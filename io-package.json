@@ -70,7 +70,7 @@
       "zh-cn": "SMA 电子充电器的安装。学习与施展"
     },
     "authors": [
-      "SpongeTroN <rolf@bunter-waeschekorb.de>"
+      "SpongeTroN86 <rolf@bunter-waeschekorb.de>"
     ],
     "keywords": [
       "template",
@@ -85,8 +85,8 @@
     "platform": "Javascript/Node.js",
     "icon": "sma-echarger.png",
     "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/SpongeTroN/ioBroker.sma-echarger/master/admin/sma-echarger.png",
-    "readme": "https://github.com/SpongeTroN/ioBroker.sma-echarger/blob/master/README.md",
+    "extIcon": "https://raw.githubusercontent.com/SpongeTroN86/ioBroker.sma-echarger/master/admin/sma-echarger.png",
+    "readme": "https://github.com/SpongeTroN86/ioBroker.sma-echarger/blob/master/README.md",
     "loglevel": "info",
     "tier": 3,
     "mode": "daemon",
