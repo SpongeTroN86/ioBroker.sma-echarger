@@ -1,8 +1,12 @@
 {
 	"common": {
 		"name": "sma-echarger",
-		"version": "0.0.1",
+		"version": "0.1.0",
 		"news": {
+			"0.1.0": {
+        			"en": "First working version with live measurements, parameter scan and control states",
+        			"de": "Erste funktionsfähige Version mit Live-Messwerten, Parameter-Scan und Control-Datenpunkten"
+      	},
 			"0.0.1": {
 				"en": "initial release",
 				"de": "Erstveröffentlichung",
