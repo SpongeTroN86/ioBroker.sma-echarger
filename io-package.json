@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sma-echarger",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "news": {
+      "0.1.3": {
+        "en": "SpongeTroN86 fix: add \"WORK IN PROGRESS\" section to README",
+        "de": "SpongeTron86 fix: Teil „IN ARBEIT“ zur README hinzufügen",
+        "ru": "Исправление SpongeTron86: добавьте раздел «РАБОТА В ПРОЦЕССЕ» в README",
+        "pt": "Correção do SpongeTron86: adiciona “EM CURSO” ao README",
+        "nl": "Oplossing SpongeTron86: voeg de sectie „WORK IN PROGRESS” toe aan README",
+        "fr": "Fix SpongeTron86 : ajout de la section « EN COURS » au README",
+        "it": "SpongeTron86 fix: aggiunga «WORK IN PROGRESS» a README",
+        "es": "SpongeTron86: añadir la sección «TRABAJO EN CURSO» a README",
+        "pl": "Poprawka SpongeTron86: dodaj sekcję „WORK IN PROGRESS” do README",
+        "uk": "Виправлення SpongeTron86: додайте розділ «РОБОТА В ПРОЦЕСІ» до README",
+        "zh-cn": "Spongetron86 修复：在 README 中添加 “正在进行中” 部分"
+      },
       "0.1.2": {
         "en": "Added trusted publishing workflow and updated adapter dependencies",
         "de": "Trusted Publishing Workflow und Adapterabhängigkeiten hinzugefügt",
