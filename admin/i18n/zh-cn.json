@@ -1,5 +1,7 @@
 {
-	"option1": "选项1",
-	"option2": "选项2",
+	"IP-Adress of the SMA eChargers": "SMA eCharger 的 IP 地址",
+	"Password": "密码",
+	"Poll interval (seconds)": "轮询间隔（秒）",
+	"Username (default: user)": "用户名（默认：user）",
 	"sma-echarger adapter settings": "sma-echarger的适配器设置"
 }

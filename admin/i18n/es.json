@@ -1,5 +1,7 @@
 {
-	"option1": "opción1",
-	"option2": "opción2",
+	"IP-Adress of the SMA eChargers": "Dirección IP del SMA eCharger",
+	"Password": "Contraseña",
+	"Poll interval (seconds)": "Intervalo de encuesta (segundos)",
+	"Username (default: user)": "Nombre de usuario (predeterminado: usuario)",
 	"sma-echarger adapter settings": "Ajustes del adaptador para sma-echarger"
 }
