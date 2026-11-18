@@ -125,10 +125,13 @@
       "SpongeTroN86 <rolf@bunter-waeschekorb.de>"
     ],
     "keywords": [
-      "template",
+      "SMA",
       "automation",
       "IoT",
-      "integration"
+      "integration",
+      "EV",
+      "Wallbox",
+      "eCharger"
     ],
     "licenseInformation": {
       "type": "free",
@@ -137,8 +140,8 @@
     "platform": "Javascript/Node.js",
     "icon": "sma-echarger.png",
     "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/SpongeTroN86/ioBroker.sma-echarger/master/admin/sma-echarger.png",
-    "readme": "https://github.com/SpongeTroN86/ioBroker.sma-echarger/blob/master/README.md",
+    "extIcon": "https://raw.githubusercontent.com/SpongeTroN86/ioBroker.sma-echarger/main/admin/sma-echarger.png",
+    "readme": "https://github.com/SpongeTroN86/ioBroker.sma-echarger/blob/main/README.md",
     "loglevel": "info",
     "tier": 3,
     "mode": "daemon",
@@ -160,7 +163,18 @@
       }
     ]
   },
-  "native": {},
+  "native": {
+    "ipAddress": "192.168.178.xxx",
+    "pollInterval": 15,
+    "username": "user",
+    "password": "***"
+  },
+  "encryptedNative": [
+    "password"
+  ],
+  "protectedNative": [
+    "password"
+  ],
   "objects": [],
   "instanceObjects": [
     {
@@ -182,18 +196,7 @@
         "write": false,
         "def": false
       },
-      "encryptedNative": [
-        "password"
-      ],
-      "protectedNative": [
-        "password"
-      ],
-      "native": {
-        "ipAddress": "",
-        "pollInterval": 15,
-        "username": "user",
-        "password": "***"
-      }
+      "native": {}
     }
   ]
 }

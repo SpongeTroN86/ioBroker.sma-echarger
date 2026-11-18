@@ -2,124 +2,58 @@
 
 # ioBroker.sma-echarger
 
-[![NPM version](https://img.shields.io/npm/v/iobroker.sma-echarger.svg)](https://www.npmjs.com/package/iobroker.sma-echarger)
-[![Downloads](https://img.shields.io/npm/dm/iobroker.sma-echarger.svg)](https://www.npmjs.com/package/iobroker.sma-echarger)
-![Number of Installations](https://iobroker.live/badges/sma-echarger-installed.svg)
-![Current version in stable repository](https://iobroker.live/badges/sma-echarger-stable.svg)
+[![NPM version](https://shields.io)](https://npmjs.com)
+[![Downloads](https://shields.io)](https://npmjs.com)
+![Number of Installations](https://iobroker.live)
+![Current version in stable repository](https://iobroker.live)
 
-[![NPM](https://nodei.co/npm/iobroker.sma-echarger.png?downloads=true)](https://nodei.co/npm/iobroker.sma-echarger/)
+[![NPM](https://nodei.co)](https://nodei.co)
 
-**Tests:** ![Test and Release](<https://github.com/SpongeTroN/ioBroker.sma-echarger/workflows/Test%20and%20Release/badge.svg>)
+**Tests:** ![Test and Release](https://github.com)
 
-## sma-echarger adapter for ioBroker
+## SMA eCharger adapter for ioBroker
 
-Anbindung eines SMA eChargers. Lesen und Steuern
+This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its HTTPS JSON API to ioBroker. It allows you to monitor live charging values, read device parameters, and control charging modes or power limits.
 
-## Developer manual
+### Features
+* **Live Measurements (`Live.*`):** Current charging power (W), total and session energy (Wh), charging status, device health, phase currents (L1–L3), and voltages.
+* **Device Parameters (`Parameter.*`):** Automatic retrieval of all readable SMA eCharger configuration parameters.
+* **Remote Control (`Control.*`):** Change the charging mode (Fast, PV Surplus, Target, Stop), adjust maximum active power (`WMax` / `WMaxIn`), and control charging release.
 
-This section is intended for the developer. It can be deleted later.
+### Configuration
+1. Open the adapter instance settings in ioBroker.
+2. Enter the local **IP address** of your SMA eCharger.
+3. Enter your **Username** (`user` for reading values, or `admin` / an installer account if you want to modify inverter power limits like `WMax`) and **Password**.
+4. Set the desired **Poll interval** in seconds (default: `15` seconds).
 
-### DISCLAIMER
+---
 
-Please make sure that you consider copyrights and trademarks when you use names or logos of a company and add a disclaimer to your README.
-You can check other adapters for examples or ask in the developer community. Using a name or logo of a company without permission may cause legal problems for you.
+## Deutsche Beschreibung
 
-### Getting started
+Dieser Adapter bindet deinen **SMA eCharger** (z. B. EVC22-3AC-20) lokal über die HTTPS-JSON-Schnittstelle an ioBroker an. Damit lassen sich Live-Messwerte auslesen, Geräteparameter überwachen sowie Lademodus und Leistungsbegrenzungen direkt steuern.
 
-You are almost done, only a few steps left:
+### Funktionen
+* **Live-Messwerte (`Live.*`):** Aktuelle Ladeleistung (W), Gesamt- und Sitzungsenergie (Wh), Fahrzeug-/Ladestatus, Gerätestatus sowie Phasenströme (L1–L3) und Spannungen.
+* **Geräteparameter (`Parameter.*`):** Automatisches Auslesen der Konfigurationsparameter des SMA eChargers.
+* **Steuerung (`Control.*`):** Umschalten des Lademodus (Schnellladen, PV-Überschuss, Zielvorgabe, Stopp), Setzen der maximalen Wirkleistung (`WMax` / `WMaxIn`) und Ladefreigabe.
 
-1. Create a new repository on GitHub with the name `ioBroker.sma-echarger`
-2. Initialize the current folder as a new git repository:
+### Konfiguration
+1. Öffne die Instanz-Einstellungen des Adapters im ioBroker Admin-Panel.
+2. Trage die lokale **IP-Adresse** deines SMA eChargers ein.
+3. Hinterlege **Benutzername** (`user` zum reinen Auslesen, oder `admin` bzw. ein Installateur-Konto, wenn Leistungsparameter wie `WMax` geschrieben werden sollen) und **Passwort**.
+4. Lege das gewünschte **Abfrageintervall** in Sekunden fest (Standard: `15` Sekunden).
 
-   ```bash
-   git init -b master
-   git add .
-   git commit -m "Initial commit"
-   ```
-3. Link your local repository with the one on GitHub:
-
-   ```bash
-   git remote add origin https://github.com/SpongeTroN/ioBroker.sma-echarger
-   ```
-4. Push all files to the GitHub repo:
-
-   ```bash
-   git push origin master
-   ```
-5. Add a new secret under https://github.com/SpongeTroN/ioBroker.sma-echarger/settings/secrets. It must be named `AUTO_MERGE_TOKEN` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.
-6. Head over to [main.js](main.js) and start programming!
-
-### Best Practices
-
-We've collected some [best practices](https://github.com/ioBroker/ioBroker.repositories#development-and-coding-best-practices) regarding ioBroker development and coding in general. If you're new to ioBroker or Node.js, you should
-check them out. If you're already experienced, you should also take a look at them - you might learn something new :)
-
-### State Roles
-
-When creating state objects, it is important to use the correct role for the state. The role defines how the state should be interpreted by visualizations and other adapters. For a list of available roles and their meanings, please refer to the [state roles documentation](https://www.iobroker.net/#en/documentation/dev/stateroles.md).
-
-**Important:** Do not invent your own custom role names. If you need a role that is not part of the official list, please contact the ioBroker developer community for guidance and discussion about adding new roles.
-
-### Scripts in `package.json`
-
-Several npm scripts are predefined for your convenience. You can run them using `npm run <scriptname>`
-
-| Script name          | Description                                                                                                                                                               |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `test:js`          | Executes the tests you defined in `*.test.js` files.                                                                                                                    |
-| `test:package`     | Ensures your `package.json` and `io-package.json` are valid.                                                                                                          |
-| `test:integration` | Tests the adapter startup with an actual instance of ioBroker.                                                                                                            |
-| `test`             | Performs a minimal test run on package files and your tests.                                                                                                              |
-| `check`            | Performs a type-check on your code (without compiling anything).                                                                                                          |
-| `lint`             | Runs `ESLint` to check your code for formatting errors and potential bugs.                                                                                              |
-| `translate`        | Translates texts in your adapter to all required languages, see [`@iobroker/adapter-dev`](https://github.com/ioBroker/adapter-dev#manage-translations) for more details. |
-| `release`          | Creates a new release, see [`@alcalzone/release-script`](https://github.com/AlCalzone/release-script#usage) for more details.                                            |
-
-### Writing tests
-
-When done right, testing code is invaluable, because it gives you the
-confidence to change your code while knowing exactly if and when
-something breaks. A good read on the topic of test-driven development
-is https://hackernoon.com/introduction-to-test-driven-development-tdd-61a13bc92d92.
-Although writing tests before the code might seem strange at first, but it has very
-clear upsides.
-
-The template provides you with basic tests for the adapter startup and package files.
-It is recommended that you add your own tests into the mix.
-
-### Publishing the adapter
-
-Using GitHub Actions, you can enable automatic releases on npm whenever you push a new git tag that matches the form
-`v<major>.<minor>.<patch>`. We **strongly recommend** that you do. The necessary steps are described in `.github/workflows/test-and-release.yml`.
-
-Since you installed the release script, you can create a new
-release simply by calling:
-
-```bash
-npm run release
-```
-
-Additional command line options for the release script are explained in the
-[release-script documentation](https://github.com/AlCalzone/release-script#command-line).
-
-To get your adapter released in ioBroker, please refer to the documentation
-of [ioBroker.repositories](https://github.com/ioBroker/ioBroker.repositories#requirements-for-adapter-to-get-added-to-the-latest-repository).
-
-### Test the adapter manually with dev-server
-
-Since you set up `dev-server`, you can use it to run, test and debug your adapter.
-
-You may start `dev-server` by calling from your dev directory:
-
-```bash
-dev-server watch
-```
-
-The ioBroker.admin interface will then be available at http://localhost:undefined/
-
-Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev-server#command-line) for more details.
+### Disclaimer
+*SMA* and *eCharger* are registered trademarks of SMA Solar Technology AG. This project is an independent open-source adapter and is not affiliated with or endorsed by SMA Solar Technology AG.
 
 ## Changelog
+<!--
+    Placeholder for the next version (at the beginning of the line):
+    ### **WORK IN PROGRESS**
+-->
+### **WORK IN PROGRESS**
+* (SpongeTroN86) Updated README documentation and fixed repository metadata in io-package.json
+
 ### 0.1.7 (2026-11-18)
 
 * SpongeTroN86 fix: removed windows-latest from test-and-release.yml
