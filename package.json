@@ -20,7 +20,7 @@
     "url": "https://github.com/SpongeTroN/ioBroker.sma-echarger.git"
   },
   "engines": {
-    "node": ">= 24"
+    "node": ">= 20"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.4.3",
