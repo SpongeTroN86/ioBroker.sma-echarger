@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sma-echarger",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "news": {
+      "0.1.2": {
+        "en": "Added trusted publishing workflow and updated adapter dependencies",
+        "de": "Trusted Publishing Workflow und Adapterabhängigkeiten hinzugefügt",
+        "ru": "Добавлен надежный рабочий процесс публикации и обновлены зависимости адаптеров",
+        "pt": "Adição de fluxo de publicação confiável e novas dependências",
+        "nl": "Betrouwbare publicatieworkflow toegevoegd en adapterafhankelijkheden bijgewerkt",
+        "fr": "Ajout d'un flux de publication fiable et de dépendances d'adaptateur",
+        "it": "Aggiunti workflow editoriali affidabili e adattatori aggiornati",
+        "es": "Añadió un flujo de publicación fiable y actualizó las dependencias del adaptador",
+        "pl": "Dodano zaufany przepływ pracy publikowania i zaktualizowane zależności adaptera",
+        "uk": "Додано надійний робочий процес публікації та оновлені залежності адаптера",
+        "zh-cn": "添加了可信发布工作流程并更新了适配器依赖关系"
+      },
       "0.1.1": {
         "en": "initial release",
         "de": "erste Version",
