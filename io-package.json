@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sma-echarger",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "news": {
+      "0.1.6": {
+        "en": "SpongeTroN86 fix: removed macos-latest from test-and-release.yml",
+        "de": "SpongeTron86 fix: macos-latest aus test-and-release.yml entfernt",
+        "ru": "Исправление SpongeTron86: последняя версия macOS удалена из файла test-and-release.yml",
+        "pt": "Correção SpongeTron86: removeu o macos-latest de test-and-release.yml",
+        "nl": "Oplossing SpongeTron86: macos-latest verwijderd uit test-and-release.yml",
+        "fr": "Fix SpongeTron86 : macos-latest a été supprimé de test-and-release.yml",
+        "it": "SpongeTron86 fix: macos-latest rimosso da test-and-release.yml",
+        "es": "Solución de SpongeTron86: se quitó macOS Latest de test-and-release.yml",
+        "pl": "Poprawka SpongeTron86: usunięto macos-latest z test-and-release.yml",
+        "uk": "Виправлення SpongeTron86: видалено macos-latest з test-and-release.yml",
+        "zh-cn": "Spongetron86 修复：从 test-and-release.yml 中移除了 macos-latest"
+      },
       "0.1.5": {
         "en": "SpongeTroN86 fix: add npm environment variables for deployment",
         "de": "Spongetron86 fix: NPM-Umgebungsvariablen hinzufügen",
