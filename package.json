@@ -10,6 +10,11 @@
   "homepage": "https://github.com/SpongeTroN/ioBroker.sma-echarger",
   "license": "MIT",
   "keywords": [
+    "ioBroker",
+    "SMA",
+    "eCharger",
+    "Wallbox",
+    "Smart Home",
     "template",
     "automation",
     "IoT",
@@ -17,10 +22,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/SpongeTroN/ioBroker.sma-echarger.git"
+    "url": "https://github.com/SpongeTroN86/ioBroker.sma-echarger.git"
   },
   "engines": {
-    "node": ">= 20"
+    "node": ">= 22"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.4.3",

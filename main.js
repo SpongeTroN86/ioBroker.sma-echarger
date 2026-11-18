@@ -1,9 +1,8 @@
-// @ts-nocheck
 'use strict';
 
 const utils = require('@iobroker/adapter-core');
 const axios = require('axios');
-const https = require('https');
+const https = require('node:https');
 
 const LIVE_POINTS = [
 	{
@@ -79,8 +78,6 @@ const LIVE_POINTS = [
 	},
 	// Hier einfach weitere Kanäle ergänzen...
 ];
-
-/** @type {const} */
 
 const CONTROL_STATES = [
 	{
@@ -220,7 +217,6 @@ class SmaEcharger extends utils.Adapter {
 		for (const item of LIVE_POINTS) {
 			const fullId = `Live.${item.dp}`;
 
-			/** @type {ioBroker.StateCommon} */
 			const commonObj = {
 				name: item.name,
 				type: 'number',
@@ -358,7 +354,6 @@ class SmaEcharger extends utils.Adapter {
 				const finalValue = isNumber ? Number(rawValue) : String(rawValue);
 
 				// Datenpunkt-Eigenschaften aufbauen
-				/** @type {ioBroker.StateCommon} */
 				const commonObj = {
 					name: param.channelId,
 					type: isNumber ? 'number' : 'string',
