@@ -7,7 +7,12 @@ updates:
       day: 9
       time: "00:05"
       timezone: Europe/Berlin
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 15
+    cooldown:
+      default: 7
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     assignees:
       - SpongeTroN
     versioning-strategy: increase
