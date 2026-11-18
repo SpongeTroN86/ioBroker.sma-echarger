@@ -51,7 +51,7 @@ Dieser Adapter bindet deinen **SMA eCharger** (z. B. EVC22-3AC-20) lokal über d
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.1.9 (2026-11-18)
 * (SpongeTroN86) Updated README documentation and fixed repository metadata in io-package.json
 
 ### 0.1.7 (2026-11-18)
