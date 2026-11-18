@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sma-echarger",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "news": {
+      "0.1.7": {
+        "en": "SpongeTroN86 fix: removed windows-latest from test-and-release.yml",
+        "de": "SpongeTron86 Fix: Windows-Latest aus Test-and-Release.yml entfernt",
+        "ru": "Исправление SpongeTron86: удалена последняя версия Windows из файла test-and-release.yml",
+        "pt": "Correção SpongeTron86: removeu o windows-latest de test-and-release.yml",
+        "nl": "Oplossing SpongeTron86: de nieuwste versie van Windows verwijderd uit test-and-release.yml",
+        "fr": "Fix SpongeTron86 : Windows-Latest a été supprimé de test-and-release.yml",
+        "it": "SpongeTron86 fix: rimosso windows-latest da test-and-release.yml",
+        "es": "Solución de SpongeTron86: se quitó Windows Latest de test-and-release.yml",
+        "pl": "Poprawka SpongeTron86: usunięto windows-latest z test-and-release.yml",
+        "uk": "Виправлення SpongeTron86: видалено останнє вікно з тесту та випуску.yml",
+        "zh-cn": "Spongetron86 修复：从 test-and-release.yml 中删除了 Windows-latest"
+      },
       "0.1.6": {
         "en": "SpongeTroN86 fix: removed macos-latest from test-and-release.yml",
         "de": "SpongeTron86 fix: macos-latest aus test-and-release.yml entfernt",
@@ -80,19 +93,6 @@
         "pl": "wstępne wydanie",
         "uk": "первинний випуск",
         "zh-cn": "初始版本"
-      },
-      "0.1.0": {
-        "en": "First working version with live measurements, parameter scan and control states",
-        "de": "Erste funktionsfähige Version mit Live-Messwerten, Parameter-Scan und Control-Datenpunkten",
-        "ru": "Первая рабочая версия с измерениями в реальном времени, сканированием параметров и состояниями управления.",
-        "pt": "Primeira versão funcional com medições ao vivo, varredura de parâmetros e estados de controle",
-        "nl": "Eerste werkende versie met live metingen, parameterscan en controlestatussen",
-        "fr": "Première version fonctionnelle avec mesures en direct, analyse des paramètres et états de contrôle",
-        "it": "Prima versione funzionante con misurazioni in tempo reale, scansione dei parametri e stati di controllo",
-        "es": "Primera versión funcional con mediciones en vivo, escaneo de parámetros y estados de control.",
-        "pl": "Pierwsza działająca wersja z pomiarami na żywo, skanowaniem parametrów i stanami kontrolnymi",
-        "uk": "Перша робоча версія з живими вимірюваннями, скануванням параметрів і контрольними станами",
-        "zh-cn": "第一个具有实时测量、参数扫描和控制状态的工作版本"
       }
     },
     "titleLang": {
