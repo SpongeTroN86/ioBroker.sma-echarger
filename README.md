@@ -121,10 +121,11 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 
 ## Changelog
 
-<!--
-	Placeholder for the next version (at the beginning of the line):
-	### **WORK IN PROGRESS**
--->
+
+### **WORK IN PROGRESS**
+
+* SpongeTroN86 fix: add "WORK IN PROGRESS" section to README
+
 ### 0.1.3 (2026-11-18)
 
 * SpongeTroN86 fix: add "WORK IN PROGRESS" section to README
