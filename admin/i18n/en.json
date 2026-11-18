@@ -1,5 +1,7 @@
 {
 	"sma-echarger adapter settings": "Adapter settings for sma-echarger",
-	"option1": "option1",
-	"option2": "option2"
+	"IP-Adress of the SMA eChargers": "IP address of the SMA eCharger",
+	"Username (default: user)": "Username (default: user)",
+	"Password": "Password",
+	"Poll interval (seconds)": "Poll interval (seconds)"
 }
