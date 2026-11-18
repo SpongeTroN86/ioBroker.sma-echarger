@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sma-echarger",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "news": {
+      "0.1.8": {
+        "en": "Updated README documentation and fixed repository metadata in io-package.json",
+        "de": "README-Dokumentation aktualisiert und Repository-Metadaten in io-package.json korrigiert",
+        "ru": "Обновленная документация README и исправленные метаданные репозитория в io-package.json",
+        "pt": "Documentação README atualizada e metadados fixos em io-package.json",
+        "nl": "Bijgewerkte README-documentatie en metagegevens van vaste opslagplaatsen in io-package.json",
+        "fr": "Documentation README mise à jour et métadonnées du dépôt corrigées dans io-package.json",
+        "it": "Documentazione README aggiornata e metadati fissi in io-package.json",
+        "es": "Documentación README actualizada y metadatos fijos en io-package.json",
+        "pl": "Zaktualizowano dokumentację README i stałe metadane repozytorium w io-package.json",
+        "uk": "Оновлена документація README та фіксовані метадані сховища в io-package.json",
+        "zh-cn": "更新了 io-package.json 中的 README 文档并修复了存储库元数据"
+      },
       "0.1.7": {
         "en": "SpongeTroN86 fix: removed windows-latest from test-and-release.yml",
         "de": "SpongeTron86 Fix: Windows-Latest aus Test-and-Release.yml entfernt",
@@ -80,19 +93,6 @@
         "pl": "Dodano zaufany przepływ pracy publikowania i zaktualizowane zależności adaptera",
         "uk": "Додано надійний робочий процес публікації та оновлені залежності адаптера",
         "zh-cn": "添加了可信发布工作流程并更新了适配器依赖关系"
-      },
-      "0.1.1": {
-        "en": "initial release",
-        "de": "erste Version",
-        "ru": "первоначальный релиз",
-        "pt": "versão inicial",
-        "nl": "eerste uitgave",
-        "fr": "sortie initiale",
-        "it": "prima versione",
-        "es": "versión inicial",
-        "pl": "wstępne wydanie",
-        "uk": "первинний випуск",
-        "zh-cn": "初始版本"
       }
     },
     "titleLang": {
