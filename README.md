@@ -120,6 +120,11 @@ The ioBroker.admin interface will then be available at http://localhost:undefine
 Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev-server#command-line) for more details.
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+
+* SpongeTroN86 fix: add npm environment variables for deployment
+
 ### 0.1.4 (2026-11-18)
 
 * SpongeTroN86 fix: add "WORK IN PROGRESS" section to README

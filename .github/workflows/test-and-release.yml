@@ -64,12 +64,15 @@ jobs:
     permissions:
       contents: write
       id-token: write
+    env:
+      NPM_CONFIG_PREFIX: /home/runner/.npm-global
+      NPM_CONFIG_PROVENANCE: true
     steps:
       - name: Configure npm global prefix
         run: |
           mkdir -p /home/runner/.npm-global
           echo "/home/runner/.npm-global/bin" >> $GITHUB_PATH
-          
+
       - uses: ioBroker/testing-action-deploy@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
