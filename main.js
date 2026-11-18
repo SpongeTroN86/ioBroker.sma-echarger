@@ -80,7 +80,6 @@ const LIVE_POINTS = [
 	// Hier einfach weitere Kanäle ergänzen...
 ];
 
-
 /** @type {const} */
 
 const CONTROL_STATES = [
