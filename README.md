@@ -2,14 +2,14 @@
 
 # ioBroker.sma-echarger
 
-[![NPM version](https://shields.io)](https://npmjs.com)
-[![Downloads](https://shields.io)](https://npmjs.com)
-![Number of Installations](https://iobroker.live)
-![Current version in stable repository](https://iobroker.live)
+[![NPM version](https://img.shields.io/npm/v/iobroker.sma-echarger.svg)](https://www.npmjs.com/package/iobroker.sma-echarger)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.sma-echarger.svg)](https://www.npmjs.com/package/iobroker.sma-echarger)
+![Number of Installations](https://iobroker.live/badges/sma-echarger-installed.svg)
+![Current version in stable repository](https://iobroker.live/badges/sma-echarger-stable.svg)
 
-[![NPM](https://nodei.co)](https://nodei.co)
+[![NPM](https://nodei.co/npm/iobroker.sma-echarger.png?downloads=true)](https://nodei.co/npm/iobroker.sma-echarger/)
 
-**Tests:** ![Test and Release](https://github.com)
+**Tests:** ![Test and Release](<https://github.com/SpongeTroN86/ioBroker.sma-echarger/workflows/Test%20and%20Release/badge.svg>)
 
 ## SMA eCharger adapter for ioBroker
 
@@ -51,7 +51,7 @@ Dieser Adapter bindet deinen **SMA eCharger** (z. B. EVC22-3AC-20) lokal über d
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### 0.1.8 (2026-11-18)
+### **WORK IN PROGRESS**
 * (SpongeTroN86) Updated README documentation and fixed repository metadata in io-package.json
 
 ### 0.1.7 (2026-11-18)
