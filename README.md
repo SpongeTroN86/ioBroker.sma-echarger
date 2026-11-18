@@ -127,6 +127,8 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 -->
 ### **WORK IN PROGRESS**
 
+* (SpongeTroN86) Added trusted publishing workflow and updated adapter dependencies
+
 ### 0.1.1 (2026-11-18)
 
 * (SpongeTroN) initial release
