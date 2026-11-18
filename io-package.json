@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sma-echarger",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "news": {
+      "0.1.5": {
+        "en": "SpongeTroN86 fix: add npm environment variables for deployment",
+        "de": "Spongetron86 fix: NPM-Umgebungsvariablen hinzufügen",
+        "ru": "Исправление SpongeTron86: добавление переменных окружения npm для развертывания",
+        "pt": "Correção do SpongeTron86: adicione o ambiente npm",
+        "nl": "Oplossing SpongeTron86: npm-omgevingsvariabelen toevoegen voor implementatie",
+        "fr": "Fix SpongeTron86 : ajout de variables d'environnement NPM",
+        "it": "SpongeTron86 fix: aggiunge variabili di ambiente npm",
+        "es": "Solución de SpongeTron86: añadir variables de entorno npm para su despliegue",
+        "pl": "Poprawka SpongeTron86: dodaj zmienne środowiskowe npm do wdrożenia",
+        "uk": "Виправлення SpongeTron86: додайте змінні середовища npm для розгортання",
+        "zh-cn": "Spongetron86 修复：为部署添加 npm 环境变量"
+      },
       "0.1.4": {
         "en": "SpongeTroN86 fix: add \"WORK IN PROGRESS\" section to README",
         "de": "SpongeTron86 fix: Teil „IN ARBEIT“ zur README hinzufügen",
