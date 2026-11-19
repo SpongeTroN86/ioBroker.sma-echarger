@@ -10,7 +10,7 @@
         "pt": "Adicionado suporte multilíngue (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) para estados, logs e configuração.",
         "nl": "Ondersteuning voor meerdere talen toegevoegd (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) voor staten, logboeken en configuratie.",
         "fr": "Ajout du support multilingue (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) pour les états, les logs et la configuration.",
-        "it": "Aggiunto il supporto multilingue (de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) per stati, log e configurazione.",
+        "it": "Aggiunto il supporto multilingue (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) per stati, log e configurazione.",
         "es": "Se añadió soporte multilingüe (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) para estados, registros y configuración.",
         "pl": "Dodano obsługę wielu języków (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) dla stanów, logów i konfiguracji.",
         "uk": "Додана багатомовна підтримка (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) для станів, журналів та конфігурації.",
@@ -48,7 +48,7 @@
         "ru": "Исправление SpongeTron86: удалена последняя версия Windows из файла test-and-release.yml",
         "pt": "Correção SpongeTron86: removeu o windows-latest de test-and-release.yml",
         "nl": "Oplossing SpongeTron86: de nieuwste versie van Windows verwijderd uit test-and-release.yml",
-        "fr": "Fix SpongeTron86 : Windows-Latest a été supprimé de test-and-release.yml",
+        "fr": "Fix SpongeTron86 : Windows-Latest a été supprimé de test-and-release.yml",
         "it": "SpongeTron86 fix: rimosso windows-latest da test-and-release.yml",
         "es": "Solución de SpongeTron86: se quitó Windows Latest de test-and-release.yml",
         "pl": "Poprawka SpongeTron86: usunięto windows-latest z test-and-release.yml",
@@ -61,7 +61,7 @@
         "ru": "Исправление SpongeTron86: последняя версия macOS удалена из файла test-and-release.yml",
         "pt": "Correção SpongeTron86: removeu o macos-latest de test-and-release.yml",
         "nl": "Oplossing SpongeTron86: macos-latest verwijderd uit test-and-release.yml",
-        "fr": "Fix SpongeTron86 : macos-latest a été supprimé de test-and-release.yml",
+        "fr": "Fix SpongeTron86 : macos-latest a été supprimé de test-and-release.yml",
         "it": "SpongeTron86 fix: macos-latest rimosso da test-and-release.yml",
         "es": "Solución de SpongeTron86: se quitó macOS Latest de test-and-release.yml",
         "pl": "Poprawka SpongeTron86: usunięto macos-latest z test-and-release.yml",
@@ -74,7 +74,7 @@
         "ru": "Исправление SpongeTron86: добавление переменных окружения npm для развертывания",
         "pt": "Correção do SpongeTron86: adicione o ambiente npm",
         "nl": "Oplossing SpongeTron86: npm-omgevingsvariabelen toevoegen voor implementatie",
-        "fr": "Fix SpongeTron86 : ajout de variables d'environnement NPM",
+        "fr": "Fix SpongeTron86 : ajout de variables d'environnement NPM",
         "it": "SpongeTron86 fix: aggiunge variabili di ambiente npm",
         "es": "Solución de SpongeTron86: añadir variables de entorno npm para su despliegue",
         "pl": "Poprawka SpongeTron86: dodaj zmienne środowiskowe npm do wdrożenia",
@@ -87,7 +87,7 @@
         "ru": "Исправление SpongeTron86: добавьте раздел «РАБОТА В ПРОЦЕССЕ» в README",
         "pt": "Correção do SpongeTron86: adiciona “EM CURSO” ao README",
         "nl": "Oplossing SpongeTron86: voeg de sectie „WORK IN PROGRESS” toe aan README",
-        "fr": "Fix SpongeTron86 : ajout de la section « EN COURS » au README",
+        "fr": "Fix SpongeTron86 : ajout de la section « EN COURS » au README",
         "it": "SpongeTron86 fix: aggiunga «WORK IN PROGRESS» a README",
         "es": "SpongeTron86: añadir la sección «TRABAJO EN CURSO» a README",
         "pl": "Poprawka SpongeTron86: dodaj sekcję „WORK IN PROGRESS” do README",
@@ -96,30 +96,30 @@
       }
     },
     "titleLang": {
-      "en": "eCharger",
-      "de": "eCharger",
-      "ru": "электронное зарядное устройство",
-      "pt": "Carregador eletrônico",
-      "nl": "eOplader",
-      "fr": "eChargeur",
-      "it": "eCharger",
-      "es": "cargador electrónico",
-      "pl": "eŁadowarka",
-      "uk": "eCharger",
-      "zh-cn": "电子充电器"
+      "en": "SMA eCharger",
+      "de": "SMA eCharger",
+      "ru": "SMA eCharger",
+      "pt": "SMA eCharger",
+      "nl": "SMA eCharger",
+      "fr": "SMA eCharger",
+      "it": "SMA eCharger",
+      "es": "SMA eCharger",
+      "pl": "SMA eCharger",
+      "uk": "SMA eCharger",
+      "zh-cn": "SMA eCharger"
     },
     "desc": {
-      "en": "Anbindung eines SMA eChargers. Lesen und Steuern",
-      "de": "Anbindung eines SMA eChargers. Lesen und Steuern",
-      "ru": "Используйте зарядные устройства SMA eChargers. Лесен и Стойерн",
-      "pt": "Conecte seus eChargers SMA. Lesen e Steuern",
-      "nl": "Sluit een SMA eCharger aan. Lesen en Steuern",
-      "fr": "Connexion à un chargeur électronique SMA. Lesen et Steuern",
-      "it": "Collegare un eChargers SMA. Lesen und Steuern",
-      "es": "Anbindung eines SMA eChargers. Lesen und Steuern",
-      "pl": "Dołącz eines SMA eChargers. Lesen i Steuern",
-      "uk": "Anbindung eines SMA eChargers. Lesen und Steuern",
-      "zh-cn": "SMA 电子充电器的安装。学习与施展"
+      "en": "Integration of an SMA eCharger wallbox. Read values and control charging.",
+      "de": "Anbindung eines SMA eChargers. Messwerte auslesen und Ladevorgang steuern.",
+      "ru": "Интеграция настенной зарядной станции SMA eCharger. Чтение данных и управление зарядкой.",
+      "pt": "Integração de uma wallbox SMA eCharger. Ler valores e controlar o carregamento.",
+      "nl": "Integratie van een SMA eCharger wallbox. Waarden uitlezen en laden bedienen.",
+      "fr": "Intégration d'une borne de recharge SMA eCharger. Lire les valeurs et contrôler la charge.",
+      "it": "Integrazione di una wallbox SMA eCharger. Lettura dei valori e controllo della ricarica.",
+      "es": "Integración de un cargador SMA eCharger. Lectura de valores y control de carga.",
+      "pl": "Integracja ładowarki ściennej SMA eCharger. Odczyt wartości i sterowanie ładowaniem.",
+      "uk": "Інтеграція зарядної станції SMA eCharger. Зчитування значень та керування заряджанням.",
+      "zh-cn": "集成 SMA eCharger 充电桩。读取数值并控制充电。"
     },
     "authors": [
       "SpongeTroN86 <rolf@bunter-waeschekorb.de>"
@@ -140,12 +140,20 @@
     "platform": "Javascript/Node.js",
     "icon": "sma-echarger.png",
     "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/SpongeTroN86/ioBroker.sma-echarger/main/admin/sma-echarger.png",
-    "readme": "https://github.com/SpongeTroN86/ioBroker.sma-echarger/blob/main/README.md",
+    "extIcon": "https://githubusercontent.com",
+    "readme": "https://github.com",
+    "docs": {
+      "en": [
+        "README.md"
+      ],
+      "de": [
+        "docs/de/README.md"
+      ]
+    },
     "loglevel": "info",
     "tier": 3,
     "mode": "daemon",
-    "type": "iot-systems",
+    "type": "energy",
     "compact": true,
     "connectionType": "local",
     "dataSource": "poll",
@@ -164,10 +172,10 @@
     ]
   },
   "native": {
-    "ipAddress": "192.168.178.xxx",
+    "ipAddress": "",
     "pollInterval": 15,
     "username": "user",
-    "password": "***"
+    "password": ""
   },
   "encryptedNative": [
     "password"
