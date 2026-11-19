@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sma-echarger",
-    "version": "0.1.10",
+    "version": "0.1.11",
     "news": {
+      "0.1.11": {
+        "en": "feat: update README files for improved documentation and add German translation",
+        "de": "Feat: Readme-Dateien für bessere Dokumentation und deutsche Übersetzung",
+        "ru": "подвиг: обновите файлы README для улучшения документации и добавьте перевод на немецкий язык",
+        "pt": "feat: atualize o README para melhorar a documentação e traduzir em alemão",
+        "nl": "prestatie: README-bestanden bijwerken voor betere documentatie en Duitse vertaling toevoegen",
+        "fr": "exploit : mise à jour des fichiers README pour améliorer la documentation et les traduire en allemand",
+        "it": "feat: aggiorna i file README e aggiungi la traduzione in tedesco",
+        "es": "hazaña: actualizar los archivos README para mejorar la documentación y añadir la traducción al alemán",
+        "pl": "feat: zaktualizuj pliki README w celu poprawy dokumentacji i dodaj tłumaczenie niemieckie",
+        "uk": "feat: оновити файли README для покращення документації та додати німецький переклад",
+        "zh-cn": "壮举：更新自述文件以改进文档并添加德语翻译"
+      },
       "0.1.10": {
         "en": "Added multi-language support (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) for states, logs, and configuration.",
         "de": "Mehrsprachigkeit (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) für Status, Logs und Konfiguration hinzugefügt.",
@@ -80,19 +93,6 @@
         "pl": "Poprawka SpongeTron86: dodaj zmienne środowiskowe npm do wdrożenia",
         "uk": "Виправлення SpongeTron86: додайте змінні середовища npm для розгортання",
         "zh-cn": "Spongetron86 修复：为部署添加 npm 环境变量"
-      },
-      "0.1.4": {
-        "en": "SpongeTroN86 fix: add \"WORK IN PROGRESS\" section to README",
-        "de": "SpongeTron86 fix: Teil „IN ARBEIT“ zur README hinzufügen",
-        "ru": "Исправление SpongeTron86: добавьте раздел «РАБОТА В ПРОЦЕССЕ» в README",
-        "pt": "Correção do SpongeTron86: adiciona “EM CURSO” ao README",
-        "nl": "Oplossing SpongeTron86: voeg de sectie „WORK IN PROGRESS” toe aan README",
-        "fr": "Fix SpongeTron86 : ajout de la section « EN COURS » au README",
-        "it": "SpongeTron86 fix: aggiunga «WORK IN PROGRESS» a README",
-        "es": "SpongeTron86: añadir la sección «TRABAJO EN CURSO» a README",
-        "pl": "Poprawka SpongeTron86: dodaj sekcję „WORK IN PROGRESS” do README",
-        "uk": "Виправлення SpongeTron86: додайте розділ «РОБОТА В ПРОЦЕСІ» до README",
-        "zh-cn": "Spongetron86 修复：在 README 中添加 “正在进行中” 部分"
       }
     },
     "titleLang": {
