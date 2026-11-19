@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sma-echarger",
-    "version": "0.1.9",
+    "version": "0.1.10",
     "news": {
+      "0.1.10": {
+        "en": "Added multi-language support (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) for states, logs, and configuration.",
+        "de": "Mehrsprachigkeit (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) für Status, Logs und Konfiguration hinzugefügt.",
+        "ru": "Добавлена поддержка нескольких языков (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) для состояний, журналов и конфигурации.",
+        "pt": "Adicionado suporte multilíngue (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) para estados, logs e configuração.",
+        "nl": "Ondersteuning voor meerdere talen toegevoegd (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) voor staten, logboeken en configuratie.",
+        "fr": "Ajout du support multilingue (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) pour les états, les logs et la configuration.",
+        "it": "Aggiunto il supporto multilingue (de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) per stati, log e configurazione.",
+        "es": "Se añadió soporte multilingüe (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) para estados, registros y configuración.",
+        "pl": "Dodano obsługę wielu języków (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) dla stanów, logów i konfiguracji.",
+        "uk": "Додана багатомовна підтримка (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) для станів, журналів та конфігурації.",
+        "zh-cn": "增加了对状态、日志和配置的多语言支持（`de`、`en`、`es`、`fr`、`it`、`nl`、`pl`、`pt`、`ru`、`uk`、`zh-cn`）。"
+      },
       "0.1.9": {
         "en": "Updated README documentation and fixed repository metadata in io-package.json",
         "de": "README-Dokumentation aktualisiert und Repository-Metadaten in io-package.json korrigiert",
@@ -69,19 +82,6 @@
         "zh-cn": "Spongetron86 修复：为部署添加 npm 环境变量"
       },
       "0.1.4": {
-        "en": "SpongeTroN86 fix: add \"WORK IN PROGRESS\" section to README",
-        "de": "SpongeTron86 fix: Teil „IN ARBEIT“ zur README hinzufügen",
-        "ru": "Исправление SpongeTron86: добавьте раздел «РАБОТА В ПРОЦЕССЕ» в README",
-        "pt": "Correção do SpongeTron86: adiciona “EM CURSO” ao README",
-        "nl": "Oplossing SpongeTron86: voeg de sectie „WORK IN PROGRESS” toe aan README",
-        "fr": "Fix SpongeTron86 : ajout de la section « EN COURS » au README",
-        "it": "SpongeTron86 fix: aggiunga «WORK IN PROGRESS» a README",
-        "es": "SpongeTron86: añadir la sección «TRABAJO EN CURSO» a README",
-        "pl": "Poprawka SpongeTron86: dodaj sekcję „WORK IN PROGRESS” do README",
-        "uk": "Виправлення SpongeTron86: додайте розділ «РОБОТА В ПРОЦЕСІ» до README",
-        "zh-cn": "Spongetron86 修复：在 README 中添加 “正在进行中” 部分"
-      },
-      "0.1.3": {
         "en": "SpongeTroN86 fix: add \"WORK IN PROGRESS\" section to README",
         "de": "SpongeTron86 fix: Teil „IN ARBEIT“ zur README hinzufügen",
         "ru": "Исправление SpongeTron86: добавьте раздел «РАБОТА В ПРОЦЕССЕ» в README",
