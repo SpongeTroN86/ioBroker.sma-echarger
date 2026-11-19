@@ -109,7 +109,7 @@ function getControlStates() {
 			channelId: 'Parameter.Inverter.WMaxIn',
 			initial: 11000,
 			common: {
-				name: I18n.getTranslatedObject('Maximale Wirkleistung (WMaxIn) setzen'),
+				name: I18n.getTranslatedObject('Maximale Wirkleistung (WMaxIn) setzen (Bezug/Ladeleistung)'),
 				type: 'number',
 				role: 'level.power',
 				unit: 'W',
@@ -140,7 +140,7 @@ function getControlStates() {
 			channelId: 'Parameter.Inverter.WMax',
 			initial: 11000,
 			common: {
-				name: I18n.getTranslatedObject('Maximale Wirkleistung setzen (WMax)'),
+				name: I18n.getTranslatedObject('Maximale Wirkleistung setzen (WMax) (Abgabe/Entladeleistung)'),
 				type: 'number',
 				role: 'level.power',
 				unit: 'W',
