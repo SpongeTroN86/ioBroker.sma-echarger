@@ -354,6 +354,48 @@ class SmaEcharger extends utils.Adapter {
 			}
 
 			// 3. Alle Parameter aus data[0].values durchlaufen
+						// 3. Alle Parameter aus data[0].values durchlaufen
+			for (const param of data[0].values) {
+				// Punkt-Notation für saubere Ordnerstruktur in ioBroker beibehalten
+				const cleanId = param.channelId.replace(/\[\]$/, '');
+
+				// Wert auslesen (beachtet sowohl "value" als auch das Array "values[0]")
+				let rawValue = '';
+				if (param.value !== undefined) {
+					rawValue = param.value;
+				} else if (Array.isArray(param.values) && param.values.length > 0) {
+					rawValue = param.values[0];
+				}
+
+				// Prüfen, ob der Wert eine Zahl ist (z. B. "5500" oder "14.000")
+				const isNumber = rawValue !== '' && !isNaN(Number(rawValue));
+				const finalValue = isNumber ? Number(rawValue) : String(rawValue);
+
+				// Datenpunkt-Eigenschaften aufbauen
+				const commonObj = {
+					name: param.channelId,
+					type: isNumber ? 'number' : 'string',
+					role: 'value',
+					read: true,
+					write: Boolean(param.editable),
+				};
+
+				if (isNumber && param.min !== undefined) {
+					commonObj.min = Number(param.min);
+				}
+				if (isNumber && param.max !== undefined) {
+					commonObj.max = Number(param.max);
+				}
+
+				// Erst warten bis das Objekt existiert, DANN den Wert schreiben!
+				await this.setObjectNotExistsAsync(cleanId, {
+					type: 'state',
+					common: commonObj,
+					native: {},
+				});
+				await this.setStateAsync(cleanId, { val: finalValue, ack: true });
+			}
+/*
 			data[0].values.forEach(param => {
 				// Punkt-Notation für saubere Ordnerstruktur in ioBroker beibehalten
 				const cleanId = param.channelId.replace(/\[\]$/, '');
@@ -393,7 +435,7 @@ class SmaEcharger extends utils.Adapter {
 					native: {},
 				});
 				this.setState(cleanId, { val: finalValue, ack: true });
-			});
+			});*/
 			if (Array.isArray(res.data) && res.data.length > 0 && Array.isArray(res.data[0].values)) {
 				this.log.info(
 					I18n.t(
