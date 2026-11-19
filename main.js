@@ -41,7 +41,7 @@ function getLivePoints(){
 		{
 			channel: 'Measurement.Operation.Health',
 			dp: 'Geraete_Status',
-			name: I18n.getTranslatedObject('Status Wallbox'),
+			name: I18n.getTranslatedObject('Status Wallbox. 307 bedeutet: Alles OK'),
 			unit: '',
 		},
 		{

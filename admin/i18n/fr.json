@@ -11,7 +11,7 @@
 	"Kabel getrennt": "Câble débranché",
 	"Kabel angeschlossen": "Câble branché",
 	"wird geladen": "En cours de charge",
-	"Status Wallbox": "Statut de la Wallbox",
+	"Status Wallbox. 307 bedeutet: Alles OK": "Statut de la Wallbox. 307 signifie : Tout est OK",
 	"Ladestrom Phase L1": "Courant de charge phase L1",
 	"Ladestrom Phase L2": "Courant de charge phase L2",
 	"Ladestrom Phase L3": "Courant de charge phase L3",

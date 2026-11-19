@@ -11,7 +11,7 @@
 	"Kabel getrennt": "充电线已断开",
 	"Kabel angeschlossen": "充电线已连接",
 	"wird geladen": "正在充电",
-	"Status Wallbox": "充电桩状态",
+	"Status Wallbox. 307 bedeutet: Alles OK": "充电桩状态。307 表示：一切正常",
 	"Ladestrom Phase L1": "L1 相充电电流",
 	"Ladestrom Phase L2": "L2 相充电电流",
 	"Ladestrom Phase L3": "L3 相充电电流",
@@ -40,5 +40,5 @@
 	"SMA eCharger %s erfolgreich auf %s gesetzt (HTTP %s)": "SMA eCharger %s 已成功设置为 %s (HTTP %s)",
 	"SMA eCharger Fehler beim Setzen von %s: %s": "设置 %s 时 SMA eCharger 出错：%s",
 	"Maximale Wirkleistung (WMaxIn) setzen (Bezug/Ladeleistung)": "设置最大有功功率 (WMaxIn)（取电/充电功率）",
-"Maximale Wirkleistung setzen (WMax) (Abgabe/Entladeleistung)": "设置最大有功功率 (WMax)（馈电/放电功率）"
+	"Maximale Wirkleistung setzen (WMax) (Abgabe/Entladeleistung)": "设置最大有功功率 (WMax)（馈电/放电功率）"
 }

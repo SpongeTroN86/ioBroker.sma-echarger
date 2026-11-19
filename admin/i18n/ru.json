@@ -11,7 +11,7 @@
 	"Kabel getrennt": "Кабель отключен",
 	"Kabel angeschlossen": "Кабель подключен",
 	"wird geladen": "Идет зарядка",
-	"Status Wallbox": "Статус Wallbox",
+	"Status Wallbox. 307 bedeutet: Alles OK": "Статус Wallbox. 307 означает: Всё в порядке",
 	"Ladestrom Phase L1": "Ток зарядки фаза L1",
 	"Ladestrom Phase L2": "Ток зарядки фаза L2",
 	"Ladestrom Phase L3": "Ток зарядки фаза L3",

@@ -140,8 +140,8 @@
     "platform": "Javascript/Node.js",
     "icon": "sma-echarger.png",
     "enabled": true,
-    "extIcon": "https://githubusercontent.com",
-    "readme": "https://github.com",
+    "extIcon": "https://raw.githubusercontent.com/SpongeTroN86/ioBroker.sma-echarger/master/admin/sma-echarger.png",
+    "readme": "https://github.com/SpongeTroN86/ioBroker.sma-echarger/blob/master/README.md",
     "docs": {
       "en": [
         "README.md"

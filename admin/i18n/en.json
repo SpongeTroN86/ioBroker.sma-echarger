@@ -11,7 +11,7 @@
 	"Kabel getrennt": "Cable disconnected",
 	"Kabel angeschlossen": "Cable connected",
 	"wird geladen": "Charging",
-	"Status Wallbox": "Wallbox status",
+	"Status Wallbox. 307 bedeutet: Alles OK": "Wallbox status. 307 means: Everything OK",
 	"Ladestrom Phase L1": "Charging current phase L1",
 	"Ladestrom Phase L2": "Charging current phase L2",
 	"Ladestrom Phase L3": "Charging current phase L3",
