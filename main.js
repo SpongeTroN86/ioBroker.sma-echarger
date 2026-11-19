@@ -5,7 +5,7 @@ const utils = require('@iobroker/adapter-core');
 const { I18n } = utils;
 const axios = require('axios');
 const https = require('node:https');
-const path = require('path');
+const path = require('node:path');
 
 function getLivePoints(){ 
 	return [

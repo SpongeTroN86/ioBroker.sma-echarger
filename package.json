@@ -19,7 +19,7 @@
     "automation",
     "IoT",
     "integration"
-  ],
+  ], 
   "repository": {
     "type": "git",
     "url": "https://github.com/SpongeTroN86/ioBroker.sma-echarger.git"
@@ -54,7 +54,7 @@
     "io-package.json",
     "LICENSE",
     "main.js",
-    "admin/i18n"
+    "i18n"
   ],
   "scripts": {
     "test:js": "mocha --config test/mocharc.custom.json \"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\"",
