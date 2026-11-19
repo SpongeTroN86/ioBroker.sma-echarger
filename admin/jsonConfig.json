@@ -4,7 +4,7 @@
     "items": {
         "ipAddress": {
             "type": "text",
-            "label": "IP-Adress of the SMA eChargers",
+            "label": "IP-Adresse des SMA eChargers",
             "xs": 12,
             "sm": 6,
             "md": 4,
@@ -13,7 +13,7 @@
         },
         "pollInterval": {
             "type": "number",
-            "label": "Poll interval (seconds)",
+            "label": "Abfrageintervall (Sekunden)",
             "min": 15,
             "max": 3600,
             "default": 15,
@@ -25,7 +25,7 @@
         },
         "username": {
             "type": "text",
-            "label": "Username (default: user)",
+            "label": "Benutzername (Standard: Benutzer)",
             "default": "user",
             "xs": 12,
             "sm": 6,
@@ -35,7 +35,7 @@
         },
         "password": {
             "type": "password",
-            "label": "Password",
+            "label": "Passwort",
             "xs": 12,
             "sm": 6,
             "md": 4,

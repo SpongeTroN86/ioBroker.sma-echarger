@@ -51,32 +51,12 @@ Dieser Adapter bindet deinen **SMA eCharger** (z. B. EVC22-3AC-20) lokal über d
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (SpongeTroN86) Added multi-language support (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) for states, logs, and configuration.
+
 ### 0.1.9 (2026-11-18)
 * (SpongeTroN86) Updated README documentation and fixed repository metadata in io-package.json
 
-### 0.1.7 (2026-11-18)
-
-* SpongeTroN86 fix: removed windows-latest from test-and-release.yml
-
-### 0.1.6 (2026-11-18)
-
-* SpongeTroN86 fix: removed macos-latest from test-and-release.yml
-
-### 0.1.5 (2026-11-18)
-
-* SpongeTroN86 fix: add npm environment variables for deployment
-
-### 0.1.4 (2026-11-18)
-
-* SpongeTroN86 fix: add "WORK IN PROGRESS" section to README
-
-### 0.1.3 (2026-11-18)
-
-* SpongeTroN86 fix: add "WORK IN PROGRESS" section to README
-
-### 0.1.2 (2026-11-18)
-
-* (SpongeTroN86) Added trusted publishing workflow and updated adapter dependencies
 
 ### 0.1.1 (2026-11-18)
 

@@ -1,150 +1,158 @@
+/* eslint-disable prettier/prettier */
 'use strict';
 
 const utils = require('@iobroker/adapter-core');
+const { I18n } = utils;
 const axios = require('axios');
 const https = require('node:https');
+const path = require('path');
 
-const LIVE_POINTS = [
-	{
-		channel: 'Measurement.Metering.GridMs.TotWIn.ChaSta',
-		dp: 'Ladeleistung_W',
-		name: 'Aktuelle Ladeleistung',
-		unit: 'W',
-	},
-	{
-		channel: 'Measurement.Metering.GridMs.TotWhIn.ChaSta',
-		dp: 'Gesamtenergie_Wh',
-		name: 'Geladene Gesamtenergie',
-		unit: 'Wh',
-	},
-	{
-		channel: 'Measurement.ChaSess.WhIn',
-		dp: 'Sitzungsenergie_Wh',
-		name: 'Energie aktuelle Ladung',
-		unit: 'Wh',
-	},
-	{
-		channel: 'Measurement.Operation.EVeh.ChaStt',
-		dp: 'Fahrzeug_Status',
-		name: 'Status Fahrzeug/Ladung',
-		unit: '',
-		states: {
-			200111: 'Kabel getrennt',
-			200112: 'Kabel angeschlossen',
-			200113: 'wird geladen',
+function getLivePoints(){ 
+	return [
+		{
+			channel: 'Measurement.Metering.GridMs.TotWIn.ChaSta',
+			dp: 'Ladeleistung_W',
+			name: I18n.getTranslatedObject('Aktuelle Ladeleistung'),
+			unit: 'W',
 		},
-	},
-	{
-		channel: 'Measurement.Operation.Health',
-		dp: 'Geraete_Status',
-		name: 'Status Wallbox',
-		unit: '',
-	},
-	{
-		channel: 'Measurement.GridMs.A.phsA',
-		dp: 'Strom_L1_A',
-		name: 'Ladestrom Phase L1',
-		unit: 'A',
-	},
-	{
-		channel: 'Measurement.GridMs.A.phsB',
-		dp: 'Strom_L2_A',
-		name: 'Ladestrom Phase L2',
-		unit: 'A',
-	},
-	{
-		channel: 'Measurement.GridMs.A.phsC',
-		dp: 'Strom_L3_A',
-		name: 'Ladestrom Phase L3',
-		unit: 'A',
-	},
-	{
-		channel: 'Measurement.GridMs.PhV.phsA',
-		dp: 'Spannung_L1_V',
-		name: 'Spannung Phase L1',
-		unit: 'V',
-	},
-	{
-		channel: 'Measurement.GridMs.PhV.phsB',
-		dp: 'Spannung_L2_V',
-		name: 'Spannung Phase L2',
-		unit: 'V',
-	},
-	{
-		channel: 'Measurement.GridMs.PhV.phsC',
-		dp: 'Spannung_L3_V',
-		name: 'Spannung Phase L3',
-		unit: 'V',
-	},
-	// Hier einfach weitere Kanäle ergänzen...
-];
-
-const CONTROL_STATES = [
-	{
-		id: 'Control.Lademodus',
-		channelId: 'Parameter.Chrg.ActChaMod',
-		initial: 4719,
-		common: {
-			name: 'Lademodus für eCharger festlegen',
-			type: 'number',
-			role: 'level',
-			read: true,
-			write: true,
+		{
+			channel: 'Measurement.Metering.GridMs.TotWhIn.ChaSta',
+			dp: 'Gesamtenergie_Wh',
+			name: I18n.getTranslatedObject('Geladene Gesamtenergie'),
+			unit: 'Wh',
+		},
+		{
+			channel: 'Measurement.ChaSess.WhIn',
+			dp: 'Sitzungsenergie_Wh',
+			name: I18n.getTranslatedObject('Energie aktuelle Ladung'),
+			unit: 'Wh',
+		},
+		{
+			channel: 'Measurement.Operation.EVeh.ChaStt',
+			dp: 'Fahrzeug_Status',
+			name: I18n.getTranslatedObject('Status Fahrzeug/Ladung'),
+			unit: '',
 			states: {
-				4718: 'Schnellladen',
-				4719: 'PV-Überschuss',
-				4720: 'Laden mit Zielvorgabe',
-				4721: 'LadenStop',
+				200111: I18n.t('Kabel getrennt'),
+				200112: I18n.t('Kabel angeschlossen'),
+				200113: I18n.t('wird geladen'),
 			},
 		},
-	},
-	{
-		id: 'Control.Inverter_WMaxIn',
-		channelId: 'Parameter.Inverter.WMaxIn',
-		initial: 11000,
-		common: {
-			name: 'Maximale Wirkleistung (WMaxIn) setzen',
-			type: 'number',
-			role: 'level.power',
-			unit: 'W',
-			min: 4500,
-			max: 11000,
-			read: true,
-			write: true,
+		{
+			channel: 'Measurement.Operation.Health',
+			dp: 'Geraete_Status',
+			name: I18n.getTranslatedObject('Status Wallbox'),
+			unit: '',
 		},
-	},
-	{
-		id: 'Control.Ladefreigabe',
-		channelId: 'Parameter.Chrg.ChrgApv',
-		initial: 5171,
-		common: {
-			name: 'Ladefreigabe',
-			type: 'number',
-			role: 'level',
-			read: true,
-			write: true,
-			states: {
-				5172: 'Ja',
-				5171: 'Nein',
+		{
+			channel: 'Measurement.GridMs.A.phsA',
+			dp: 'Strom_L1_A',
+			name: I18n.getTranslatedObject('Ladestrom Phase L1'),
+			unit: 'A',
+		},
+		{
+			channel: 'Measurement.GridMs.A.phsB',
+			dp: 'Strom_L2_A',
+			name: I18n.getTranslatedObject('Ladestrom Phase L2'),
+			unit: 'A',
+		},
+		{
+			channel: 'Measurement.GridMs.A.phsC',
+			dp: 'Strom_L3_A',
+			name: I18n.getTranslatedObject('Ladestrom Phase L3'),
+			unit: 'A',
+		},
+		{
+			channel: 'Measurement.GridMs.PhV.phsA',
+			dp: 'Spannung_L1_V',
+			name: I18n.getTranslatedObject('Voltage phase L1'),
+			unit: 'V',
+		},
+		{
+			channel: 'Measurement.GridMs.PhV.phsB',
+			dp: 'Spannung_L2_V',
+			name: I18n.getTranslatedObject('Spannung Phase L2'),
+			unit: 'V',
+		},
+		{
+			channel: 'Measurement.GridMs.PhV.phsC',
+			dp: 'Spannung_L3_V',
+			name: I18n.getTranslatedObject('Spannung Phase L3'),
+			unit: 'V',
+		},
+		// Hier einfach weitere Kanäle ergänzen...
+	];
+}
+
+function getControlStates() {
+	return [
+		{
+			id: 'Control.Lademodus',
+			channelId: 'Parameter.Chrg.ActChaMod',
+			initial: 4719,
+			common: {
+				name: I18n.getTranslatedObject('Lademodus für eCharger festlegen'),
+				type: 'number',
+				role: 'level',
+				read: true,
+				write: true,
+				states: {
+					4718: I18n.t('Schnellladen'),
+					4719: I18n.t('PV-Überschuss'),
+					4720: I18n.t('Laden mit Zielvorgabe'),
+					4721: I18n.t('LadenStop'),
+				},
 			},
 		},
-	},
-	{
-		id: 'Control.Inverter_WMax',
-		channelId: 'Parameter.Inverter.WMax',
-		initial: 11000,
-		common: {
-			name: 'Maximale Wirkleistung setzen (WMax)',
-			type: 'number',
-			role: 'level.power',
-			unit: 'W',
-			min: 4500,
-			max: 11000,
-			read: true,
-			write: true,
+		{
+			id: 'Control.Inverter_WMaxIn',
+			channelId: 'Parameter.Inverter.WMaxIn',
+			initial: 11000,
+			common: {
+				name: I18n.getTranslatedObject('Maximale Wirkleistung (WMaxIn) setzen'),
+				type: 'number',
+				role: 'level.power',
+				unit: 'W',
+				min: 4500,
+				max: 11000,
+				read: true,
+				write: true,
+			},
 		},
-	},
-];
+		{
+			id: 'Control.Ladefreigabe',
+			channelId: 'Parameter.Chrg.ChrgApv',
+			initial: 5171,
+			common: {
+				name: I18n.getTranslatedObject('Ladefreigabe'),
+				type: 'number',
+				role: 'level',
+				read: true,
+				write: true,
+				states: {
+					5172: I18n.t('Ja'),
+					5171: I18n.t('Nein'),
+				},
+			},
+		},
+		{
+			id: 'Control.Inverter_WMax',
+			channelId: 'Parameter.Inverter.WMax',
+			initial: 11000,
+			common: {
+				name: I18n.getTranslatedObject('Maximale Wirkleistung setzen (WMax)'),
+				type: 'number',
+				role: 'level.power',
+				unit: 'W',
+				min: 4500,
+				max: 11000,
+				read: true,
+				write: true,
+			},
+		},
+	];
+}
+
 
 const TARGET_PARAMS = [
 	'Parameter.Chrg.ActChaMod',
@@ -164,7 +172,7 @@ const queryItems = TARGET_PARAMS.map(id => ({
 }));
 
 // Mapping-Tabelle automatisch aus LIVE_POINTS erzeugen
-const LIVE_MAPPING = Object.fromEntries(LIVE_POINTS.map(item => [item.channel, item.dp]));
+//const LIVE_MAPPING = Object.fromEntries(LIVE_POINTS.map(item => [item.channel, item.dp]));
 // Reagiert auf Änderungen des Datenpunkts (ack: false)
 // Zuordnung: [Datenpunkt unter DP_PREFIX] -> [SMA Parameter-Kanal]
 
@@ -182,21 +190,30 @@ class SmaEcharger extends utils.Adapter {
 		this.httpsAgent = new https.Agent({ rejectUnauthorized: false });
 		this.cachedToken = null;
 		this.pollTimer = null;
+		this.liveMapping = {};
+		this.controlStates = [];
 	}
 
 	async onReady() {
-		this.log.info('=== PARAMETER-ANALYSE & LIVE-TEST STARTET ===');
+		await I18n.init(path.join(__dirname, 'admin'), this);
+		//await I18n.init(__dirname, this);
+
+		this.log.info(I18n.t('=== PARAMETER-ANALYSE & LIVE-TEST STARTET ==='));
 
 		if (!this.config.ipAddress || !this.config.password) {
-			this.log.error('ABBRUCH: IP-Adresse oder Passwort ist leer!');
+			this.log.error(I18n.t('ABBRUCH: IP-Adresse oder Passwort ist leer!'));
 			return;
 		}
+
+		const livePoints = getLivePoints();
+		this.liveMapping = Object.fromEntries(livePoints.map(item => [item.channel, item.dp]));
+		this.controlStates = getControlStates();
 
 		// 1. Debug-Datenpunkt für alle Parameter anlegen
 		await this.setObjectNotExistsAsync('Debug.All_Parameters', {
 			type: 'state',
 			common: {
-				name: 'Komplette JSON-Antwort aller Parameter',
+				name: I18n.t('Komplette JSON-Antwort aller Parameter'),
 				type: 'string',
 				role: 'json',
 				read: true,
@@ -208,13 +225,13 @@ class SmaEcharger extends utils.Adapter {
 		// Übergeordneten Kanal "Live" anlegen
 		await this.setObjectNotExists('Live', {
 			type: 'channel',
-			common: { name: 'Live-Messwerte' },
+			common: { name: I18n.t('Live-Messwerte') },
 			native: {},
 		});
 
 		// Alle Live-Datenpunkte aus LIVE_POINTS anlegen
 		// Alle Live-Datenpunkte aus LIVE_POINTS anlegen/aktualisieren
-		for (const item of LIVE_POINTS) {
+		for (const item of livePoints) {
 			const fullId = `Live.${item.dp}`;
 
 			const commonObj = {
@@ -244,8 +261,8 @@ class SmaEcharger extends utils.Adapter {
 		}
 		// 2b. Alle Control-Datenpunkte anlegen und auf Änderungen lauschen
 
-		for (const item of CONTROL_STATES) {
-			await this.setObjectNotExists(item.id, {
+		for (const item of this.controlStates) {
+			await this.extendObject(item.id, {
 				type: 'state',
 				common: item.common,
 				native: { channelId: item.channelId },
@@ -318,7 +335,7 @@ class SmaEcharger extends utils.Adapter {
 				queryItems: [{ componentId: 'IGULD:SELF' }],
 			});
 			if (!res || !res.data) {
-				this.log.warn('Keine Daten von der SMA-Wallbox erhalten.');
+				this.log.warn(I18n.t('Keine Daten von der SMA-Wallbox erhalten.'));
 				return;
 			}
 			const jsonString = JSON.stringify(res.data);
@@ -332,7 +349,7 @@ class SmaEcharger extends utils.Adapter {
 
 			// 2. Prüfen, ob data[0] und das innere values-Array vorhanden sind
 			if (!Array.isArray(data) || data.length === 0 || !Array.isArray(data[0].values)) {
-				this.log.warn('Ungültiges SMA-Parameter-Format.');
+				this.log.warn(I18n.t('Ungültiges SMA-Parameter-Format.'));
 				return;
 			}
 
@@ -379,16 +396,20 @@ class SmaEcharger extends utils.Adapter {
 			});
 			if (Array.isArray(res.data) && res.data.length > 0 && Array.isArray(res.data[0].values)) {
 				this.log.info(
-					`Erfolg! ${res.data[0].values.length} Parameter gefunden und in Debug.All_Parameters gespeichert.`,
-				);
+					I18n.t(
+							'Erfolg! %s Parameter gefunden und in Debug.All_Parameters gespeichert.',
+							res.data[0].values.length,
+					),
+);
+
 			} else {
-				this.log.warn('Antwort erhalten, Struktur bitte im Datenpunkt Debug.All_Parameters ansehen.');
+				this.log.warn(I18n.t('Antwort erhalten, Struktur bitte im Datenpunkt Debug.All_Parameters ansehen.'));
 			}
 		} catch (error) {
 			const details = error.response
 				? `${error.response.status} - ${JSON.stringify(error.response.data)}`
 				: error.message;
-			this.log.error(`Fehler beim Parameter-Abruf: ${details}`);
+			this.log.error(I18n.t('Fehler beim Parameter-Abruf: %s', details));
 		}
 	}
 
@@ -399,13 +420,13 @@ class SmaEcharger extends utils.Adapter {
 				{ componentId: 'IGULD:SELF' },
 			]);
 			if (!liveRes || !liveRes.data) {
-				this.log.warn('Keine Daten von der SMA-Wallbox erhalten.');
+				this.log.warn(I18n.t('Keine Daten von der SMA-Wallbox erhalten.'));
 				return;
 			}
 
 			if (Array.isArray(liveRes.data)) {
 				for (const item of liveRes.data) {
-					const targetDp = LIVE_MAPPING[item.channelId];
+					const targetDp = this.liveMapping[item.channelId];
 					if (targetDp && item.values && item.values.length > 0) {
 						const val = Number(item.values[0].value);
 						this.setState(`Live.${targetDp}`, { val: val, ack: true });
@@ -438,7 +459,7 @@ class SmaEcharger extends utils.Adapter {
 		} catch (error) {
 			await this.setState('info.connection', false, true);
 			const details = error.response ? JSON.stringify(error.response.data) : error.message;
-			this.log.error(`Fehler beim Lesen der Live-Werte: ${details}`);
+			this.log.error(I18n.t('Fehler beim Lesen der Live-Werte: %s', details));
 		}
 	}
 	async onStateChange(id, state) {
@@ -450,7 +471,7 @@ class SmaEcharger extends utils.Adapter {
 
 		// FALL 1: Steuerbefehl (ack === false) -> Suche über item.id
 		if (!state.ack) {
-			const controlItem = CONTROL_STATES.find(item => item.id === shortId);
+			const controlItem = this.controlStates.find(item => item.id === shortId);
 			if (controlItem) {
 				await this.setValueOneCharger(controlItem.channelId, controlItem.id, state.val);
 			}
@@ -458,14 +479,14 @@ class SmaEcharger extends utils.Adapter {
 		}
 
 		// FALL 2: Wert von der Wallbox (ack === true) -> Suche über item.channelId
-		const syncItem = CONTROL_STATES.find(item => item.channelId === shortId);
+		const syncItem = this.controlStates.find(item => item.channelId === shortId);
 		if (syncItem) {
 			const wallboxVal = Number(state.val);
 			const controlState = await this.getState(syncItem.id);
 
 			if (!isNaN(wallboxVal) && controlState && controlState.ack === true && controlState.val !== wallboxVal) {
 				await this.setState(syncItem.id, { val: wallboxVal, ack: true });
-				this.log.info(`SMA Sync: ${syncItem.id} auf ${wallboxVal} aktualisiert.`);
+				this.log.info(I18n.t('SMA Sync: %s auf %s aktualisiert.', syncItem.id, wallboxVal));
 			}
 		}
 	}
@@ -483,14 +504,14 @@ class SmaEcharger extends utils.Adapter {
 			});
 
 			if (putResponse) {
-				this.log.info(`SMA eCharger ${param} erfolgreich auf ${value} gesetzt (HTTP ${putResponse.status})`);
+				this.log.info(I18n.t('SMA eCharger %s erfolgreich auf %s gesetzt (HTTP %s)', param, value, putResponse.status));
 				const numVal = Number(value);
 				await this.setState(dp, { val: numVal, ack: true });
 				await this.setState(param, { val: numVal, ack: true });
 			}
 		} catch (error) {
 			const details = error.response ? JSON.stringify(error.response.data) : error.message;
-			this.log.error(`SMA eCharger Fehler beim Setzen von ${param}: ${details}`);
+			this.log.error(I18n.t('SMA eCharger Fehler beim Setzen von %s: %s', param, details));
 		}
 	}
 
