@@ -51,6 +51,9 @@ Dieser Adapter bindet deinen **SMA eCharger** (z. B. EVC22-3AC-20) lokal über d
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (SpongeTroN86) Added multi OS in test-and-release.yml
+
 ### 0.1.10 (2026-11-19)
 * (SpongeTroN86) Added multi-language support (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) for states, logs, and configuration.
 
