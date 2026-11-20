@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "sma-echarger",
-    "version": "0.1.12",
+    "version": "0.2.0",
     "news": {
       "0.2.0": {
         "en": "BREAKING CHANGE: Standardized all Live.* and Control.* state IDs to English. Added control states for charging current limit, charging lock, and target charging plan (including date-to-epoch helper), plus 5-second rate limit, session energy validation, and automatic state reset.",
@@ -93,19 +93,6 @@
         "pl": "Poprawka SpongeTron86: usunięto windows-latest z test-and-release.yml",
         "uk": "Виправлення SpongeTron86: видалено останнє вікно з тесту та випуску.yml",
         "zh-cn": "Spongetron86 修复：从 test-and-release.yml 中删除了 Windows-latest"
-      },
-      "0.1.6": {
-        "en": "SpongeTroN86 fix: removed macos-latest from test-and-release.yml",
-        "de": "SpongeTron86 fix: macos-latest aus test-and-release.yml entfernt",
-        "ru": "Исправление SpongeTron86: последняя версия macOS удалена из файла test-and-release.yml",
-        "pt": "Correção SpongeTron86: removeu o macos-latest de test-and-release.yml",
-        "nl": "Oplossing SpongeTron86: macos-latest verwijderd uit test-and-release.yml",
-        "fr": "Fix SpongeTron86 : macos-latest a été supprimé de test-and-release.yml",
-        "it": "SpongeTron86 fix: macos-latest rimosso da test-and-release.yml",
-        "es": "Solución de SpongeTron86: se quitó macOS Latest de test-and-release.yml",
-        "pl": "Poprawka SpongeTron86: usunięto macos-latest z test-and-release.yml",
-        "uk": "Виправлення SpongeTron86: видалено macos-latest з test-and-release.yml",
-        "zh-cn": "Spongetron86 修复：从 test-and-release.yml 中移除了 macos-latest"
       }
     },
     "titleLang": {
