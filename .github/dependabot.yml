@@ -4,9 +4,6 @@ updates:
     directory: "/"
     schedule:
       interval: monthly
-      day: 9
-      time: "00:05"
-      timezone: Europe/Berlin
     open-pull-requests-limit: 15
     cooldown:
       default: 7
@@ -21,9 +18,6 @@ updates:
     directory: "/"
     schedule:
       interval: monthly
-      day: 9
-      time: "00:05"
-      timezone: Europe/Berlin
     open-pull-requests-limit: 5
     assignees:
       - SpongeTroN
