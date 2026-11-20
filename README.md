@@ -11,7 +11,6 @@
 
 **Tests:** ![Test and Release](<https://github.com/SpongeTroN86/ioBroker.sma-echarger/workflows/Test%20and%20Release/badge.svg>)
 
-
 [German documentation / Deutsche Dokumentation](docs/de/README.md)
 
 ## SMA eCharger adapter for ioBroker
@@ -19,6 +18,7 @@
 This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its HTTPS JSON API to ioBroker. It allows you to monitor live charging values, read device parameters, and control charging modes or power limits.
 
 ### Features
+
 * **Live Measurements (`Live.*`):** Current charging power (`chargingPower`), total and session energy (`totalEnergy`, `sessionEnergy`), vehicle/charging status (`vehicleStatus`), device health (`deviceStatus`), phase currents (`currentL1`–`currentL3`), and voltages (`voltageL1`–`voltageL3`).
 * **Device Parameters (`Parameter.*`):** Automatic retrieval of all readable SMA eCharger configuration parameters.
 * **Remote Control (`Control.*`):**
@@ -32,36 +32,45 @@ This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its
   * Built-in 5-second cooldown per parameter, duplicate filtering, and automatic value reset on blocked commands to protect the wallbox hardware.
 
 ### Configuration
+
 1. Open the adapter instance settings in ioBroker.
 2. Enter the local **IP address** of your SMA eCharger.
 3. Enter your **Username** (`user` for reading values, or `admin` / an installer account if you want to modify inverter power limits like `WMax`) and **Password**.
 4. Set the desired **Poll interval** in seconds (default: `15` seconds).
 
 ### Disclaimer
+
 *SMA* and *eCharger* are registered trademarks of SMA Solar Technology AG. This project is an independent open-source adapter and is not affiliated with or endorsed by SMA Solar Technology AG.
 
 ## Changelog
+
 <!--
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
-* (SpongeTroN86) refactor: standardized all `Live.*` and `Control.*` state IDs to English naming conventions
+
+### **WORK IN PROGRESS
+
+* (SpongeTroN86) **BREAKING CHANGE:** Standardized all `Live.*` and `Control.*` state IDs to English naming conventions (existing scripts and visualizations must be updated)
 * (SpongeTroN86) feat: add control states for charging current limit (`AcALim`), charging lock (`ChrgLok`), and target charging plan (`Plan.En`, `Plan.DurTmm`, `Plan.StopTm`)
 * (SpongeTroN86) feat: add date-to-epoch helper state (`Control.planTargetTimeInput`)
 * (SpongeTroN86) feat: add 5-second rate limit, duplicate filtering, session energy validation, and automatic state reset on blocked commands
 
 ### 0.1.12 (2026-11-20)
+
 * (SpongeTroN86) fix: remove specific schedule time from dependabot configuration
-                 feat: add placeholder for future changes in CHANGELOG_OLD.md
+  feat: add placeholder for future changes in CHANGELOG_OLD.md
 
 ### 0.1.11 (2026-11-19)
+
 * (SpongeTroN86) feat: update README files for improved documentation and add German translation
 
 ### 0.1.10 (2026-11-19)
+
 * (SpongeTroN86) Added multi-language support (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) for states, logs, and configuration.
 
 ### 0.1.9 (2026-11-18)
+
 * (SpongeTroN86) Updated README documentation and fixed repository metadata in io-package.json
 
 ### 0.1.1 (2026-11-18)

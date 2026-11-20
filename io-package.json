@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sma-echarger",
-    "version": "0.1.12",
+    "version": "0.2.0",
     "news": {
+      "0.2.0": {
+        "en": "BREAKING CHANGE: Standardized all Live.* and Control.* state IDs to English. Added control states for charging current limit, charging lock, and target charging plan (including date-to-epoch helper), plus 5-second rate limit, session energy validation, and automatic state reset.",
+        "de": "BREAKING CHANGE: Alle Live.*- und Control.*-Datenpunkt-IDs auf Englisch vereinheitlicht. Steuerungsdatenpunkte für Ladestrombegrenzung, Ladesperre und Ladeplan (inkl. Datums-Hilfspunkt) sowie 5-Sekunden-Rate-Limit, Sitzungsenergie-Prüfung und automatischer Reset hinzugefügt.",
+        "ru": "BREAKING CHANGE: Все идентификаторы точек данных Live.* и Control.* стандартизированы на английском языке. Добавлены точки управления для ограничения тока зарядки, блокировки зарядки и плана зарядки (включая помощник преобразования даты), а также 5-секундное ограничение частоты, проверка энергии сессии и автоматический сброс.",
+        "pt": "BREAKING CHANGE: Todos os IDs de pontos de dados Live.* e Control.* foram padronizados para inglês. Adicionados estados de controle para limite de corrente de carregamento, bloqueio de carregamento e plano de carregamento (incluindo auxiliar de data para Epoch), além de limite de taxa de 5 segundos, validação de energia da sessão e redefinição automática.",
+        "nl": "BREAKING CHANGE: Alle Live.*- en Control.*-datapunt-ID's gestandaardiseerd naar het Engels. Besturingspunten toegevoegd voor laadstroomlimiet, laadblokkering en laadplan (inclusief datum-naar-Epoch-hulpprogramma), plus een snelheidslimiet van 5 seconden, sessie-energievalidatie en automatische reset.",
+        "fr": "BREAKING CHANGE : Tous les identifiants de points de données Live.* et Control.* ont été standardisés en anglais. Ajout des états de contrôle pour la limite de courant de charge, le verrouillage de charge et le plan de charge (y compris l'assistant date vers Epoch), ainsi qu'une limite de débit de 5 secondes, la validation de l'énergie de session et la réinitialisation automatique.",
+        "it": "BREAKING CHANGE: Tutti gli ID dei datapoint Live.* e Control.* sono stati standardizzati in inglese. Aggiunti stati di controllo per limite di corrente di ricarica, blocco di ricarica e piano di ricarica (incluso helper data-to-Epoch), oltre a limite di frequenza di 5 secondi, convalida dell'energia della sessione e ripristino automatico.",
+        "es": "BREAKING CHANGE: Todos los ID de puntos de datos Live.* y Control.* se estandarizaron al inglés. Se agregaron estados de control para el límite de corriente de carga, bloqueo de carga y plan de carga (incluido el asistente de fecha a Epoch), además de límite de velocidad de 5 segundos, validación de energía de sesión y restablecimiento automático.",
+        "pl": "BREAKING CHANGE: Ujednolicono wszystkie identyfikatory punktów danych Live.* i Control.* na język angielski. Dodano stany sterowania dla limitu prądu ładowania, blokady ładowania i planu ładowania (w tym pomocnik konwersji daty na Epoch), a także 5-sekundowy limit częstotliwości, walidację energii sesji i automatyczne resetowanie.",
+        "uk": "BREAKING CHANGE: Усі ідентифікатори точок даних Live.* та Control.* стандартизовано англійською мовою. Додано стани керування для обмеження струму заряджання, блокування заряджання та плану заряджання (включно з помічником перетворення дати в Epoch), а також 5-секундне обмеження частоти, перевірку енергії сесії та автоматичне скидання.",
+        "zh-cn": "BREAKING CHANGE：所有 Live.* 和 Control.* 数据点 ID 已统一为英文命名。添加了充电电流限制、充电锁定和目标充电计划（包括日期转 Epoch 辅助点）的控制状态，以及 5 秒速率限制、会话电量验证和自动状态重置功能。"
+      },
       "0.1.12": {
         "en": "+(SpongeTroN86) fix: remove specific schedule time from dependabot configuration\n                feat: add placeholder for future changes in CHANGELOG_OLD.md",
         "de": "+ (Spongetron 86) fix: Bestimmte Zeit aus der Dependabot-Konfiguration entfernen\n                feat: Platzhalter für zukünftige Änderungen in CHANGELOG_OLD.md",
