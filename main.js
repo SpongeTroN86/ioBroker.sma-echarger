@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 'use strict';
 
 const utils = require('@iobroker/adapter-core');
@@ -7,29 +6,29 @@ const axios = require('axios');
 const https = require('node:https');
 const path = require('node:path');
 
-function getLivePoints(){ 
+function getLivePoints() {
 	return [
 		{
 			channel: 'Measurement.Metering.GridMs.TotWIn.ChaSta',
-			dp: 'Ladeleistung_W',
+			dp: 'chargingPower',
 			name: I18n.getTranslatedObject('Aktuelle Ladeleistung'),
 			unit: 'W',
 		},
 		{
 			channel: 'Measurement.Metering.GridMs.TotWhIn.ChaSta',
-			dp: 'Gesamtenergie_Wh',
+			dp: 'totalEnergy',
 			name: I18n.getTranslatedObject('Geladene Gesamtenergie'),
 			unit: 'Wh',
 		},
 		{
 			channel: 'Measurement.ChaSess.WhIn',
-			dp: 'Sitzungsenergie_Wh',
+			dp: 'sessionEnergy',
 			name: I18n.getTranslatedObject('Energie aktuelle Ladung'),
 			unit: 'Wh',
 		},
 		{
 			channel: 'Measurement.Operation.EVeh.ChaStt',
-			dp: 'Fahrzeug_Status',
+			dp: 'vehicleStatus',
 			name: I18n.getTranslatedObject('Status Fahrzeug/Ladung'),
 			unit: '',
 			states: {
@@ -40,43 +39,43 @@ function getLivePoints(){
 		},
 		{
 			channel: 'Measurement.Operation.Health',
-			dp: 'Geraete_Status',
+			dp: 'deviceStatus',
 			name: I18n.getTranslatedObject('Status Wallbox. 307 bedeutet: Alles OK'),
 			unit: '',
 		},
 		{
 			channel: 'Measurement.GridMs.A.phsA',
-			dp: 'Strom_L1_A',
+			dp: 'currentL1',
 			name: I18n.getTranslatedObject('Ladestrom Phase L1'),
 			unit: 'A',
 		},
 		{
 			channel: 'Measurement.GridMs.A.phsB',
-			dp: 'Strom_L2_A',
+			dp: 'currentL2',
 			name: I18n.getTranslatedObject('Ladestrom Phase L2'),
 			unit: 'A',
 		},
 		{
 			channel: 'Measurement.GridMs.A.phsC',
-			dp: 'Strom_L3_A',
+			dp: 'currentL3',
 			name: I18n.getTranslatedObject('Ladestrom Phase L3'),
 			unit: 'A',
 		},
 		{
 			channel: 'Measurement.GridMs.PhV.phsA',
-			dp: 'Spannung_L1_V',
+			dp: 'voltageL1',
 			name: I18n.getTranslatedObject('Voltage phase L1'),
 			unit: 'V',
 		},
 		{
 			channel: 'Measurement.GridMs.PhV.phsB',
-			dp: 'Spannung_L2_V',
+			dp: 'voltageL2',
 			name: I18n.getTranslatedObject('Spannung Phase L2'),
 			unit: 'V',
 		},
 		{
 			channel: 'Measurement.GridMs.PhV.phsC',
-			dp: 'Spannung_L3_V',
+			dp: 'voltageL3',
 			name: I18n.getTranslatedObject('Spannung Phase L3'),
 			unit: 'V',
 		},
@@ -87,7 +86,92 @@ function getLivePoints(){
 function getControlStates() {
 	return [
 		{
-			id: 'Control.Lademodus',
+			id: 'Control.planTargetTimeInput',
+			channelId: '',
+			initial: '',
+			common: {
+				name: I18n.getTranslatedObject('Zielzeitpunkt eingeben (DD.MM.YYYY HH:MM oder YYYY-MM-DD HH:MM)'),
+				type: 'string',
+				role: 'text',
+				read: true,
+				write: true,
+			},
+		},
+		{
+			id: 'Control.chargingCurrentLimit',
+			channelId: 'Parameter.Inverter.AcALim',
+			initial: 16,
+			common: {
+				name: I18n.getTranslatedObject('Maximaler Ladestrom in Ampere'),
+				type: 'number',
+				role: 'level.current',
+				unit: 'A',
+				min: 6,
+				max: 32,
+				read: true,
+				write: true,
+			},
+		},
+		{
+			id: 'Control.chargingLock',
+			channelId: 'Parameter.Chrg.ChrgLok',
+			initial: 1129,
+			common: {
+				name: I18n.getTranslatedObject('Ladesperre aktivieren'),
+				type: 'number',
+				role: 'level',
+				read: true,
+				write: true,
+				states: {
+					1129: I18n.t('Entsperrt'),
+					1130: I18n.t('Gesperrt'),
+				},
+			},
+		},
+		{
+			id: 'Control.planTargetEnergy',
+			channelId: 'Parameter.Chrg.Plan.En',
+			initial: 0,
+			common: {
+				name: I18n.getTranslatedObject('Ladeplan Energiemenge (Wh)'),
+				type: 'number',
+				role: 'level.energy',
+				unit: 'kWh',
+				min: 0,
+				read: true,
+				write: true,
+			},
+		},
+		{
+			id: 'Control.planDuration',
+			channelId: 'Parameter.Chrg.Plan.DurTmm',
+			initial: 0,
+			common: {
+				name: I18n.getTranslatedObject('Ladeplan Dauer in Minuten'),
+				type: 'number',
+				role: 'level.timer',
+				unit: 'min',
+				min: 0,
+				read: true,
+				write: true,
+			},
+		},
+		{
+			id: 'Control.planStopTime',
+			channelId: 'Parameter.Chrg.Plan.StopTm',
+			initial: 0,
+			common: {
+				name: I18n.getTranslatedObject('Ladeplan Zielzeit (Unix-Zeitstempel in Sekunden)'),
+				type: 'number',
+				role: 'value',
+				unit: 's',
+				min: 0,
+				read: true,
+				write: true,
+			},
+		},
+		{
+			id: 'Control.chargingMode',
 			channelId: 'Parameter.Chrg.ActChaMod',
 			initial: 4719,
 			common: {
@@ -105,7 +189,7 @@ function getControlStates() {
 			},
 		},
 		{
-			id: 'Control.Inverter_WMaxIn',
+			id: 'Control.inverterMaxPowerIn',
 			channelId: 'Parameter.Inverter.WMaxIn',
 			initial: 11000,
 			common: {
@@ -120,7 +204,7 @@ function getControlStates() {
 			},
 		},
 		{
-			id: 'Control.Ladefreigabe',
+			id: 'Control.chargingRelease',
 			channelId: 'Parameter.Chrg.ChrgApv',
 			initial: 5171,
 			common: {
@@ -136,7 +220,7 @@ function getControlStates() {
 			},
 		},
 		{
-			id: 'Control.Inverter_WMax',
+			id: 'Control.inverterMaxPower',
 			channelId: 'Parameter.Inverter.WMax',
 			initial: 11000,
 			common: {
@@ -152,7 +236,6 @@ function getControlStates() {
 		},
 	];
 }
-
 
 const TARGET_PARAMS = [
 	'Parameter.Chrg.ActChaMod',
@@ -171,11 +254,6 @@ const queryItems = TARGET_PARAMS.map(id => ({
 	channelId: id,
 }));
 
-// Mapping-Tabelle automatisch aus LIVE_POINTS erzeugen
-//const LIVE_MAPPING = Object.fromEntries(LIVE_POINTS.map(item => [item.channel, item.dp]));
-// Reagiert auf Änderungen des Datenpunkts (ack: false)
-// Zuordnung: [Datenpunkt unter DP_PREFIX] -> [SMA Parameter-Kanal]
-
 class SmaEcharger extends utils.Adapter {
 	constructor(options) {
 		super({
@@ -192,11 +270,11 @@ class SmaEcharger extends utils.Adapter {
 		this.pollTimer = null;
 		this.liveMapping = {};
 		this.controlStates = [];
+		this.lastWriteTimes = {};
 	}
 
 	async onReady() {
 		await I18n.init(path.join(__dirname, 'admin'), this);
-		//await I18n.init(__dirname, this);
 
 		this.log.info(I18n.t('=== PARAMETER-ANALYSE & LIVE-TEST STARTET ==='));
 
@@ -234,6 +312,7 @@ class SmaEcharger extends utils.Adapter {
 		for (const item of livePoints) {
 			const fullId = `Live.${item.dp}`;
 
+			/** @type {ioBroker.StateCommon} */
 			const commonObj = {
 				name: item.name,
 				type: 'number',
@@ -254,7 +333,7 @@ class SmaEcharger extends utils.Adapter {
 			});
 
 			// Initial auf 0 setzen, falls der Datenpunkt noch leer (null) ist
-			const existing = await this.getState(fullId);
+			const existing = await this.getStateAsync(fullId);
 			if (!existing || existing.val === null) {
 				await this.setState(fullId, { val: 0, ack: true });
 			}
@@ -269,7 +348,7 @@ class SmaEcharger extends utils.Adapter {
 			});
 
 			// Initialwert nur setzen, falls der Datenpunkt noch leer (null) ist
-			const existing = await this.getState(item.id);
+			const existing = await this.getStateAsync(item.id);
 			if (!existing || existing.val === null) {
 				await this.setState(item.id, { val: item.initial, ack: true });
 			}
@@ -341,8 +420,8 @@ class SmaEcharger extends utils.Adapter {
 			const jsonString = JSON.stringify(res.data);
 
 			await this.setState('Debug.All_Parameters', { val: jsonString, ack: true });
-			this.log.info(jsonString);
-			/////
+			this.log.debug(jsonString);
+
 			let apiResponse = jsonString;
 			// 1. Falls die Antwort noch ein JSON-String ist, in ein Objekt umwandeln
 			const data = typeof apiResponse === 'string' ? JSON.parse(apiResponse) : apiResponse;
@@ -354,7 +433,6 @@ class SmaEcharger extends utils.Adapter {
 			}
 
 			// 3. Alle Parameter aus data[0].values durchlaufen
-						// 3. Alle Parameter aus data[0].values durchlaufen
 			for (const param of data[0].values) {
 				// Punkt-Notation für saubere Ordnerstruktur in ioBroker beibehalten
 				const cleanId = param.channelId.replace(/\[\]$/, '');
@@ -372,6 +450,7 @@ class SmaEcharger extends utils.Adapter {
 				const finalValue = isNumber ? Number(rawValue) : String(rawValue);
 
 				// Datenpunkt-Eigenschaften aufbauen
+				/** @type {ioBroker.StateCommon} */
 				const commonObj = {
 					name: param.channelId,
 					type: isNumber ? 'number' : 'string',
@@ -393,57 +472,15 @@ class SmaEcharger extends utils.Adapter {
 					common: commonObj,
 					native: {},
 				});
-				await this.setStateAsync(cleanId, { val: finalValue, ack: true });
+				await this.setState(cleanId, { val: finalValue, ack: true });
 			}
-/*
-			data[0].values.forEach(param => {
-				// Punkt-Notation für saubere Ordnerstruktur in ioBroker beibehalten
-				const cleanId = param.channelId.replace(/\[\]$/, '');
-
-				// Wert auslesen (beachtet sowohl "value" als auch das Array "values[0]")
-				let rawValue = '';
-				if (param.value !== undefined) {
-					rawValue = param.value;
-				} else if (Array.isArray(param.values) && param.values.length > 0) {
-					rawValue = param.values[0];
-				}
-
-				// Prüfen, ob der Wert eine Zahl ist (z. B. "5500" oder "14.000")
-				const isNumber = rawValue !== '' && !isNaN(Number(rawValue));
-				const finalValue = isNumber ? Number(rawValue) : String(rawValue);
-
-				// Datenpunkt-Eigenschaften aufbauen
-				const commonObj = {
-					name: param.channelId,
-					type: isNumber ? 'number' : 'string',
-					role: 'value',
-					read: true,
-					write: Boolean(param.editable),
-				};
-
-				if (isNumber && param.min !== undefined) {
-					commonObj.min = Number(param.min);
-				}
-				if (isNumber && param.max !== undefined) {
-					commonObj.max = Number(param.max);
-				}
-
-				// Datenpunkt anlegen und Wert setzen
-				this.setObjectNotExistsAsync(cleanId, {
-					type: 'state',
-					common: commonObj,
-					native: {},
-				});
-				this.setState(cleanId, { val: finalValue, ack: true });
-			});*/
 			if (Array.isArray(res.data) && res.data.length > 0 && Array.isArray(res.data[0].values)) {
 				this.log.info(
 					I18n.t(
-							'Erfolg! %s Parameter gefunden und in Debug.All_Parameters gespeichert.',
-							res.data[0].values.length,
+						'Erfolg! %s Parameter gefunden und in Debug.All_Parameters gespeichert.',
+						res.data[0].values.length,
 					),
-);
-
+				);
 			} else {
 				this.log.warn(I18n.t('Antwort erhalten, Struktur bitte im Datenpunkt Debug.All_Parameters ansehen.'));
 			}
@@ -479,7 +516,7 @@ class SmaEcharger extends utils.Adapter {
 			const paramRes = await this.smaRequest('post', '/api/v1/parameters/search/', { queryItems: queryItems });
 
 			// Antwort prüfen und mit einer Schleife in die Datenpunkte schreiben
-			if (Array.isArray(paramRes.data)) {
+			if (paramRes && Array.isArray(paramRes.data)) {
 				for (let i = 0; i < paramRes.data.length; i++) {
 					const componentObj = paramRes.data[i];
 
@@ -504,6 +541,38 @@ class SmaEcharger extends utils.Adapter {
 			this.log.error(I18n.t('Fehler beim Lesen der Live-Werte: %s', details));
 		}
 	}
+
+	parseDateToUnixSeconds(input) {
+		if (!input || typeof input !== 'string') {
+			return null;
+		}
+		const trimmed = input.trim();
+
+		// 1. Deutsches Format prüfen: DD.MM.YYYY HH:MM (Sekunden optional)
+		const deMatch = trimmed.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})[\sT]+(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+		if (deMatch) {
+			const [, day, month, year, hour, minute, second = '0'] = deMatch;
+			const dateObj = new Date(
+				Number(year),
+				Number(month) - 1,
+				Number(day),
+				Number(hour),
+				Number(minute),
+				Number(second),
+			);
+			if (!isNaN(dateObj.getTime())) {
+				return Math.floor(dateObj.getTime() / 1000);
+			}
+		}
+
+		// 2. ISO- / Standard-Format prüfen: YYYY-MM-DD HH:MM oder ISO-String
+		const parsedMs = Date.parse(trimmed.replace(' ', 'T'));
+		if (!isNaN(parsedMs)) {
+			return Math.floor(parsedMs / 1000);
+		}
+		return null;
+	}
+
 	async onStateChange(id, state) {
 		if (!state) {
 			return;
@@ -512,7 +581,29 @@ class SmaEcharger extends utils.Adapter {
 		const shortId = id.replace(`${this.namespace}.`, '');
 
 		// FALL 1: Steuerbefehl (ack === false) -> Suche über item.id
+		// FALL 1: Steuerbefehl (ack === false) -> Suche über item.id
 		if (!state.ack) {
+			// Sonderbehandlung für den Datums-Hilfspunkt
+			if (shortId === 'Control.planTargetTimeInput') {
+				const unixSec = this.parseDateToUnixSeconds(String(state.val));
+				if (unixSec === null) {
+					this.log.warn(
+						I18n.t(
+							'Ungültiges Datumsformat "%s". Bitte DD.MM.YYYY HH:MM oder YYYY-MM-DD HH:MM verwenden.',
+							state.val,
+						),
+					);
+					await this.setState('Control.planTargetTimeInput', { val: '', ack: true });
+					return;
+				}
+				await this.setState('Control.planTargetTimeInput', { val: String(state.val).trim(), ack: true });
+				this.log.debug(I18n.t('Datum "%s" in Epoch-Zeitstempel %s umgerechnet.', state.val, unixSec));
+
+				// Direkt auch an die Wallbox (StopTm) senden
+				await this.setValueOneCharger('Parameter.Chrg.Plan.StopTm', 'Control.Ladeplan_Stoppzeit', unixSec);
+				return;
+			}
+
 			const controlItem = this.controlStates.find(item => item.id === shortId);
 			if (controlItem) {
 				await this.setValueOneCharger(controlItem.channelId, controlItem.id, state.val);
@@ -521,42 +612,124 @@ class SmaEcharger extends utils.Adapter {
 		}
 
 		// FALL 2: Wert von der Wallbox (ack === true) -> Suche über item.channelId
-		const syncItem = this.controlStates.find(item => item.channelId === shortId);
+		const syncItem = this.controlStates.find(item => item.channelId && item.channelId === shortId);
 		if (syncItem) {
 			const wallboxVal = Number(state.val);
-			const controlState = await this.getState(syncItem.id);
+			const controlState = await this.getStateAsync(syncItem.id);
 
 			if (!isNaN(wallboxVal) && controlState && controlState.ack === true && controlState.val !== wallboxVal) {
 				await this.setState(syncItem.id, { val: wallboxVal, ack: true });
-				this.log.info(I18n.t('SMA Sync: %s auf %s aktualisiert.', syncItem.id, wallboxVal));
+				this.log.debug(I18n.t('SMA Sync: %s auf %s aktualisiert.', syncItem.id, wallboxVal));
 			}
 		}
 	}
 
+	async resetControlToWallboxValue(param, dp) {
+		const wallboxState = await this.getStateAsync(param);
+		if (wallboxState && wallboxState.val !== null) {
+			await this.setState(dp, { val: wallboxState.val, ack: true });
+		}
+	}
+
 	async setValueOneCharger(param, dp, value) {
+		const numVal = Number(value);
+
+		// 1. Typ-Prüfung: Nur gültige Zahlen zulassen
+		if (isNaN(numVal)) {
+			this.log.warn(I18n.t('Ungültiger Wert "%s" für %s ignoriert.', value, param));
+			await this.resetControlToWallboxValue(param, dp);
+			return;
+		}
+
+		// 2. Min/Max-Grenzen aus CONTROL_STATES prüfen
+		const controlConfig = this.controlStates.find(item => item.channelId === param);
+		if (controlConfig && controlConfig.common) {
+			if (controlConfig.common.min !== undefined && numVal < controlConfig.common.min) {
+				this.log.warn(
+					I18n.t('Wert %s für %s überschreitet Minimum (%s).', numVal, param, controlConfig.common.min),
+				);
+				await this.resetControlToWallboxValue(param, dp);
+				return;
+			}
+			if (controlConfig.common.max !== undefined && numVal > controlConfig.common.max) {
+				this.log.warn(
+					I18n.t('Wert %s für %s überschreitet Maximum (%s).', numVal, param, controlConfig.common.max),
+				);
+				await this.resetControlToWallboxValue(param, dp);
+				return;
+			}
+		}
+
+		// 2b. Plausibilitätsprüfung für Ladeplan-Energiemenge (darf bei > 0 nicht kleiner als Sitzungsenergie sein)
+		if (param === 'Parameter.Chrg.Plan.En' && numVal > 0) {
+			const sessionState = await this.getStateAsync('Live.sessionEnergy');
+			if (sessionState && typeof sessionState.val === 'number') {
+				const sessionKwh = Number((sessionState.val / 1000).toFixed(3));
+				if (numVal < sessionKwh) {
+					this.log.warn(
+						I18n.t(
+							'Ladeplan-Energiemenge (%s kWh) darf nicht kleiner als die bereits geladene Sitzungsenergie (%s kWh) sein.',
+							numVal,
+							sessionKwh,
+						),
+					);
+					await this.resetControlToWallboxValue(param, dp);
+					return;
+				}
+			}
+		}
+
+		// 3. Duplikat-Filter: Nichts senden, wenn der Parameter schon diesen Wert hat
+		const currentParamState = await this.getStateAsync(param);
+		if (currentParamState && currentParamState.ack && Number(currentParamState.val) === numVal) {
+			this.log.debug(I18n.t('SMA eCharger %s steht bereits auf %s – kein Schreibbefehl nötig.', param, numVal));
+			await this.setState(dp, { val: numVal, ack: true });
+			return;
+		}
+
+		// 4. Cooldown / Rate-Limit (mind. 5 Sekunden Abstand je Parameter)
+		const COOLDOWN_MS = 5000;
+		const now = Date.now();
+		const lastWrite = this.lastWriteTimes[param] || 0;
+
+		if (now - lastWrite < COOLDOWN_MS) {
+			const waitSec = ((COOLDOWN_MS - (now - lastWrite)) / 1000).toFixed(1);
+			this.log.warn(
+				I18n.t('Rate-Limit: Schreibbefehl für %s blockiert (bitte noch %ss warten).', param, waitSec),
+			);
+			await this.resetControlToWallboxValue(param, dp);
+			return;
+		}
+
+		// Zeitstempel vor dem Request setzen (verhindert parallele Doppel-Requests)
+		this.lastWriteTimes[param] = now;
+
 		try {
 			const putResponse = await this.smaRequest('put', '/api/v1/parameters/IGULD:SELF/', {
 				values: [
 					{
 						channelId: param,
 						timestamp: new Date().toISOString(),
-						value: String(value),
+						value: String(numVal),
 					},
 				],
 			});
 
 			if (putResponse) {
-				this.log.info(I18n.t('SMA eCharger %s erfolgreich auf %s gesetzt (HTTP %s)', param, value, putResponse.status));
-				const numVal = Number(value);
+				this.log.info(
+					I18n.t('SMA eCharger %s erfolgreich auf %s gesetzt (HTTP %s)', param, numVal, putResponse.status),
+				);
 				await this.setState(dp, { val: numVal, ack: true });
 				await this.setState(param, { val: numVal, ack: true });
 			}
 		} catch (error) {
+			// Bei Fehler Sperrzeit zurücksetzen, damit ein erneuter Versuch möglich ist
+			delete this.lastWriteTimes[param];
 			const details = error.response ? JSON.stringify(error.response.data) : error.message;
 			this.log.error(I18n.t('SMA eCharger Fehler beim Setzen von %s: %s', param, details));
+			await this.resetControlToWallboxValue(param, dp);
 		}
 	}
-
 	onUnload(callback) {
 		if (this.pollTimer) {
 			this.clearInterval(this.pollTimer);
