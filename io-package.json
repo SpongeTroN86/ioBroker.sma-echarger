@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "sma-echarger",
-    "version": "0.2.0",
+    "version": "0.1.12",
     "news": {
       "0.2.0": {
         "en": "BREAKING CHANGE: Standardized all Live.* and Control.* state IDs to English. Added control states for charging current limit, charging lock, and target charging plan (including date-to-epoch helper), plus 5-second rate limit, session energy validation, and automatic state reset.",
