@@ -36,10 +36,10 @@ This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.1.12 (2026-11-20)
 +(SpongeTroN86) fix: remove specific schedule time from dependabot configuration
                 feat: add placeholder for future changes in CHANGELOG_OLD.md
-                
+
 ### 0.1.11 (2026-11-19)
 * (SpongeTroN86) feat: update README files for improved documentation and add German translation
 

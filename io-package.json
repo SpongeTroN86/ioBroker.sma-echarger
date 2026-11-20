@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sma-echarger",
-    "version": "0.1.11",
+    "version": "0.1.12",
     "news": {
+      "0.1.12": {
+        "en": "+(SpongeTroN86) fix: remove specific schedule time from dependabot configuration\n                feat: add placeholder for future changes in CHANGELOG_OLD.md",
+        "de": "+ (Spongetron 86) fix: Bestimmte Zeit aus der Dependabot-Konfiguration entfernen\n                feat: Platzhalter für zukünftige Änderungen in CHANGELOG_OLD.md",
+        "ru": "+ (SpongeTron86) исправление: удаление определенного времени расписания из конфигурации dependabot\n                подвиг: добавьте заполнитель для будущих изменений в Changelog_old.md",
+        "pt": "+ (SpongeTron86) fix: remove o horário da configuração do Dependabot\n                feat: adicione espaço para futuras mudanças em CHANGELOG_OLD.md",
+        "nl": "+ (SpongeTron86) fix: specifieke geplande tijd verwijderen uit de Dependabot-configuratie\n                feat: voeg een tijdelijke aanduiding toe voor toekomstige wijzigingen in CHANGELOG_OLD.md",
+        "fr": "+ (SpongeTron86) Fix : suppression d'une heure précise de la configuration Dependabot\n                exploit : ajouter un espace pour les modifications à venir dans CHANGELOG_OLD.md",
+        "it": "+ (SpongeTron86) fix: rimuove l'orario specifico da Dependabot\n                feat: aggiungere un segnaposto a Changelog_old.md",
+        "es": "+ (SpongeTron86) Corrección: eliminar una hora específica de la configuración del dependabot\n                hazaña: añadir un marcador para futuros cambios en ChangeLog_old.md",
+        "pl": "+ (SpongeTron86) fix: usuń określony czas harmonogramu z konfiguracji zależnej\n                feat: dodaj symbol zastępczy dla przyszłych zmian w ChangeLog_old.md",
+        "uk": "+ (SpongeTron86) виправлення: видаліть певний час розкладу з залежної конфігурації\n                feat: додати заповнювач для майбутніх змін у changelog_old.md",
+        "zh-cn": "+ (Spongetron86) 修复：从 dependabot 配置中删除特定的计划时间\n                壮举：在 ChangeLog_old.md 中为将来的更改添加占位符"
+      },
       "0.1.11": {
         "en": "feat: update README files for improved documentation and add German translation",
         "de": "Feat: Readme-Dateien für bessere Dokumentation und deutsche Übersetzung",
@@ -80,19 +93,6 @@
         "pl": "Poprawka SpongeTron86: usunięto macos-latest z test-and-release.yml",
         "uk": "Виправлення SpongeTron86: видалено macos-latest з test-and-release.yml",
         "zh-cn": "Spongetron86 修复：从 test-and-release.yml 中移除了 macos-latest"
-      },
-      "0.1.5": {
-        "en": "SpongeTroN86 fix: add npm environment variables for deployment",
-        "de": "Spongetron86 fix: NPM-Umgebungsvariablen hinzufügen",
-        "ru": "Исправление SpongeTron86: добавление переменных окружения npm для развертывания",
-        "pt": "Correção do SpongeTron86: adicione o ambiente npm",
-        "nl": "Oplossing SpongeTron86: npm-omgevingsvariabelen toevoegen voor implementatie",
-        "fr": "Fix SpongeTron86 : ajout de variables d'environnement NPM",
-        "it": "SpongeTron86 fix: aggiunge variabili di ambiente npm",
-        "es": "Solución de SpongeTron86: añadir variables de entorno npm para su despliegue",
-        "pl": "Poprawka SpongeTron86: dodaj zmienne środowiskowe npm do wdrożenia",
-        "uk": "Виправлення SpongeTron86: додайте змінні середовища npm для розгортання",
-        "zh-cn": "Spongetron86 修复：为部署添加 npm 环境变量"
       }
     },
     "titleLang": {
