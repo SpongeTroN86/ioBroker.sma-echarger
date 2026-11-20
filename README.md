@@ -49,7 +49,7 @@ This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its
     ### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS
+### **WORK IN PROGRESS**
 
 * (SpongeTroN86) **BREAKING CHANGE:** Standardized all `Live.*` and `Control.*` state IDs to English naming conventions (existing scripts and visualizations must be updated)
 * (SpongeTroN86) feat: add control states for charging current limit (`AcALim`), charging lock (`ChrgLok`), and target charging plan (`Plan.En`, `Plan.DurTmm`, `Plan.StopTm`)
