@@ -56,5 +56,7 @@
 	"SMA eCharger %s steht bereits auf %s – kein Schreibbefehl nötig.": "SMA eCharger %s вже встановлено на %s – команда запису не потрібна.",
 	"Rate-Limit: Schreibbefehl für %s blockiert (bitte noch %ss warten).": "Обмеження частоти: команду запису для %s заблоковано (зачекайте ще %ss).",
 	"SMA eCharger %s erfolgreich auf %s gesetzt (HTTP %s)": "SMA eCharger %s успішно встановлено на %s (HTTP %s)",
-	"SMA eCharger Fehler beim Setzen von %s: %s": "Помилка SMA eCharger під час встановлення %s: %s"
+	"SMA eCharger Fehler beim Setzen von %s: %s": "Помилка SMA eCharger під час встановлення %s: %s",
+	"Nicht mehr editierbares Parameter-Objekt entfernt: %s": "Видалено об'єкт параметра, який більше не редагується: %s",
+	"Nicht berechtigtes Control-Objekt entfernt: %s": "Видалено неавторизований об'єкт керування: %s"
 }

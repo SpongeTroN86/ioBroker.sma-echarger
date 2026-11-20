@@ -175,7 +175,8 @@
     "ipAddress": "",
     "pollInterval": 15,
     "username": "user",
-    "password": ""
+    "password": "",
+    "expertMode": false
   },
   "encryptedNative": [
     "password"

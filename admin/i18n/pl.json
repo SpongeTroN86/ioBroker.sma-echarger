@@ -56,5 +56,7 @@
 	"SMA eCharger %s steht bereits auf %s – kein Schreibbefehl nötig.": "SMA eCharger %s jest już ustawiony na %s – polecenie zapisu nie jest konieczne.",
 	"Rate-Limit: Schreibbefehl für %s blockiert (bitte noch %ss warten).": "Limit częstotliwości: polecenie zapisu dla %s zablokowane (proszę czekać jeszcze %ss).",
 	"SMA eCharger %s erfolgreich auf %s gesetzt (HTTP %s)": "SMA eCharger %s pomyślnie ustawiono na %s (HTTP %s)",
-	"SMA eCharger Fehler beim Setzen von %s: %s": "Błąd SMA eCharger podczas ustawiania %s: %s"
+	"SMA eCharger Fehler beim Setzen von %s: %s": "Błąd SMA eCharger podczas ustawiania %s: %s",
+	"Nicht mehr editierbares Parameter-Objekt entfernt: %s": "Usunięto obiekt parametru, którego nie można już edytować: %s",
+	"Nicht berechtigtes Control-Objekt entfernt: %s": "Usunięto nieautoryzowany obiekt sterowania: %s"
 }

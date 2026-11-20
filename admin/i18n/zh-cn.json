@@ -56,5 +56,7 @@
 	"SMA eCharger %s steht bereits auf %s – kein Schreibbefehl nötig.": "SMA eCharger %s 已设置为 %s – 无需写入命令。",
 	"Rate-Limit: Schreibbefehl für %s blockiert (bitte noch %ss warten).": "速率限制：%s 的写入命令已被阻止（请等待 %ss）。",
 	"SMA eCharger %s erfolgreich auf %s gesetzt (HTTP %s)": "SMA eCharger %s 已成功设置为 %s (HTTP %s)",
-	"SMA eCharger Fehler beim Setzen von %s: %s": "设置 %s 时 SMA eCharger 出错：%s"
+	"SMA eCharger Fehler beim Setzen von %s: %s": "设置 %s 时 SMA eCharger 出错：%s",
+	"Nicht mehr editierbares Parameter-Objekt entfernt: %s": "已移除不再可编辑的参数对象：%s",
+	"Nicht berechtigtes Control-Objekt entfernt: %s": "已移除未授权的控制对象：%s"
 }

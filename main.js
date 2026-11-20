@@ -6,6 +6,7 @@ const axios = require('axios');
 const https = require('node:https');
 const path = require('node:path');
 
+// #region Datenpunkt-Definitionen (Live & Control)
 function getLivePoints() {
 	return [
 		{
@@ -83,8 +84,8 @@ function getLivePoints() {
 	];
 }
 
-function getControlStates() {
-	return [
+function getControlStates(editableMap = {}) {
+	const allStates = [
 		{
 			id: 'Control.planTargetTimeInput',
 			channelId: '',
@@ -235,7 +236,16 @@ function getControlStates() {
 			},
 		},
 	];
+	return allStates.filter(item => {
+		// Hilfspunkt für Zielzeit nur anzeigen, wenn StopTm editierbar ist
+		if (item.id === 'Control.planTargetTimeInput') {
+			return editableMap['Parameter.Chrg.Plan.StopTm'] === true;
+		}
+		// Alle anderen Control-States nur behalten, wenn ihr channelId in der Box editable === true ist
+		return item.channelId ? editableMap[item.channelId] === true : true;
+	});
 }
+// #endregion
 
 const TARGET_PARAMS = [
 	'Parameter.Chrg.ActChaMod',
@@ -271,6 +281,7 @@ class SmaEcharger extends utils.Adapter {
 		this.liveMapping = {};
 		this.controlStates = [];
 		this.lastWriteTimes = {};
+		this.wallboxValues = {};
 	}
 
 	async onReady() {
@@ -285,7 +296,6 @@ class SmaEcharger extends utils.Adapter {
 
 		const livePoints = getLivePoints();
 		this.liveMapping = Object.fromEntries(livePoints.map(item => [item.channel, item.dp]));
-		this.controlStates = getControlStates();
 
 		// 1. Debug-Datenpunkt für alle Parameter anlegen
 		await this.setObjectNotExistsAsync('Debug.All_Parameters', {
@@ -307,15 +317,12 @@ class SmaEcharger extends utils.Adapter {
 			native: {},
 		});
 
-		// Alle Live-Datenpunkte aus LIVE_POINTS anlegen
 		// Alle Live-Datenpunkte aus LIVE_POINTS anlegen/aktualisieren
 		for (const item of livePoints) {
 			const fullId = `Live.${item.dp}`;
 
-			/** @type {ioBroker.StateCommon} */
 			const commonObj = {
 				name: item.name,
-				type: 'number',
 				role: 'value',
 				unit: item.unit,
 				read: true,
@@ -328,7 +335,10 @@ class SmaEcharger extends utils.Adapter {
 
 			await this.extendObject(fullId, {
 				type: 'state',
-				common: commonObj,
+				common: {
+					...commonObj,
+					type: 'number',
+				},
 				native: { channelId: item.channel },
 			});
 
@@ -338,8 +348,60 @@ class SmaEcharger extends utils.Adapter {
 				await this.setState(fullId, { val: 0, ack: true });
 			}
 		}
-		// 2b. Alle Control-Datenpunkte anlegen und auf Änderungen lauschen
 
+		this.subscribeStates('Control.*');
+		if (this.config.expertMode) {
+			this.subscribeStates('Parameter.*');
+		}
+
+		// 3. Einmalig ALLE Parameter abrufen (legt Parameter.* nur an, wenn expertMode === true)
+		const editableMap = await this.listAllParameters();
+
+		// Aufräumen der Parameter.*-Objekte
+		const allObjs = await this.getAdapterObjectsAsync();
+		for (const [fullObjId, obj] of Object.entries(allObjs)) {
+			const shortObjId = fullObjId.replace(`${this.namespace}.`, '');
+			if (!shortObjId.startsWith('Parameter.')) {
+				continue;
+			}
+
+			// Fall A: Expertenmodus ist AUS -> alle Parameter.* löschen
+			if (!this.config.expertMode) {
+				await this.delObjectAsync(shortObjId);
+				continue;
+			}
+
+			// Fall B: Expertenmodus ist AN, aber Rechte wurden von Installateur auf Betreiber reduziert
+			// Lösche Parameter.*, die vorher schreibbar (write: true) waren, jetzt aber nicht mehr editierbar sind
+			if (
+				Object.keys(editableMap).length > 0 &&
+				obj &&
+				obj.type === 'state' &&
+				obj.common &&
+				obj.common.write === true
+			) {
+				if (editableMap[shortObjId] !== true) {
+					await this.delObjectAsync(shortObjId);
+					this.log.debug(I18n.t('Nicht mehr editierbares Parameter-Objekt entfernt: %s', shortObjId));
+				}
+			}
+		}
+		// 4. Control-Datenpunkte anhand der Benutzerrechte filtern
+		this.controlStates = getControlStates(editableMap);
+		const allowedControlIds = new Set(this.controlStates.map(item => item.id));
+
+		// Nicht mehr berechtigte Control.*-Objekte entfernen (z. B. nach Wechsel von Admin auf User)
+		if (Object.keys(editableMap).length > 0) {
+			for (const fullObjId of Object.keys(allObjs)) {
+				const shortObjId = fullObjId.replace(`${this.namespace}.`, '');
+				if (shortObjId.startsWith('Control.') && !allowedControlIds.has(shortObjId)) {
+					await this.delObjectAsync(shortObjId);
+					this.log.debug(I18n.t('Nicht berechtigtes Control-Objekt entfernt: %s', shortObjId));
+				}
+			}
+		}
+
+		// Erlaubte Control-Datenpunkte anlegen/aktualisieren
 		for (const item of this.controlStates) {
 			await this.extendObject(item.id, {
 				type: 'state',
@@ -353,14 +415,7 @@ class SmaEcharger extends utils.Adapter {
 				await this.setState(item.id, { val: item.initial, ack: true });
 			}
 		}
-
-		this.subscribeStates('Control.*');
-		this.subscribeStates('Parameter.*');
-
-		// 3. Einmalig ALLE Parameter abrufen und speichern
-		await this.listAllParameters();
-
-		// 4. Live-Werte sofort einmal abfragen und Intervall starten
+		// 5. Live-Werte sofort einmal abfragen und Intervall starten
 		await this.readLiveValues();
 		const intervalMs = (this.config.pollInterval || 15) * 1000;
 		this.pollTimer = this.setInterval(() => this.readLiveValues(), intervalMs);
@@ -409,71 +464,70 @@ class SmaEcharger extends utils.Adapter {
 	}
 
 	async listAllParameters() {
+		const editableMap = {};
 		try {
 			const res = await this.smaRequest('post', '/api/v1/parameters/search/', {
 				queryItems: [{ componentId: 'IGULD:SELF' }],
 			});
 			if (!res || !res.data) {
 				this.log.warn(I18n.t('Keine Daten von der SMA-Wallbox erhalten.'));
-				return;
+				return editableMap;
 			}
 			const jsonString = JSON.stringify(res.data);
 
 			await this.setState('Debug.All_Parameters', { val: jsonString, ack: true });
 			this.log.debug(jsonString);
 
-			let apiResponse = jsonString;
-			// 1. Falls die Antwort noch ein JSON-String ist, in ein Objekt umwandeln
-			const data = typeof apiResponse === 'string' ? JSON.parse(apiResponse) : apiResponse;
+			const data = typeof jsonString === 'string' ? JSON.parse(jsonString) : jsonString;
 
-			// 2. Prüfen, ob data[0] und das innere values-Array vorhanden sind
 			if (!Array.isArray(data) || data.length === 0 || !Array.isArray(data[0].values)) {
 				this.log.warn(I18n.t('Ungültiges SMA-Parameter-Format.'));
-				return;
+				return editableMap;
 			}
 
-			// 3. Alle Parameter aus data[0].values durchlaufen
 			for (const param of data[0].values) {
-				// Punkt-Notation für saubere Ordnerstruktur in ioBroker beibehalten
 				const cleanId = param.channelId.replace(/\[\]$/, '');
+				editableMap[cleanId] = Boolean(param.editable);
 
-				// Wert auslesen (beachtet sowohl "value" als auch das Array "values[0]")
 				let rawValue = '';
 				if (param.value !== undefined) {
 					rawValue = param.value;
 				} else if (Array.isArray(param.values) && param.values.length > 0) {
-					rawValue = param.values[0];
+					rawValue = param.values;
 				}
 
-				// Prüfen, ob der Wert eine Zahl ist (z. B. "5500" oder "14.000")
 				const isNumber = rawValue !== '' && !isNaN(Number(rawValue));
 				const finalValue = isNumber ? Number(rawValue) : String(rawValue);
+				this.wallboxValues[cleanId] = finalValue; // Immer intern merken
 
-				// Datenpunkt-Eigenschaften aufbauen
-				/** @type {ioBroker.StateCommon} */
-				const commonObj = {
-					name: param.channelId,
-					type: isNumber ? 'number' : 'string',
-					role: 'value',
-					read: true,
-					write: Boolean(param.editable),
-				};
+				// Objekte im Baum nur anlegen, wenn Expertenmodus aktiv ist!
+				if (this.config.expertMode) {
+					const commonObj = {
+						name: param.channelId,
+						role: 'value',
+						read: true,
+						write: Boolean(param.editable),
+					};
 
-				if (isNumber && param.min !== undefined) {
-					commonObj.min = Number(param.min);
+					if (isNumber && param.min !== undefined) {
+						commonObj.min = Number(param.min);
+					}
+					if (isNumber && param.max !== undefined) {
+						commonObj.max = Number(param.max);
+					}
+
+					await this.extendObject(cleanId, {
+						type: 'state',
+						common: {
+							...commonObj,
+							type: isNumber ? 'number' : 'string',
+						},
+						native: {},
+					});
+					await this.setState(cleanId, { val: finalValue, ack: true });
 				}
-				if (isNumber && param.max !== undefined) {
-					commonObj.max = Number(param.max);
-				}
-
-				// Erst warten bis das Objekt existiert, DANN den Wert schreiben!
-				await this.setObjectNotExistsAsync(cleanId, {
-					type: 'state',
-					common: commonObj,
-					native: {},
-				});
-				await this.setState(cleanId, { val: finalValue, ack: true });
 			}
+
 			if (Array.isArray(res.data) && res.data.length > 0 && Array.isArray(res.data[0].values)) {
 				this.log.info(
 					I18n.t(
@@ -490,6 +544,7 @@ class SmaEcharger extends utils.Adapter {
 				: error.message;
 			this.log.error(I18n.t('Fehler beim Parameter-Abruf: %s', details));
 		}
+		return editableMap;
 	}
 
 	async readLiveValues() {
@@ -528,8 +583,23 @@ class SmaEcharger extends utils.Adapter {
 							// Prüfen, ob der Wert eine Zahl ist (z. B. "4719" oder "14.000")
 							const finalVal = rawVal !== '' && !isNaN(Number(rawVal)) ? Number(rawVal) : String(rawVal);
 
-							// Schreibt z. B. in item.channelId-{Parameter.Chrg.ActChaMod}-, finalVal-{4719}-, ack-{true}- <-- 4719 steht für PV-Überschussladen
-							this.setState(item.channelId, finalVal, true);
+							// Wert intern merken
+							this.wallboxValues[item.channelId] = finalVal;
+
+							// Im Expertenmodus auch den Parameter.*-Datenpunkt aktualisieren
+							if (this.config.expertMode) {
+								await this.setState(item.channelId, finalVal, true);
+							}
+
+							// Direkt mit dem passenden Control.*-Datenpunkt synchronisieren
+							const syncItem = this.controlStates.find(c => c.channelId === item.channelId);
+							if (syncItem && typeof finalVal === 'number') {
+								const controlState = await this.getStateAsync(syncItem.id);
+								if (controlState && controlState.ack === true && controlState.val !== finalVal) {
+									await this.setState(syncItem.id, { val: finalVal, ack: true });
+									this.log.debug(I18n.t('SMA Sync: %s auf %s aktualisiert.', syncItem.id, finalVal));
+								}
+							}
 						}
 					}
 				}
@@ -581,9 +651,7 @@ class SmaEcharger extends utils.Adapter {
 		const shortId = id.replace(`${this.namespace}.`, '');
 
 		// FALL 1: Steuerbefehl (ack === false) -> Suche über item.id
-		// FALL 1: Steuerbefehl (ack === false) -> Suche über item.id
 		if (!state.ack) {
-			// Sonderbehandlung für den Datums-Hilfspunkt
 			if (shortId === 'Control.planTargetTimeInput') {
 				const unixSec = this.parseDateToUnixSeconds(String(state.val));
 				if (unixSec === null) {
@@ -600,7 +668,7 @@ class SmaEcharger extends utils.Adapter {
 				this.log.debug(I18n.t('Datum "%s" in Epoch-Zeitstempel %s umgerechnet.', state.val, unixSec));
 
 				// Direkt auch an die Wallbox (StopTm) senden
-				await this.setValueOneCharger('Parameter.Chrg.Plan.StopTm', 'Control.Ladeplan_Stoppzeit', unixSec);
+				await this.setValueOneCharger('Parameter.Chrg.Plan.StopTm', 'Control.planStopTime', unixSec);
 				return;
 			}
 
@@ -625,9 +693,9 @@ class SmaEcharger extends utils.Adapter {
 	}
 
 	async resetControlToWallboxValue(param, dp) {
-		const wallboxState = await this.getStateAsync(param);
-		if (wallboxState && wallboxState.val !== null) {
-			await this.setState(dp, { val: wallboxState.val, ack: true });
+		const wallboxVal = this.wallboxValues[param];
+		if (wallboxVal !== undefined && wallboxVal !== null) {
+			await this.setState(dp, { val: wallboxVal, ack: true });
 		}
 	}
 
@@ -641,7 +709,7 @@ class SmaEcharger extends utils.Adapter {
 			return;
 		}
 
-		// 2. Min/Max-Grenzen aus CONTROL_STATES prüfen
+		// 2. Min/Max-Grenzen aus getControlStates() prüfen
 		const controlConfig = this.controlStates.find(item => item.channelId === param);
 		if (controlConfig && controlConfig.common) {
 			if (controlConfig.common.min !== undefined && numVal < controlConfig.common.min) {
@@ -680,14 +748,12 @@ class SmaEcharger extends utils.Adapter {
 		}
 
 		// 3. Duplikat-Filter: Nichts senden, wenn der Parameter schon diesen Wert hat
-		const currentParamState = await this.getStateAsync(param);
-		if (currentParamState && currentParamState.ack && Number(currentParamState.val) === numVal) {
+		if (this.wallboxValues[param] !== undefined && Number(this.wallboxValues[param]) === numVal) {
 			this.log.debug(I18n.t('SMA eCharger %s steht bereits auf %s – kein Schreibbefehl nötig.', param, numVal));
 			await this.setState(dp, { val: numVal, ack: true });
 			return;
 		}
 
-		// 4. Cooldown / Rate-Limit (mind. 5 Sekunden Abstand je Parameter)
 		const COOLDOWN_MS = 5000;
 		const now = Date.now();
 		const lastWrite = this.lastWriteTimes[param] || 0;
@@ -719,8 +785,11 @@ class SmaEcharger extends utils.Adapter {
 				this.log.info(
 					I18n.t('SMA eCharger %s erfolgreich auf %s gesetzt (HTTP %s)', param, numVal, putResponse.status),
 				);
+				this.wallboxValues[param] = numVal;
 				await this.setState(dp, { val: numVal, ack: true });
-				await this.setState(param, { val: numVal, ack: true });
+				if (this.config.expertMode) {
+					await this.setState(param, { val: numVal, ack: true });
+				}
 			}
 		} catch (error) {
 			// Bei Fehler Sperrzeit zurücksetzen, damit ein erneuter Versuch möglich ist

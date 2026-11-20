@@ -20,7 +20,9 @@ This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its
 ### Features
 
 * **Live Measurements (`Live.*`):** Current charging power (`chargingPower`), total and session energy (`totalEnergy`, `sessionEnergy`), vehicle/charging status (`vehicleStatus`), device health (`deviceStatus`), phase currents (`currentL1`–`currentL3`), and voltages (`voltageL1`–`voltageL3`).
-* **Device Parameters (`Parameter.*`):** Automatic retrieval of all readable SMA eCharger configuration parameters.
+* **Automatic Permission Detection & Cleanup:** On startup, the adapter checks which parameters are editable for the configured account (*User* vs. *Installer*). Only permitted `Control.*` states are created, and previously created states are automatically removed from the object tree if permissions are downgraded.
+* **Device Parameters (`Parameter.*` / Expert Mode):** Raw SMA configuration parameters are kept in `Debug.All_Parameters` by default to keep the object tree clean. Enable **Expert mode** in the instance settings to create all `Parameter.*` states in the object tree (also automatically cleaned up when disabled or when switching from Installer to User).
+
 * **Remote Control (`Control.*`):**
   * Change the charging mode (`Control.chargingMode`: Fast, PV Surplus, Target Charging, Stop).
   * Adjust maximum active power (`Control.inverterMaxPower` / `Control.inverterMaxPowerIn`) and maximum charging current (`Control.chargingCurrentLimit`, 6–32 A).
@@ -37,6 +39,7 @@ This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its
 2. Enter the local **IP address** of your SMA eCharger.
 3. Enter your **Username** (`user` for reading values, or `admin` / an installer account if you want to modify inverter power limits like `WMax`) and **Password**.
 4. Set the desired **Poll interval** in seconds (default: `15` seconds).
+5. Optionally enable **Expert mode** if you want all raw `Parameter.*` states to be created in the object tree.
 
 ### Disclaimer
 
@@ -48,6 +51,10 @@ This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (SpongeTroN86) feat: add expert mode option (`expertMode`) to toggle creation of raw `Parameter.*` states
+* (SpongeTroN86) feat: automatically filter and clean up `Control.*` and `Parameter.*` states based on user permissions (User vs. Installer)
+
 ### 0.2.0 (2026-11-20)
 
 * (SpongeTroN86) **BREAKING CHANGE:** Standardized all `Live.*` and `Control.*` state IDs to English naming conventions (existing scripts and visualizations must be updated)

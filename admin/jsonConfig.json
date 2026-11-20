@@ -41,6 +41,12 @@
             "md": 4,
             "lg": 4,
             "xl": 4
+        },
+        "expertMode": {
+            "type": "checkbox",
+            "label": "Expertenmodus (alle Parameter.*-Datenpunkte anlegen)",
+            "default": false,
+            "newLine": true
         }
     }
 }
