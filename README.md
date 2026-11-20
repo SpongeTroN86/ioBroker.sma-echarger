@@ -51,7 +51,7 @@ This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.3.0 (2026-11-20)
 * (SpongeTroN86) feat: add expert mode option (`expertMode`) to toggle creation of raw `Parameter.*` states
 * (SpongeTroN86) feat: automatically filter and clean up `Control.*` and `Parameter.*` states based on user permissions (User vs. Installer)
 
@@ -74,10 +74,6 @@ This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its
 ### 0.1.10 (2026-11-19)
 
 * (SpongeTroN86) Added multi-language support (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) for states, logs, and configuration.
-
-### 0.1.9 (2026-11-18)
-
-* (SpongeTroN86) Updated README documentation and fixed repository metadata in io-package.json
 
 ## License
 

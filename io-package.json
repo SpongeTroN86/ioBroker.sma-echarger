@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sma-echarger",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "news": {
+      "0.3.0": {
+        "en": "feat: add expert mode option (`expertMode`) to toggle creation of raw `Parameter.*` states\nfeat: automatically filter and clean up `Control.*` and `Parameter.*` states based on user permissions (User vs. Installer)",
+        "de": "Feat: Hinzufügen des Expertenmodus (`ExpertMode`) zur Erzeugung roher `Parameter.*`\nFeat: filtert und bereinigt automatisch die Status `Control.*` und `Parameter.*` je nach Benutzerrecht (User vs. Installer)",
+        "ru": "подвиг: добавьте опцию экспертного режима (`expertMode`) для переключения создания необработанных состояний `Parameter.*`\nфункция: автоматическая фильтрация и очистка состояний `Control.*` и `Parameter.*` на основе разрешений пользователя (пользователь или инсталлятор)",
+        "pt": "feat: adicione o modo expert (`expertMode`) para criar estados brutos de `Parâmetro.*`\nfeat: filtra e limpa automaticamente os estados `Control.*` e `Parameter.*` com base nas permissões (User x Installer)",
+        "nl": "prestatie: voeg de optie voor de expertmodus toe (`ExpertMode`) om het aanmaken van onbewerkte `Parameter.*` statussen in te schakelen\nprestatie: automatisch de statussen van `Control.*` en `Parameter.*` filteren en opschonen op basis van gebruikersrechten (gebruiker versus installateur)",
+        "fr": "exploit : ajouter le mode expert (« ExpertMode ») pour créer des états « Parameter.*» bruts\nexploit : filtre et nettoie automatiquement les états Control.* et Parameter.* en fonction des droits de l'utilisateur (utilisateur ou installateur)",
+        "it": "feat: aggiungere l'opzione ExpertMode per attivare la creazione di stati raw\nfeat: filtra e pulisce automaticamente gli stati Control.*` e `Parameter.*` in base ai permessi utente (User vs. Installer)",
+        "es": "hazaña: añadir la opción de modo experto (`ExpertMode`) para cambiar la creación de estados de `Parámetro.*`\nhazaña: filtrar y limpiar automáticamente los estados de «Control» y «Parámetro» según los permisos de usuario (usuario contra instalador)",
+        "pl": "feat: dodaj opcję trybu eksperta (`ExpertMode`), aby przełączyć tworzenie surowych stanów `Parameter.*`\nfeat: automatyczne filtrowanie i czyszczenie stanów `Control.*` i `Parameter.*` w oparciu o uprawnienia użytkownika (użytkownik kontra instalator)",
+        "uk": "feat: додати параметр експертного режиму (`ExpertMode`) для перемикання створення необроблених станів `Parameter.*`\nfeat: автоматично фільтрує та очищає стани `Control.*` та `Parameter.*` на основі дозволів користувача (Користувач проти Інсталятора)",
+        "zh-cn": "壮举：添加专家模式选项 (`ExpertMode`) 来切换原始`参数.*`状态的创建\n壮举：根据用户权限（用户与安装程序）自动筛选和清理 `Control.*` 和 `Parameter.*` 状态"
+      },
       "0.2.0": {
         "en": "BREAKING CHANGE: Standardized all Live.* and Control.* state IDs to English. Added control states for charging current limit, charging lock, and target charging plan (including date-to-epoch helper), plus 5-second rate limit, session energy validation, and automatic state reset.",
         "de": "BREAKING CHANGE: Alle Live.*- und Control.*-Datenpunkt-IDs auf Englisch vereinheitlicht. Steuerungsdatenpunkte für Ladestrombegrenzung, Ladesperre und Ladeplan (inkl. Datums-Hilfspunkt) sowie 5-Sekunden-Rate-Limit, Sitzungsenergie-Prüfung und automatischer Reset hinzugefügt.",
@@ -80,19 +93,6 @@
         "pl": "Zaktualizowano dokumentację README i stałe metadane repozytorium w io-package.json",
         "uk": "Оновлена документація README та фіксовані метадані сховища в io-package.json",
         "zh-cn": "更新了 io-package.json 中的 README 文档并修复了存储库元数据"
-      },
-      "0.1.7": {
-        "en": "SpongeTroN86 fix: removed windows-latest from test-and-release.yml",
-        "de": "SpongeTron86 Fix: Windows-Latest aus Test-and-Release.yml entfernt",
-        "ru": "Исправление SpongeTron86: удалена последняя версия Windows из файла test-and-release.yml",
-        "pt": "Correção SpongeTron86: removeu o windows-latest de test-and-release.yml",
-        "nl": "Oplossing SpongeTron86: de nieuwste versie van Windows verwijderd uit test-and-release.yml",
-        "fr": "Fix SpongeTron86 : Windows-Latest a été supprimé de test-and-release.yml",
-        "it": "SpongeTron86 fix: rimosso windows-latest da test-and-release.yml",
-        "es": "Solución de SpongeTron86: se quitó Windows Latest de test-and-release.yml",
-        "pl": "Poprawka SpongeTron86: usunięto windows-latest z test-and-release.yml",
-        "uk": "Виправлення SpongeTron86: видалено останнє вікно з тесту та випуску.yml",
-        "zh-cn": "Spongetron86 修复：从 test-and-release.yml 中删除了 Windows-latest"
       }
     },
     "titleLang": {
