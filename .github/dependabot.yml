@@ -3,7 +3,8 @@ updates:
   - package-ecosystem: npm
     directory: "/"
     schedule:
-      interval: monthly
+      interval: "cron"
+      cronjob: "17 3 14 * *"
     open-pull-requests-limit: 15
     cooldown:
       default: 7
@@ -17,7 +18,8 @@ updates:
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: monthly
-    open-pull-requests-limit: 5
+      interval: "cron"
+      cronjob: "42 4 21 * *"
+    open-pull-requests-limit: 15
     assignees:
       - SpongeTroN
