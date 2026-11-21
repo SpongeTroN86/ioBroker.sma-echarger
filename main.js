@@ -105,7 +105,7 @@ function getControlStates(editableMap = {}) {
 			common: {
 				name: I18n.getTranslatedObject('Maximaler Ladestrom in Ampere'),
 				type: 'number',
-				role: 'level.current',
+				role: 'level',
 				unit: 'A',
 				min: 6,
 				max: 32,
@@ -136,7 +136,7 @@ function getControlStates(editableMap = {}) {
 			common: {
 				name: I18n.getTranslatedObject('Ladeplan Energiemenge (Wh)'),
 				type: 'number',
-				role: 'level.energy',
+				role: 'level',
 				unit: 'kWh',
 				min: 0,
 				read: true,
@@ -164,7 +164,7 @@ function getControlStates(editableMap = {}) {
 			common: {
 				name: I18n.getTranslatedObject('Ladeplan Zielzeit (Unix-Zeitstempel in Sekunden)'),
 				type: 'number',
-				role: 'value',
+				role: 'level',
 				unit: 's',
 				min: 0,
 				read: true,
@@ -196,7 +196,7 @@ function getControlStates(editableMap = {}) {
 			common: {
 				name: I18n.getTranslatedObject('Maximale Wirkleistung (WMaxIn) setzen (Bezug/Ladeleistung)'),
 				type: 'number',
-				role: 'level.power',
+				role: 'level',
 				unit: 'W',
 				min: 4500,
 				max: 11000,
@@ -227,7 +227,7 @@ function getControlStates(editableMap = {}) {
 			common: {
 				name: I18n.getTranslatedObject('Maximale Wirkleistung setzen (WMax) (Abgabe/Entladeleistung)'),
 				type: 'number',
-				role: 'level.power',
+				role: 'level',
 				unit: 'W',
 				min: 4500,
 				max: 11000,
@@ -297,7 +297,13 @@ class SmaEcharger extends utils.Adapter {
 		const livePoints = getLivePoints();
 		this.liveMapping = Object.fromEntries(livePoints.map(item => [item.channel, item.dp]));
 
-		// 1. Debug-Datenpunkt für alle Parameter anlegen
+		// 1. Übergeordneten Kanal "Debug" und Debug-Datenpunkt anlegen
+		await this.setObjectNotExistsAsync('Debug', {
+			type: 'channel',
+			common: { name: 'Debug' },
+			native: {},
+		});
+
 		await this.setObjectNotExistsAsync('Debug.All_Parameters', {
 			type: 'state',
 			common: {
@@ -310,10 +316,16 @@ class SmaEcharger extends utils.Adapter {
 			native: {},
 		});
 
-		// Übergeordneten Kanal "Live" anlegen
-		await this.setObjectNotExists('Live', {
+		// 2. Übergeordnete Kanäle "Live" und "Control" anlegen
+		await this.setObjectNotExistsAsync('Live', {
 			type: 'channel',
 			common: { name: I18n.t('Live-Messwerte') },
+			native: {},
+		});
+
+		await this.setObjectNotExistsAsync('Control', {
+			type: 'channel',
+			common: { name: I18n.t('Steuerung') },
 			native: {},
 		});
 
@@ -502,11 +514,32 @@ class SmaEcharger extends utils.Adapter {
 
 				// Objekte im Baum nur anlegen, wenn Expertenmodus aktiv ist!
 				if (this.config.expertMode) {
+					// 1. Alle übergeordneten Zwischen-Kanäle anlegen (verhindert E3009)
+					const parts = cleanId.split('.');
+					let currentPath = '';
+					for (let p = 0; p < parts.length - 1; p++) {
+						currentPath = currentPath ? `${currentPath}.${parts[p]}` : parts[p];
+						await this.setObjectNotExistsAsync(currentPath, {
+							type: 'channel',
+							common: { name: parts[p] },
+							native: {},
+						});
+					}
+
+					// 2. Passende Rolle für read/write bestimmen (verhindert E1011)
+					const isEditable = Boolean(param.editable);
+					let role = 'value';
+					if (isEditable) {
+						role = isNumber ? 'level' : 'text';
+					} else if (!isNumber) {
+						role = 'text';
+					}
+
 					const commonObj = {
 						name: param.channelId,
-						role: 'value',
+						role: role,
 						read: true,
-						write: Boolean(param.editable),
+						write: isEditable,
 					};
 
 					if (isNumber && param.min !== undefined) {
