@@ -58,5 +58,6 @@
 	"SMA eCharger %s erfolgreich auf %s gesetzt (HTTP %s)": "SMA eCharger %s успішно встановлено на %s (HTTP %s)",
 	"SMA eCharger Fehler beim Setzen von %s: %s": "Помилка SMA eCharger під час встановлення %s: %s",
 	"Nicht mehr editierbares Parameter-Objekt entfernt: %s": "Видалено об'єкт параметра, який більше не редагується: %s",
-	"Nicht berechtigtes Control-Objekt entfernt: %s": "Видалено неавторизований об'єкт керування: %s"
+	"Nicht berechtigtes Control-Objekt entfernt: %s": "Видалено неавторизований об'єкт керування: %s",
+	"Expertenmodus (alle Parameter.*-Datenpunkte anlegen)": "Режим експерта (створювати всі точки даних Parameter.*)"
 }
