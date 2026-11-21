@@ -51,7 +51,7 @@ This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### 0.3.1 (2026-11-21)
+### **WORK IN PROGRESS**
 * (SpongeTroN86) fix: create missing parent channels (`Debug`, `Control`, and `Parameter.*` sub-channels) in object tree
 * (SpongeTroN86) fix: use standard ioBroker state roles (`level`) for writable control states
 
