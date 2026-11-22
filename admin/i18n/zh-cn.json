@@ -59,5 +59,10 @@
 	"SMA eCharger Fehler beim Setzen von %s: %s": "设置 %s 时 SMA eCharger 出错：%s",
 	"Nicht mehr editierbares Parameter-Objekt entfernt: %s": "已移除不再可编辑的参数对象：%s",
 	"Nicht berechtigtes Control-Objekt entfernt: %s": "已移除未授权的控制对象：%s",
+	"Fahrzeugverbrauch (kWh/100 km)": "车辆能耗 (kWh/100 km)",
+	"Geladene Reichweite aktuelle Ladung": "当前会话已充续航里程",
+	"Ladeplan Zielreichweite (km)": "充电计划目标续航里程 (km)",
+	"Ungültige Zielreichweite \"%s\" km ignoriert.": "已忽略无效的目标续航里程 \"%s\" km。",
+	"Zielreichweite %s km in %s kWh umgerechnet.": "已将目标续航里程 %s km 转换为 %s kWh。",
 	"Expertenmodus (alle Parameter.*-Datenpunkte anlegen)": "专家模式（创建所有 Parameter.* 数据点）"
 }

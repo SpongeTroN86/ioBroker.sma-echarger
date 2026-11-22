@@ -84,7 +84,7 @@ function getLivePoints() {
 	];
 }
 
-function getControlStates(editableMap = {}) {
+function getControlStates(editableMap = {}, carConsumption) {
 	const allStates = [
 		{
 			id: 'Control.planTargetTimeInput',
@@ -116,18 +116,17 @@ function getControlStates(editableMap = {}) {
 		{
 			id: 'Control.chargingLock',
 			channelId: 'Parameter.Chrg.ChrgLok',
-			initial: 1129,
+			type: 'state',
+			initial: false,
 			common: {
-				name: I18n.getTranslatedObject('Ladesperre aktivieren'),
-				type: 'number',
-				role: 'level',
+				name: I18n.getTranslatedObject('Charging lock'),
+				type: 'boolean',
+				role: 'switch',
 				read: true,
 				write: true,
-				states: {
-					1129: I18n.t('Entsperrt'),
-					1130: I18n.t('Gesperrt'),
-				},
+				def: false,
 			},
+			native: {},
 		},
 		{
 			id: 'Control.planTargetEnergy',
@@ -207,18 +206,17 @@ function getControlStates(editableMap = {}) {
 		{
 			id: 'Control.chargingRelease',
 			channelId: 'Parameter.Chrg.ChrgApv',
-			initial: 5171,
+			type: 'state',
+			initial: true,
 			common: {
-				name: I18n.getTranslatedObject('Ladefreigabe'),
-				type: 'number',
-				role: 'level',
+				name: I18n.getTranslatedObject('Charging release'),
+				type: 'boolean',
+				role: 'switch',
 				read: true,
 				write: true,
-				states: {
-					5172: I18n.t('Ja'),
-					5171: I18n.t('Nein'),
-				},
+				def: true,
 			},
+			native: {},
 		},
 		{
 			id: 'Control.inverterMaxPower',
@@ -235,12 +233,31 @@ function getControlStates(editableMap = {}) {
 				write: true,
 			},
 		},
+		{
+			id: 'Control.planTargetRange',
+			channelId: '',
+			initial: 0,
+			common: {
+				name: I18n.getTranslatedObject('Ladeplan Zielreichweite (km)'),
+				type: 'number',
+				role: 'level',
+				unit: 'km',
+				min: 0,
+				read: true,
+				write: true,
+			},
+		},
 	];
 	return allStates.filter(item => {
 		// Hilfspunkt für Zielzeit nur anzeigen, wenn StopTm editierbar ist
 		if (item.id === 'Control.planTargetTimeInput') {
 			return editableMap['Parameter.Chrg.Plan.StopTm'] === true;
 		}
+
+		if (item.id === 'Control.planTargetRange') {
+			return editableMap['Parameter.Chrg.Plan.En'] === true && Number(carConsumption) > 0;
+		}
+
 		// Alle anderen Control-States nur behalten, wenn ihr channelId in der Box editable === true ist
 		return item.channelId ? editableMap[item.channelId] === true : true;
 	});
@@ -282,6 +299,7 @@ class SmaEcharger extends utils.Adapter {
 		this.controlStates = [];
 		this.lastWriteTimes = {};
 		this.wallboxValues = {};
+		this.lastVehicleStatus = null;
 	}
 
 	async onReady() {
@@ -399,7 +417,8 @@ class SmaEcharger extends utils.Adapter {
 			}
 		}
 		// 4. Control-Datenpunkte anhand der Benutzerrechte filtern
-		this.controlStates = getControlStates(editableMap);
+		this.controlStates = getControlStates(editableMap, this.config.carConsumption);
+
 		const allowedControlIds = new Set(this.controlStates.map(item => item.id));
 
 		// Nicht mehr berechtigte Control.*-Objekte entfernen (z. B. nach Wechsel von Admin auf User)
@@ -514,7 +533,6 @@ class SmaEcharger extends utils.Adapter {
 
 				// Objekte im Baum nur anlegen, wenn Expertenmodus aktiv ist!
 				if (this.config.expertMode) {
-					// 1. Alle übergeordneten Zwischen-Kanäle anlegen (verhindert E3009)
 					const parts = cleanId.split('.');
 					let currentPath = '';
 					for (let p = 0; p < parts.length - 1; p++) {
@@ -526,7 +544,6 @@ class SmaEcharger extends utils.Adapter {
 						});
 					}
 
-					// 2. Passende Rolle für read/write bestimmen (verhindert E1011)
 					const isEditable = Boolean(param.editable);
 					let role = 'value';
 					if (isEditable) {
@@ -590,17 +607,59 @@ class SmaEcharger extends utils.Adapter {
 				this.log.warn(I18n.t('Keine Daten von der SMA-Wallbox erhalten.'));
 				return;
 			}
-
+			/// - "Geladene km" -
+			const consumption = Number(this.config.carConsumption) || 0;
+			if (consumption > 0) {
+				await this.extendObject('Live.sessionRange', {
+					type: 'state',
+					common: {
+						name: I18n.getTranslatedObject('Geladene Reichweite aktuelle Ladung'),
+						type: 'number',
+						role: 'value',
+						unit: 'km',
+						read: true,
+						write: false,
+					},
+					native: {},
+				});
+			}
+			///
 			if (Array.isArray(liveRes.data)) {
 				for (const item of liveRes.data) {
 					const targetDp = this.liveMapping[item.channelId];
 					if (targetDp && item.values && item.values.length > 0) {
 						const val = Number(item.values[0].value);
 						this.setState(`Live.${targetDp}`, { val: val, ack: true });
+
+						if (targetDp === 'vehicleStatus') {
+							if (val === 200111 && this.lastVehicleStatus !== 200111) {
+								const hasRangeDp = this.controlStates.some(c => c.id === 'Control.planTargetRange');
+								if (hasRangeDp) {
+									await this.setState('Control.planTargetRange', { val: 0, ack: true });
+									if (this.lastVehicleStatus !== null) {
+										this.log.info(
+											I18n.t(
+												'Ladekabel getrennt – Zielreichweite (Control.planTargetRange) auf 0 zurückgesetzt.',
+											),
+										);
+									}
+								}
+							}
+							this.lastVehicleStatus = val;
+						}
+						// Reichweite der aktuellen Sitzung in km berechnen
+						if (targetDp === 'sessionEnergy') {
+							const consumption = Number(this.config.carConsumption) || 0;
+							if (consumption > 0) {
+								const rangeKm = Number(((val / 1000 / consumption) * 100).toFixed(1));
+								await this.setState('Live.sessionRange', { val: rangeKm, ack: true });
+							}
+						}
 					}
 				}
 			}
-			// Alle gewünschten Parameter in einem einzigen Request abrufen
+
+			// Alle Parameter in einem einzigen Request abrufen
 			const paramRes = await this.smaRequest('post', '/api/v1/parameters/search/', { queryItems: queryItems });
 
 			// Antwort prüfen und mit einer Schleife in die Datenpunkte schreiben
@@ -627,10 +686,17 @@ class SmaEcharger extends utils.Adapter {
 							// Direkt mit dem passenden Control.*-Datenpunkt synchronisieren
 							const syncItem = this.controlStates.find(c => c.channelId === item.channelId);
 							if (syncItem && typeof finalVal === 'number') {
+								const targetControlVal = this.toControlValue(item.channelId, finalVal);
 								const controlState = await this.getStateAsync(syncItem.id);
-								if (controlState && controlState.ack === true && controlState.val !== finalVal) {
-									await this.setState(syncItem.id, { val: finalVal, ack: true });
-									this.log.debug(I18n.t('SMA Sync: %s auf %s aktualisiert.', syncItem.id, finalVal));
+								if (
+									controlState &&
+									controlState.ack === true &&
+									controlState.val !== targetControlVal
+								) {
+									await this.setState(syncItem.id, { val: targetControlVal, ack: true });
+									this.log.debug(
+										I18n.t('SMA Sync: %s auf %s aktualisiert.', syncItem.id, targetControlVal),
+									);
 								}
 							}
 						}
@@ -705,35 +771,85 @@ class SmaEcharger extends utils.Adapter {
 				return;
 			}
 
+			if (shortId === 'Control.planTargetRange') {
+				const targetKm = Number(state.val);
+				const consumption = Number(this.config.carConsumption) || 0;
+
+				if (isNaN(targetKm) || targetKm < 0 || consumption <= 0) {
+					this.log.warn(I18n.t('Ungültige Zielreichweite "%s" km ignoriert.', state.val));
+					const currentEn = Number(this.wallboxValues['Parameter.Chrg.Plan.En']) || 0;
+					const fallbackKm = consumption > 0 ? Number(((currentEn * 100) / consumption).toFixed(1)) : 0;
+					await this.setState('Control.planTargetRange', { val: fallbackKm, ack: true });
+					return;
+				}
+
+				const targetKwh = Number(((targetKm * consumption) / 100).toFixed(2));
+				this.log.info(I18n.t('Zielreichweite %s km in %s kWh umgerechnet.', targetKm, targetKwh));
+
+				// Direkt an Parameter.Chrg.Plan.En & Control.planTargetEnergy senden
+				await this.setValueOneCharger('Parameter.Chrg.Plan.En', 'Control.planTargetEnergy', targetKwh);
+
+				// Tatsächlich übernommenen (oder bei Blockade zurückgesetzten) kWh-Wert wieder in km spiegeln
+				const appliedEn = Number(this.wallboxValues['Parameter.Chrg.Plan.En']) || 0;
+				const appliedKm = Number(((appliedEn * 100) / consumption).toFixed(1));
+				await this.setState('Control.planTargetRange', { val: appliedKm, ack: true });
+				return;
+			}
+
 			const controlItem = this.controlStates.find(item => item.id === shortId);
 			if (controlItem) {
 				await this.setValueOneCharger(controlItem.channelId, controlItem.id, state.val);
 			}
 			return;
 		}
-
 		// FALL 2: Wert von der Wallbox (ack === true) -> Suche über item.channelId
 		const syncItem = this.controlStates.find(item => item.channelId && item.channelId === shortId);
 		if (syncItem) {
 			const wallboxVal = Number(state.val);
-			const controlState = await this.getStateAsync(syncItem.id);
+			if (!isNaN(wallboxVal)) {
+				const targetControlVal = this.toControlValue(syncItem.channelId, wallboxVal);
+				const controlState = await this.getStateAsync(syncItem.id);
 
-			if (!isNaN(wallboxVal) && controlState && controlState.ack === true && controlState.val !== wallboxVal) {
-				await this.setState(syncItem.id, { val: wallboxVal, ack: true });
-				this.log.debug(I18n.t('SMA Sync: %s auf %s aktualisiert.', syncItem.id, wallboxVal));
+				if (controlState && controlState.ack === true && controlState.val !== targetControlVal) {
+					await this.setState(syncItem.id, { val: targetControlVal, ack: true });
+					this.log.debug(I18n.t('SMA Sync: %s auf %s aktualisiert.', syncItem.id, targetControlVal));
+				}
 			}
 		}
+	}
+	toControlValue(channelId, rawVal) {
+		if (channelId === 'Parameter.Chrg.ChrgApv') {
+			return Number(rawVal) === 5172;
+		}
+		if (channelId === 'Parameter.Chrg.ChrgLok') {
+			return Number(rawVal) === 1129;
+		}
+		return Number(rawVal);
+	}
+	toWallboxValue(channelId, controlVal) {
+		if (channelId === 'Parameter.Chrg.ChrgApv') {
+			if (typeof controlVal === 'boolean') {
+				return controlVal ? 5172 : 5171;
+			}
+		}
+		if (channelId === 'Parameter.Chrg.ChrgLok') {
+			if (typeof controlVal === 'boolean') {
+				return controlVal ? 1129 : 1130;
+			}
+		}
+		return Number(controlVal);
 	}
 
 	async resetControlToWallboxValue(param, dp) {
 		const wallboxVal = this.wallboxValues[param];
 		if (wallboxVal !== undefined && wallboxVal !== null) {
-			await this.setState(dp, { val: wallboxVal, ack: true });
+			const controlVal = this.toControlValue(param, wallboxVal);
+			await this.setState(dp, { val: controlVal, ack: true });
 		}
 	}
 
 	async setValueOneCharger(param, dp, value) {
-		const numVal = Number(value);
+		const numVal = this.toWallboxValue(param, value);
 
 		// 1. Typ-Prüfung: Nur gültige Zahlen zulassen
 		if (isNaN(numVal)) {
@@ -783,7 +899,7 @@ class SmaEcharger extends utils.Adapter {
 		// 3. Duplikat-Filter: Nichts senden, wenn der Parameter schon diesen Wert hat
 		if (this.wallboxValues[param] !== undefined && Number(this.wallboxValues[param]) === numVal) {
 			this.log.debug(I18n.t('SMA eCharger %s steht bereits auf %s – kein Schreibbefehl nötig.', param, numVal));
-			await this.setState(dp, { val: numVal, ack: true });
+			await this.setState(dp, { val: this.toControlValue(param, numVal), ack: true });
 			return;
 		}
 
@@ -813,13 +929,12 @@ class SmaEcharger extends utils.Adapter {
 					},
 				],
 			});
-
 			if (putResponse) {
 				this.log.info(
 					I18n.t('SMA eCharger %s erfolgreich auf %s gesetzt (HTTP %s)', param, numVal, putResponse.status),
 				);
 				this.wallboxValues[param] = numVal;
-				await this.setState(dp, { val: numVal, ack: true });
+				await this.setState(dp, { val: this.toControlValue(param, numVal), ack: true });
 				if (this.config.expertMode) {
 					await this.setState(param, { val: numVal, ack: true });
 				}

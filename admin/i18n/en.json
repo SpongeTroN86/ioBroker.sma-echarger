@@ -59,5 +59,10 @@
 	"SMA eCharger Fehler beim Setzen von %s: %s": "SMA eCharger error setting %s: %s",
 	"Nicht mehr editierbares Parameter-Objekt entfernt: %s": "Removed no longer editable parameter object: %s",
 	"Nicht berechtigtes Control-Objekt entfernt: %s": "Removed unauthorized control object: %s",
+	"Fahrzeugverbrauch (kWh/100 km)": "Vehicle consumption (kWh/100 km)",
+	"Geladene Reichweite aktuelle Ladung": "Charged range current session",
+	"Ladeplan Zielreichweite (km)": "Charging plan target range (km)",
+	"Ungültige Zielreichweite \"%s\" km ignoriert.": "Invalid target range \"%s\" km ignored.",
+	"Zielreichweite %s km in %s kWh umgerechnet.": "Converted target range %s km to %s kWh.",
 	"Expertenmodus (alle Parameter.*-Datenpunkte anlegen)": "Expert mode (create all Parameter.* states)"
 }

@@ -52,6 +52,19 @@
             "md": 8,
             "lg": 6,
             "xl": 6
+        },
+        "carConsumption": {
+            "type": "number",
+            "label": "Fahrzeugverbrauch (kWh/100 km)",
+            "min": 0,
+            "max": 100,
+            "default": 18,
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 4
         }
     }
 }

@@ -59,5 +59,10 @@
 	"SMA eCharger Fehler beim Setzen von %s: %s": "Помилка SMA eCharger під час встановлення %s: %s",
 	"Nicht mehr editierbares Parameter-Objekt entfernt: %s": "Видалено об'єкт параметра, який більше не редагується: %s",
 	"Nicht berechtigtes Control-Objekt entfernt: %s": "Видалено неавторизований об'єкт керування: %s",
+	"Fahrzeugverbrauch (kWh/100 km)": "Витрата енергії автомобіля (кВт·год/100 км)",
+	"Geladene Reichweite aktuelle Ladung": "Заряджений запас ходу поточної сесії",
+	"Ladeplan Zielreichweite (km)": "Цільовий запас ходу плану заряджання (км)",
+	"Ungültige Zielreichweite \"%s\" km ignoriert.": "Неприпустимий цільовий запас ходу \"%s\" км проігноровано.",
+	"Zielreichweite %s km in %s kWh umgerechnet.": "Цільовий запас ходу %s км перетворено на %s кВт·год.",
 	"Expertenmodus (alle Parameter.*-Datenpunkte anlegen)": "Режим експерта (створювати всі точки даних Parameter.*)"
 }

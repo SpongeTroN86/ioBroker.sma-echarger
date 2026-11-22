@@ -59,5 +59,10 @@
 	"SMA eCharger Fehler beim Setzen von %s: %s": "Błąd SMA eCharger podczas ustawiania %s: %s",
 	"Nicht mehr editierbares Parameter-Objekt entfernt: %s": "Usunięto obiekt parametru, którego nie można już edytować: %s",
 	"Nicht berechtigtes Control-Objekt entfernt: %s": "Usunięto nieautoryzowany obiekt sterowania: %s",
+	"Fahrzeugverbrauch (kWh/100 km)": "Zużycie energii pojazdu (kWh/100 km)",
+	"Geladene Reichweite aktuelle Ladung": "Naładowany zasięg w bieżącej sesji",
+	"Ladeplan Zielreichweite (km)": "Docelowy zasięg planu ładowania (km)",
+	"Ungültige Zielreichweite \"%s\" km ignoriert.": "Zignorowano nieprawidłowy docelowy zasięg \"%s\" km.",
+	"Zielreichweite %s km in %s kWh umgerechnet.": "Przekonwertowano docelowy zasięg %s km na %s kWh.",
 	"Expertenmodus (alle Parameter.*-Datenpunkte anlegen)": "Tryb eksperta (utwórz wszystkie punkty danych Parameter.*)"
 }

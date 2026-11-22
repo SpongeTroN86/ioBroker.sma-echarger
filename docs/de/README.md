@@ -9,7 +9,7 @@
 Dieser Adapter bindet deinen **SMA eCharger** (z. B. EVC22-3AC-20) lokal über die HTTPS-JSON-Schnittstelle an ioBroker an. Damit lassen sich Live-Messwerte auslesen, Geräteparameter überwachen sowie Lademodus und Leistungsbegrenzungen direkt steuern.
 
 ### Funktionen
-* **Live-Messwerte (`Live.*`):** Aktuelle Ladeleistung (`chargingPower`), Gesamt- und Sitzungsenergie (`totalEnergy`, `sessionEnergy`), Fahrzeug-/Ladestatus (`vehicleStatus`), Gerätestatus (`deviceStatus`) sowie Phasenströme (`currentL1`–`currentL3`) und Spannungen (`voltageL1`–`voltageL3`).
+* **Live-Messwerte (`Live.*`):** Aktuelle Ladeleistung (`chargingPower`), Gesamt- und Sitzungsenergie (`totalEnergy`, `sessionEnergy`), berechnete geladene Reichweite (`sessionRange` in km anhand des hinterlegten Fahrzeugverbrauchs), Fahrzeug-/Ladestatus (`vehicleStatus`), Gerätestatus (`deviceStatus`) sowie Phasenströme (`currentL1`–`currentL3`) und Spannungen (`voltageL1`–`voltageL3`).
 * **Automatische Rechteerkennung & Bereinigung:** Beim Start prüft der Adapter automatisch, welche Parameter für das hinterlegte Benutzerkonto (*Betreiber* vs. *Installateur*) schreibbar sind. Es werden nur freigegebene `Control.*`-Datenpunkte angelegt und bereits vorhandene Objekte automatisch aus dem Objektbaum entfernt, falls die Berechtigungen herabgestuft werden.
 * **Geräteparameter (`Parameter.*` / Expertenmodus):** Um den Objektbaum übersichtlich zu halten, werden die SMA-Rohparameter standardmäßig nur als JSON in `Debug.All_Parameters` abgelegt. Über die Option **Expertenmodus** in den Instanz-Einstellungen lassen sich bei Bedarf alle `Parameter.*`-Datenpunkte im Objektbaum anlegen (und werden beim Deaktivieren oder beim Wechsel von Installateur auf Betreiber ebenfalls automatisch wieder bereinigt).
 
@@ -18,7 +18,7 @@ Dieser Adapter bindet deinen **SMA eCharger** (z. B. EVC22-3AC-20) lokal über d
   * Einstellen der maximalen Wirkleistung (`Control.inverterMaxPower` / `Control.inverterMaxPowerIn`) und des maximalen Ladestroms (`Control.chargingCurrentLimit`, 6–32 A).
   * Schalten der Ladefreigabe (`Control.chargingRelease`) und Ladesperre (`Control.chargingLock`).
   * **Laden mit Zielvorgabe (`Control.plan*`):**
-    1. Gewünschte Energiemenge in kWh über `Control.planTargetEnergy` (`Parameter.Chrg.Plan.En`) festlegen. **Hinweis:** Die Ziel-Energiemenge (`> 0`) darf nicht kleiner sein als die in der aktuellen Sitzung bereits geladene Energie (`Live.sessionEnergy` / 1000), da die Wallbox den Ladevorgang sonst beendet und auf das Fallback *PV-Überschuss* zurückschaltet (wird vom Adapter automatisch abgefangen).
+    1. Gewünschte Energiemenge in kWh über `Control.planTargetEnergy` (`Parameter.Chrg.Plan.En`) festlegen – alternativ kannst du einfach die gewünschte Zielreichweite in km über `Control.planTargetRange` eingeben, um die benötigten kWh automatisch anhand deines hinterlegten Fahrzeugverbrauchs berechnen und setzen zu lassen. **Hinweis:** Die Ziel-Energiemenge (`> 0`) darf nicht kleiner sein als die in der aktuellen Sitzung bereits geladene Energie (`Live.sessionEnergy` / 1000), da die Wallbox den Ladevorgang sonst beendet und auf das Fallback *PV-Überschuss* zurückschaltet (wird vom Adapter automatisch abgefangen).
     2. **Entweder** die verbleibende Zeit in Minuten über `Control.planDuration` (`DurTmm`) **oder** den festen Zielzeitpunkt über `Control.planStopTime` (`StopTm`, Unix-Zeitstempel in Sekunden) vorgeben – alternativ kannst du einfach ein lesbares Datum (`DD.MM.YYYY HH:MM` oder `YYYY-MM-DD HH:MM`) in `Control.planTargetTimeInput` eintragen, um den Zeitstempel automatisch berechnen und setzen zu lassen.
     3. `Control.chargingMode` (`Parameter.Chrg.ActChaMod`) auf `4720` (*Laden mit Zielvorgabe*) setzen, um den Ladeplan zu starten.
   * Integrierter 5-Sekunden-Schutz (Rate-Limit) pro Parameter, Duplikat-Filter sowie automatischer Reset auf den aktuellen Wallbox-Wert bei blockierten Befehlen.
@@ -29,6 +29,8 @@ Dieser Adapter bindet deinen **SMA eCharger** (z. B. EVC22-3AC-20) lokal über d
 3. Hinterlege **Benutzername** (`user` zum reinen Auslesen, oder `admin` bzw. ein Installateur-Konto, wenn Leistungsparameter wie `WMax` geschrieben werden sollen) und **Passwort**.
 4. Lege das gewünschte **Abfrageintervall** in Sekunden fest (Standard: `15` Sekunden).
 5. Optional den **Expertenmodus** aktivieren, falls alle Rohparameter (`Parameter.*`) im Objektbaum angelegt werden sollen.
+6. Optional den **Fahrzeugverbrauch (kWh/100 km)** hinterlegen (Standard: `18`, `0` deaktiviert die Reichweitenberechnung), um die geladene Reichweite (`Live.sessionRange`) automatisch zu berechnen und Ladepläne über `Control.planTargetRange` direkt in Kilometern vorzugeben.
+
 
 
 ### Haftungsausschluss

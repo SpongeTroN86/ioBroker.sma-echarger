@@ -16,19 +16,6 @@
         "uk": "виправлення: створення відсутніх батьківських каналів (`Debug`, `Control` та `Parameter.*` підканали) у дереві об'єктів\nвиправлення: використовувати стандартні ролі стану IObroker (`level`) для записуються станів керування",
         "zh-cn": "修复：在对象树中创建缺失的父频道（`Debug`、`控制`和`参数.*`子通道）\n修复：使用标准的 IOBroker 状态角色（`level`）作为可写控件状态"
       },
-      "0.3.1": {
-        "en": "fix: create missing parent channels (`Debug`, `Control`, and `Parameter.*` sub-channels) in object tree\nfix: use standard ioBroker state roles (`level`) for writable control states",
-        "de": "Fix: Fehlende Elternkanäle (`Debug`, `Control` und `Parameter.*`) im Objektbaum erstellen\nFix: Standardstatusrollen (`Level`) von ioBroker verwenden",
-        "ru": "исправлено: создание недостающих родительских каналов (подканалы `Debug`, `Control` и `Parameter.*`) в дереве объектов\nисправление: используйте стандартные роли состояний IOBroker (`level`) для состояний управления, доступных для записи",
-        "pt": "correção: crie canais pais ausentes (subcanais `Debug`, `Control` e `Parameter.*`) na árvore de objetos\ncorreção: use funções padrão do IOBroker (`level`) para controles graváveis",
-        "nl": "opgelost: ontbrekende bovenliggende kanalen aanmaken (subkanalen `Debug`, `Control` en `Parameter.*`) in de objectstructuur\nOplossing: gebruik standaard IOBroker-statusrollen (`level`) voor schrijfbare controlestatussen",
-        "fr": "fix : créer les canaux parents manquants (sous-canaux « Debug », « Control » et « Parameter.* ») dans l'arborescence des objets\nfix : utilisez les rôles standard d'IOBroker (« level ») pour les états de contrôle en écriture",
-        "it": "fix: crea i canali principali mancanti (Debug`, `Control` e `Parameter.*`) nell'albero degli oggetti\nfix: usa i ruoli standard di IOBroker (`level`) per stati di controllo scrivibili",
-        "es": "solución: crear los canales principales que faltan (subcanales `Debug`, `Control` y `Parameter.*`) en el árbol de objetos\nsolución: usar roles de estado estándar de IOBroker («nivel») para escribir estados",
-        "pl": "poprawka: utwórz brakujące kanały nadrzędne („Debug”, „Control” i „Parameter.*” podkanały) w drzewie obiektów\nfix: użyj standardowych ról stanu ioBroker (`level`) dla zapisywalnych stanów kontrolnych",
-        "uk": "виправлення: створення відсутніх батьківських каналів (`Debug`, `Control` та `Parameter.*` підканали) у дереві об'єктів\nвиправлення: використовувати стандартні ролі стану IObroker (`level`) для записуються станів керування",
-        "zh-cn": "修复：在对象树中创建缺失的父频道（`Debug`、`控制`和`参数.*`子通道）\n修复：使用标准的 IOBroker 状态角色（`level`）作为可写控件状态"
-      },
       "0.3.0": {
         "en": "feat: add expert mode option (`expertMode`) to toggle creation of raw `Parameter.*` states\nfeat: automatically filter and clean up `Control.*` and `Parameter.*` states based on user permissions (User vs. Installer)",
         "de": "Feat: Hinzufügen des Expertenmodus (`ExpertMode`) zur Erzeugung roher `Parameter.*`\nFeat: filtert und bereinigt automatisch die Status `Control.*` und `Parameter.*` je nach Benutzerrecht (User vs. Installer)",
@@ -176,7 +163,8 @@
     "pollInterval": 15,
     "username": "user",
     "password": "",
-    "expertMode": false
+    "expertMode": false,
+    "carConsumption": 18
   },
   "encryptedNative": [
     "password"

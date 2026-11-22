@@ -19,7 +19,7 @@ This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its
 
 ### Features
 
-* **Live Measurements (`Live.*`):** Current charging power (`chargingPower`), total and session energy (`totalEnergy`, `sessionEnergy`), vehicle/charging status (`vehicleStatus`), device health (`deviceStatus`), phase currents (`currentL1`–`currentL3`), and voltages (`voltageL1`–`voltageL3`).
+* **Live Measurements (`Live.*`):** Current charging power (`chargingPower`), total and session energy (`totalEnergy`, `sessionEnergy`), calculated charged session range (`sessionRange` in km based on configured vehicle consumption), vehicle/charging status (`vehicleStatus`), device health (`deviceStatus`), phase currents (`currentL1`–`currentL3`), and voltages (`voltageL1`–`voltageL3`).
 * **Automatic Permission Detection & Cleanup:** On startup, the adapter checks which parameters are editable for the configured account (*User* vs. *Installer*). Only permitted `Control.*` states are created, and previously created states are automatically removed from the object tree if permissions are downgraded.
 * **Device Parameters (`Parameter.*` / Expert Mode):** Raw SMA configuration parameters are kept in `Debug.All_Parameters` by default to keep the object tree clean. Enable **Expert mode** in the instance settings to create all `Parameter.*` states in the object tree (also automatically cleaned up when disabled or when switching from Installer to User).
 
@@ -28,7 +28,7 @@ This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its
   * Adjust maximum active power (`Control.inverterMaxPower` / `Control.inverterMaxPowerIn`) and maximum charging current (`Control.chargingCurrentLimit`, 6–32 A).
   * Enable/disable charging release (`Control.chargingRelease`) and charging lock (`Control.chargingLock`).
   * **Target Charging (`Control.plan*`):**
-    1. Set the target energy in kWh via `Control.planTargetEnergy` (`Parameter.Chrg.Plan.En`). **Note:** The target energy (`> 0`) must not be smaller than the already charged session energy (`Live.sessionEnergy` / 1000), otherwise the wallbox stops charging and falls back to *PV Surplus* (protected automatically by the adapter).
+    1. Set the target energy in kWh via `Control.planTargetEnergy` (`Parameter.Chrg.Plan.En`) — or simply enter the desired target range in km via `Control.planTargetRange` to have the required kWh calculated automatically based on your configured vehicle consumption. **Note:** The target energy (`> 0`) must not be smaller than the already charged session energy (`Live.sessionEnergy` / 1000), otherwise the wallbox stops charging and falls back to *PV Surplus* (protected automatically by the adapter).
     2. Set **either** the remaining duration in minutes via `Control.planDuration` (`DurTmm`) **or** a fixed target time via `Control.planStopTime` (`StopTm`, Unix timestamp in seconds) — alternatively, enter a readable date/time (`DD.MM.YYYY HH:MM` or `YYYY-MM-DD HH:MM`) into `Control.planTargetTimeInput` to calculate and apply it automatically.
     3. Set `Control.chargingMode` (`Parameter.Chrg.ActChaMod`) to `4720` (*Target charging*) to start.
   * Built-in 5-second cooldown per parameter, duplicate filtering, and automatic value reset on blocked commands to protect the wallbox hardware.
@@ -40,6 +40,8 @@ This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its
 3. Enter your **Username** (`user` for reading values, or `admin` / an installer account if you want to modify inverter power limits like `WMax`) and **Password**.
 4. Set the desired **Poll interval** in seconds (default: `15` seconds).
 5. Optionally enable **Expert mode** if you want all raw `Parameter.*` states to be created in the object tree.
+6. Optionally enter your **Vehicle consumption (kWh/100 km)** (default: `18`, set to `0` to disable range calculation) to automatically calculate `Live.sessionRange` and control target charging in kilometers via `Control.planTargetRange`.
+
 
 ### Disclaimer
 
@@ -51,6 +53,12 @@ This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (SpongeTroN86) Added live session range calculation (`Live.sessionRange`) and target range input (`Control.planTargetRange`) based on vehicle energy consumption
+* (SpongeTroN86) Changed `Control.chargingRelease` and `Control.chargingLock` to native `boolean` switches (`role: "switch"`) for better compatibility with visualization adapters like `vis-2`
+* (SpongeTroN86) Automatically reset `Control.planTargetRange` to `0` when the charging cable is disconnected (`vehicleStatus === 200111`)
+
+
 ### 0.3.2 (2026-11-21)
 * (SpongeTroN86) fix: create missing parent channels (`Debug`, `Control`, and `Parameter.*` sub-channels) in object tree
 * (SpongeTroN86) fix: use standard ioBroker state roles (`level`) for writable control states

@@ -59,5 +59,10 @@
 	"SMA eCharger Fehler beim Setzen von %s: %s": "Errore SMA eCharger durante l'impostazione di %s: %s",
 	"Nicht mehr editierbares Parameter-Objekt entfernt: %s": "Oggetto parametro non più modificabile rimosso: %s",
 	"Nicht berechtigtes Control-Objekt entfernt: %s": "Oggetto di controllo non autorizzato rimosso: %s",
+	"Fahrzeugverbrauch (kWh/100 km)": "Consumo del veicolo (kWh/100 km)",
+	"Geladene Reichweite aktuelle Ladung": "Autonomia caricata nella sessione attuale",
+	"Ladeplan Zielreichweite (km)": "Autonomia target del piano di ricarica (km)",
+	"Ungültige Zielreichweite \"%s\" km ignoriert.": "Autonomia target non valida \"%s\" km ignorata.",
+	"Zielreichweite %s km in %s kWh umgerechnet.": "Autonomia target di %s km convertita in %s kWh.",
 	"Expertenmodus (alle Parameter.*-Datenpunkte anlegen)": "Modalità esperto (crea tutti i datapoint Parameter.*)"
 	}
