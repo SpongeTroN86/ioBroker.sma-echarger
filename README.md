@@ -53,11 +53,10 @@ This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.4.0 (2026-11-22)
 * (SpongeTroN86) Added live session range calculation (`Live.sessionRange`) and target range input (`Control.planTargetRange`) based on vehicle energy consumption
 * (SpongeTroN86) Changed `Control.chargingRelease` and `Control.chargingLock` to native `boolean` switches (`role: "switch"`) for better compatibility with visualization adapters like `vis-2`
 * (SpongeTroN86) Automatically reset `Control.planTargetRange` to `0` when the charging cable is disconnected (`vehicleStatus === 200111`)
-
 
 ### 0.3.2 (2026-11-21)
 * (SpongeTroN86) fix: create missing parent channels (`Debug`, `Control`, and `Parameter.*` sub-channels) in object tree
@@ -78,10 +77,6 @@ This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its
 
 * (SpongeTroN86) fix: remove specific schedule time from dependabot configuration
   feat: add placeholder for future changes in CHANGELOG_OLD.md
-
-### 0.1.11 (2026-11-19)
-
-* (SpongeTroN86) feat: update README files for improved documentation and add German translation
 
 ## License
 

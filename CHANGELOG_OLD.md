@@ -3,6 +3,10 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+## 0.1.11 (2026-11-19)
+
+* (SpongeTroN86) feat: update README files for improved documentation and add German translation
+
 ## 0.1.10 (2026-11-19)
 
 * (SpongeTroN86) Added multi-language support (`de`, `en`, `es`, `fr`, `it`, `nl`, `pl`, `pt`, `ru`, `uk`, `zh-cn`) for states, logs, and configuration.

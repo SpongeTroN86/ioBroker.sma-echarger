@@ -1,6 +1,6 @@
 {
   "name": "iobroker.sma-echarger",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Anbindung eines SMA eChargers. Lesen und Steuern",
   "author": {
     "name": "SpongeTroN",
