@@ -7,7 +7,7 @@
     "email": "rolf@bunter-waeschekorb.de"
   },
   "contributors": [],
-  "homepage": "https://github.com/SpongeTroN/ioBroker.sma-echarger",
+  "homepage": "https://github.com/SpongeTroN86/ioBroker.sma-echarger",
   "license": "MIT",
   "keywords": [
     "ioBroker",
@@ -68,7 +68,7 @@
     "dev-server": "dev-server"
   },
   "bugs": {
-    "url": "https://github.com/SpongeTroN/ioBroker.sma-echarger/issues"
+    "url": "https://github.com/SpongeTroN86/ioBroker.sma-echarger/issues"
   },
   "readmeFilename": "README.md"
 }

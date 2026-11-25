@@ -15,7 +15,7 @@
 
 ## SMA eCharger adapter for ioBroker
 
-This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its HTTPS JSON API to ioBroker. It allows you to monitor live charging values, read device parameters, and control charging modes or power limits.
+This adapter connects your [**SMA eCharger**](https://www.sma.de/produkte/ladeloesungen-elektromobilitaet/sma-echarger) (e.g., EVC22-3AC-20) locally via its HTTPS JSON API to ioBroker. It allows you to monitor live charging values, read device parameters, and control charging modes or power limits.
 
 ### Features
 
@@ -46,6 +46,7 @@ This adapter connects your **SMA eCharger** (e.g., EVC22-3AC-20) locally via its
 ### Disclaimer
 
 *SMA* and *eCharger* are registered trademarks of SMA Solar Technology AG. This project is an independent open-source adapter and is not affiliated with or endorsed by SMA Solar Technology AG.
+[https://www.sma.de/produkte/ladeloesungen-elektromobilitaet/sma-echarger](https://www.sma.de/produkte/ladeloesungen-elektromobilitaet/sma-echarger)
 
 ## Changelog
 

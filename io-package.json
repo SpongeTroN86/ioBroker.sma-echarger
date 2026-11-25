@@ -1,6 +1,7 @@
 {
   "common": {
     "name": "sma-echarger",
+    "messagebox": true,
     "version": "0.4.0",
     "news": {
       "0.4.0": {
