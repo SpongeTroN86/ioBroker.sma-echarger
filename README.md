@@ -54,6 +54,19 @@ This adapter connects your [**SMA eCharger**](https://www.sma.de/produkte/ladelo
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+## Changelog
+<!--
+	Placeholder for the next version (at the beginning of the line):
+	### **WORK IN PROGRESS**
+-->
+### **WORK IN PROGRESS**
+* (SpongeTroN) Added admin button to manually clean up orphaned `Parameter.*` and `Control.*` states while protecting states with active `common.custom` settings (e.g., History, InfluxDB, SQL)
+* (SpongeTroN) Revoked write permissions (`write: false`) for unauthorized or inactive states on startup instead of automatically deleting them
+* (SpongeTroN) Filtered out sensitive `Parameter.Acs.*` credentials completely from state creation and `Debug.All_Parameters`
+* (SpongeTroN) Sanitized dynamic `Parameter.*` object IDs against `FORBIDDEN_CHARS` and enabled direct writes via `native.channelId`
+* (SpongeTroN) Assigned specific ioBroker state roles (`value.power`, `value.energy`, `value.current`, `value.voltage`, `value.distance`) to `Live.*` states
+* (SpongeTroN) Standardized all log messages, state names, and `jsonConfig` base keys to English
+
 ### 0.4.0 (2026-11-22)
 * (SpongeTroN86) Added live session range calculation (`Live.sessionRange`) and target range input (`Control.planTargetRange`) based on vehicle energy consumption
 * (SpongeTroN86) Changed `Control.chargingRelease` and `Control.chargingLock` to native `boolean` switches (`role: "switch"`) for better compatibility with visualization adapters like `vis-2`

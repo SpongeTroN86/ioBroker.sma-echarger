@@ -361,7 +361,7 @@ class SmaEcharger extends utils.Adapter {
 
 			const commonObj = {
 				name: item.name,
-				role: 'value',
+				role: item.role,
 				unit: item.unit,
 				read: true,
 				write: false,
@@ -630,7 +630,7 @@ class SmaEcharger extends utils.Adapter {
 					common: {
 						name: 'Charged range of current session',
 						type: 'number',
-						role: 'value',
+						role: 'value.distance',
 						unit: 'km',
 						read: true,
 						write: false,
