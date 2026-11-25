@@ -696,7 +696,6 @@ class SmaEcharger extends utils.Adapter {
 								await this.setState(cleanId, finalVal, true);
 							}
 
-
 							const syncItem = this.controlStates.find(c => c.channelId === item.channelId);
 							if (syncItem && typeof finalVal === 'number') {
 								const targetControlVal = this.toControlValue(item.channelId, finalVal);
