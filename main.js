@@ -1,8 +1,10 @@
 'use strict';
 
 const utils = require('@iobroker/adapter-core');
+const { I18n } = utils;
 const axios = require('axios');
 const https = require('node:https');
+const path = require('node:path');
 
 // #region Data point definitions (Live & Control)
 function getLivePoints() {
@@ -10,82 +12,82 @@ function getLivePoints() {
 		{
 			channel: 'Measurement.Metering.GridMs.TotWIn.ChaSta',
 			dp: 'chargingPower',
-			name: 'Current charging power',
+			name: I18n.getTranslatedObject('Current charging power'),
 			role: 'value.power',
 			unit: 'W',
 		},
 		{
 			channel: 'Measurement.Metering.GridMs.TotWhIn.ChaSta',
 			dp: 'totalEnergy',
-			name: 'Total charged energy',
+			name: I18n.getTranslatedObject('Total charged energy'),
 			role: 'value.energy',
 			unit: 'Wh',
 		},
 		{
 			channel: 'Measurement.ChaSess.WhIn',
 			dp: 'sessionEnergy',
-			name: 'Current session energy',
+			name: I18n.getTranslatedObject('Current session energy'),
 			role: 'value.energy',
 			unit: 'Wh',
 		},
 		{
 			channel: 'Measurement.Operation.EVeh.ChaStt',
 			dp: 'vehicleStatus',
-			name: 'Vehicle/charging status',
+			name: I18n.getTranslatedObject('Vehicle/charging status'),
 			role: 'value',
 			unit: '',
 			states: {
-				200111: 'Cable disconnected',
-				200112: 'Cable connected',
-				200113: 'Charging',
+				200111: I18n.t('Cable disconnected'),
+				200112: I18n.t('Cable connected'),
+				200113: I18n.t('Charging'),
 			},
 		},
 		{
 			channel: 'Measurement.Operation.Health',
 			dp: 'deviceStatus',
-			name: 'Wallbox status (307 means: All OK)',
+			name: I18n.getTranslatedObject('Wallbox status (307 means: All OK)'),
 			role: 'value',
 			unit: '',
 		},
 		{
 			channel: 'Measurement.GridMs.A.phsA',
 			dp: 'currentL1',
-			name: 'Charging current phase L1',
+			name: I18n.getTranslatedObject('Charging current phase L1'),
 			role: 'value.current',
 			unit: 'A',
 		},
 		{
 			channel: 'Measurement.GridMs.A.phsB',
 			dp: 'currentL2',
-			name: 'Charging current phase L2',
+			name: I18n.getTranslatedObject('Charging current phase L2'),
 			role: 'value.current',
 			unit: 'A',
 		},
 		{
 			channel: 'Measurement.GridMs.A.phsC',
 			dp: 'currentL3',
-			name: 'Charging current phase L3',
+			name: I18n.getTranslatedObject('Charging current phase L3'),
 			role: 'value.current',
 			unit: 'A',
 		},
 		{
 			channel: 'Measurement.GridMs.PhV.phsA',
 			dp: 'voltageL1',
-			name: 'Voltage phase L1',
+			name: I18n.getTranslatedObject('Voltage phase L1'),
 			role: 'value.voltage',
 			unit: 'V',
 		},
 		{
 			channel: 'Measurement.GridMs.PhV.phsB',
 			dp: 'voltageL2',
-			name: 'Voltage phase L2',
+			name: I18n.getTranslatedObject('Voltage phase L2'),
 			role: 'value.voltage',
 			unit: 'V',
 		},
 		{
 			channel: 'Measurement.GridMs.PhV.phsC',
 			dp: 'voltageL3',
-			name: 'Voltage phase L3',
+			name: I18n.getTranslatedObject('Voltage phase L3'),
 			role: 'value.voltage',
 			unit: 'V',
 		},
@@ -99,7 +101,7 @@ function getControlStates(editableMap = {}, carConsumption) {
 			channelId: '',
 			initial: '',
 			common: {
-				name: 'Enter target time (DD.MM.YYYY HH:MM or YYYY-MM-DD HH:MM)',
+				name: I18n.getTranslatedObject('Enter target time (DD.MM.YYYY HH:MM or YYYY-MM-DD HH:MM)'),
 				type: 'string',
 				role: 'text',
 				read: true,
@@ -111,7 +113,7 @@ function getControlStates(editableMap = {}, carConsumption) {
 			channelId: 'Parameter.Inverter.AcALim',
 			initial: 16,
 			common: {
-				name: 'Maximum charging current in Amperes',
+				name: I18n.getTranslatedObject('Maximum charging current in Amperes'),
 				type: 'number',
 				role: 'level',
 				unit: 'A',
@@ -127,7 +129,7 @@ function getControlStates(editableMap = {}, carConsumption) {
 			type: 'state',
 			initial: false,
 			common: {
-				name: 'Charging lock',
+				name: I18n.getTranslatedObject('Charging lock'),
 				type: 'boolean',
 				role: 'switch',
 				read: true,
@@ -141,7 +143,7 @@ function getControlStates(editableMap = {}, carConsumption) {
 			channelId: 'Parameter.Chrg.Plan.En',
 			initial: 0,
 			common: {
-				name: 'Charging plan energy amount (kWh)',
+				name: I18n.getTranslatedObject('Charging plan energy amount (kWh)'),
 				type: 'number',
 				role: 'level',
 				unit: 'kWh',
@@ -155,7 +157,7 @@ function getControlStates(editableMap = {}, carConsumption) {
 			channelId: 'Parameter.Chrg.Plan.DurTmm',
 			initial: 0,
 			common: {
-				name: 'Charging plan duration in minutes',
+				name: I18n.getTranslatedObject('Charging plan duration in minutes'),
 				type: 'number',
 				role: 'level.timer',
 				unit: 'min',
@@ -169,7 +171,7 @@ function getControlStates(editableMap = {}, carConsumption) {
 			channelId: 'Parameter.Chrg.Plan.StopTm',
 			initial: 0,
 			common: {
-				name: 'Charging plan target time (Unix timestamp in seconds)',
+				name: I18n.getTranslatedObject('Charging plan target time (Unix timestamp in seconds)'),
 				type: 'number',
 				role: 'level',
 				unit: 's',
@@ -183,16 +185,16 @@ function getControlStates(editableMap = {}, carConsumption) {
 			channelId: 'Parameter.Chrg.ActChaMod',
 			initial: 4719,
 			common: {
-				name: 'Set charging mode for eCharger',
+				name: I18n.getTranslatedObject('Set charging mode for eCharger'),
 				type: 'number',
 				role: 'level',
 				read: true,
 				write: true,
 				states: {
-					4718: 'Fast charging',
-					4719: 'PV surplus',
-					4720: 'Target charging',
-					4721: 'Charging stop',
+					4718: I18n.t('Fast charging'),
+					4719: I18n.t('PV surplus'),
+					4720: I18n.t('Target charging'),
+					4721: I18n.t('Charging stop'),
 				},
 			},
 		},
@@ -201,7 +203,7 @@ function getControlStates(editableMap = {}, carConsumption) {
 			channelId: 'Parameter.Inverter.WMaxIn',
 			initial: 11000,
 			common: {
-				name: 'Set maximum active power (WMaxIn) (consumption/charging power)',
+				name: I18n.getTranslatedObject('Set maximum active power (WMaxIn) (consumption/charging power)'),
 				type: 'number',
 				role: 'level',
 				unit: 'W',
@@ -217,7 +219,7 @@ function getControlStates(editableMap = {}, carConsumption) {
 			type: 'state',
 			initial: true,
 			common: {
-				name: 'Charging release',
+				name: I18n.getTranslatedObject('Charging release'),
 				type: 'boolean',
 				role: 'switch',
 				read: true,
@@ -231,7 +233,7 @@ function getControlStates(editableMap = {}, carConsumption) {
 			channelId: 'Parameter.Inverter.WMax',
 			initial: 11000,
 			common: {
-				name: 'Set maximum active power (WMax) (supply/discharging power)',
+				name: I18n.getTranslatedObject('Set maximum active power (WMax) (supply/discharging power)'),
 				type: 'number',
 				role: 'level',
 				unit: 'W',
@@ -246,7 +248,7 @@ function getControlStates(editableMap = {}, carConsumption) {
 			channelId: '',
 			initial: 0,
 			common: {
-				name: 'Charging plan target range (km)',
+				name: I18n.getTranslatedObject('Charging plan target range (km)'),
 				type: 'number',
 				role: 'level',
 				unit: 'km',
@@ -269,7 +271,6 @@ function getControlStates(editableMap = {}, carConsumption) {
 	});
 }
 // #endregion
-
 const TARGET_PARAMS = [
 	'Parameter.Chrg.ActChaMod',
 	'Parameter.Inverter.WMax',
@@ -309,15 +310,18 @@ class SmaEcharger extends utils.Adapter {
 		this.lastVehicleStatus = null;
 		this.editableMap = {};
 	}
+
 	sanitizeId(id) {
 		return id.replace(/\[\]$/, '').replace(this.FORBIDDEN_CHARS, '_');
 	}
 
 	async onReady() {
-		this.log.info('=== PARAMETER ANALYSIS & LIVE TEST STARTED ===');
+		await I18n.init(path.join(__dirname, 'admin'), this);
+
+		this.log.info(I18n.t('=== PARAMETER ANALYSIS & LIVE TEST STARTED ==='));
 
 		if (!this.config.ipAddress || !this.config.password) {
-			this.log.error('ABORTED: IP address or password is empty!');
+			this.log.error(I18n.t('ABORTED: IP address or password is empty!'));
 			return;
 		}
 
@@ -334,7 +338,7 @@ class SmaEcharger extends utils.Adapter {
 		await this.setObjectNotExistsAsync('Debug.All_Parameters', {
 			type: 'state',
 			common: {
-				name: 'Complete JSON response of all parameters',
+				name: I18n.getTranslatedObject('Complete JSON response of all parameters'),
 				type: 'string',
 				role: 'json',
 				read: true,
@@ -346,13 +350,13 @@ class SmaEcharger extends utils.Adapter {
 		// 2. Create parent channels "Live" and "Control"
 		await this.setObjectNotExistsAsync('Live', {
 			type: 'channel',
-			common: { name: 'Live measurements' },
+			common: { name: I18n.getTranslatedObject('Live measurements') },
 			native: {},
 		});
 
 		await this.setObjectNotExistsAsync('Control', {
 			type: 'channel',
-			common: { name: 'Control' },
+			common: { name: I18n.getTranslatedObject('Control') },
 			native: {},
 		});
 		// Create/update all live states from getLivePoints
@@ -409,7 +413,9 @@ class SmaEcharger extends utils.Adapter {
 			if (!this.config.expertMode) {
 				if (obj.common?.write === true) {
 					await this.extendObject(shortObjId, { common: { write: false } });
-					this.log.debug(`Disabled write permissions for parameter object (expert mode off): ${shortObjId}`);
+					this.log.debug(
+						I18n.t('Disabled write permissions for parameter object (expert mode off): %s', shortObjId),
+					);
 				}
 				continue;
 			}
@@ -421,7 +427,9 @@ class SmaEcharger extends utils.Adapter {
 				this.editableMap[shortObjId] !== true
 			) {
 				await this.extendObject(shortObjId, { common: { write: false } });
-				this.log.debug(`Disabled write permissions for no longer editable parameter object: ${shortObjId}`);
+				this.log.debug(
+					I18n.t('Disabled write permissions for no longer editable parameter object: %s', shortObjId),
+				);
 			}
 		}
 
@@ -441,11 +449,12 @@ class SmaEcharger extends utils.Adapter {
 					obj.common?.write === true
 				) {
 					await this.extendObject(shortObjId, { common: { write: false } });
-					this.log.debug(`Disabled write permissions for unauthorized control object: ${shortObjId}`);
+					this.log.debug(
+						I18n.t('Disabled write permissions for unauthorized control object: %s', shortObjId),
+					);
 				}
 			}
 		}
-
 		// Create/update allowed control states
 		for (const item of this.controlStates) {
 			await this.extendObject(item.id, {
@@ -515,12 +524,12 @@ class SmaEcharger extends utils.Adapter {
 				queryItems: [{ componentId: 'IGULD:SELF' }],
 			});
 			if (!res || !res.data) {
-				this.log.warn('No data received from SMA wallbox.');
+				this.log.warn(I18n.t('No data received from SMA wallbox.'));
 				return editableMap;
 			}
 
 			if (!Array.isArray(res.data) || res.data.length === 0 || !Array.isArray(res.data[0].values)) {
-				this.log.warn('Invalid SMA parameter format.');
+				this.log.warn(I18n.t('Invalid SMA parameter format.'));
 				return editableMap;
 			}
 
@@ -539,7 +548,6 @@ class SmaEcharger extends utils.Adapter {
 
 			await this.setState('Debug.All_Parameters', { val: jsonString, ack: true });
 			this.log.debug(jsonString);
-
 			for (const param of filteredValues) {
 				const cleanId = this.sanitizeId(param.channelId);
 				editableMap[cleanId] = Boolean(param.editable);
@@ -548,7 +556,7 @@ class SmaEcharger extends utils.Adapter {
 				if (param.value !== undefined) {
 					rawValue = param.value;
 				} else if (Array.isArray(param.values) && param.values.length > 0) {
-					rawValue = param.values;
+					rawValue = param.values[0];
 				}
 
 				const isNumber = rawValue !== '' && !isNaN(Number(rawValue));
@@ -602,12 +610,17 @@ class SmaEcharger extends utils.Adapter {
 				}
 			}
 
-			this.log.info(`Success! Found ${filteredValues.length} parameters and saved to Debug.All_Parameters.`);
+			this.log.info(
+				I18n.t(
+					'Success! Found %s parameters and saved to Debug.All_Parameters.',
+					filteredValues.length,
+				),
+			);
 		} catch (error) {
 			const details = error.response
 				? `${error.response.status} - ${JSON.stringify(error.response.data)}`
 				: error.message;
-			this.log.error(`Error fetching parameters: ${details}`);
+			this.log.error(I18n.t('Error fetching parameters: %s', details));
 		}
 		return editableMap;
 	}
@@ -619,16 +632,15 @@ class SmaEcharger extends utils.Adapter {
 				{ componentId: 'IGULD:SELF' },
 			]);
 			if (!liveRes || !liveRes.data) {
-				this.log.warn('No data received from SMA wallbox.');
+				this.log.warn(I18n.t('No data received from SMA wallbox.'));
 				return;
 			}
-
 			const consumption = Number(this.config.carConsumption) || 0;
 			if (consumption > 0) {
 				await this.extendObject('Live.sessionRange', {
 					type: 'state',
 					common: {
-						name: 'Charged range of current session',
+						name: I18n.getTranslatedObject('Charged range of current session'),
 						type: 'number',
 						role: 'value.distance',
 						unit: 'km',
@@ -653,7 +665,9 @@ class SmaEcharger extends utils.Adapter {
 									await this.setState('Control.planTargetRange', { val: 0, ack: true });
 									if (this.lastVehicleStatus !== null) {
 										this.log.info(
-											'Charging cable disconnected – target range (Control.planTargetRange) reset to 0.',
+											I18n.t(
+												'Charging cable disconnected – target range (Control.planTargetRange) reset to 0.',
+											),
 										);
 									}
 								}
@@ -688,10 +702,10 @@ class SmaEcharger extends utils.Adapter {
 
 							const cleanId = this.sanitizeId(item.channelId);
 
-							// Wert intern merken
+							// Store value internally
 							this.wallboxValues[cleanId] = finalVal;
 
-							// Im Expertenmodus den Parameter.*-Datenpunkt aktualisieren
+							// Update Parameter.* state in expert mode
 							if (this.config.expertMode) {
 								await this.setState(cleanId, finalVal, true);
 							}
@@ -706,7 +720,9 @@ class SmaEcharger extends utils.Adapter {
 									controlState.val !== targetControlVal
 								) {
 									await this.setState(syncItem.id, { val: targetControlVal, ack: true });
-									this.log.debug(`SMA Sync: Updated ${syncItem.id} to ${targetControlVal}.`);
+									this.log.debug(
+										I18n.t('SMA Sync: Updated %s to %s.', syncItem.id, targetControlVal),
+									);
 								}
 							}
 						}
@@ -717,10 +733,9 @@ class SmaEcharger extends utils.Adapter {
 		} catch (error) {
 			await this.setState('info.connection', false, true);
 			const details = error.response ? JSON.stringify(error.response.data) : error.message;
-			this.log.error(`Error reading live values: ${details}`);
+			this.log.error(I18n.t('Error reading live values: %s', details));
 		}
 	}
-
 	async onMessage(obj) {
 		if (obj && obj.command === 'cleanupOrphans') {
 			try {
@@ -729,7 +744,7 @@ class SmaEcharger extends utils.Adapter {
 					this.sendTo(obj.from, obj.command, { result: resultText }, obj.callback);
 				}
 			} catch (err) {
-				this.log.error(`Error during cleanup: ${err.message}`);
+				this.log.error(I18n.t('Error during cleanup: %s', err.message));
 				if (obj.callback) {
 					this.sendTo(obj.from, obj.command, { error: err.message }, obj.callback);
 				}
@@ -785,17 +800,24 @@ class SmaEcharger extends utils.Adapter {
 			if (obj.common?.custom && Object.keys(obj.common.custom).length > 0) {
 				skippedCustomCount++;
 				this.log.warn(
-					`Skipped deletion of ${shortObjId}: active custom settings (e.g. History/InfluxDB) found.`,
+					I18n.t(
+						'Skipped deletion of %s: active custom settings (e.g. History/InfluxDB) found.',
+						shortObjId,
+					),
 				);
 				continue;
 			}
 
 			await this.delObjectAsync(shortObjId);
 			deletedCount++;
-			this.log.info(`Deleted orphaned state: ${shortObjId}`);
+			this.log.info(I18n.t('Deleted orphaned state: %s', shortObjId));
 		}
 
-		const summary = `Cleanup finished: ${deletedCount} state(s) deleted, ${skippedCustomCount} skipped due to active recording (History/InfluxDB).`;
+		const summary = I18n.t(
+			'Cleanup finished: %s state(s) deleted, %s skipped due to active recording (History/InfluxDB).',
+			deletedCount,
+			skippedCustomCount,
+		);
 		this.log.info(summary);
 		return summary;
 	}
@@ -844,13 +866,16 @@ class SmaEcharger extends utils.Adapter {
 				const unixSec = this.parseDateToUnixSeconds(String(state.val));
 				if (unixSec === null) {
 					this.log.warn(
-						`Invalid date format "${state.val}". Please use DD.MM.YYYY HH:MM or YYYY-MM-DD HH:MM.`,
+						I18n.t(
+							'Invalid date format "%s". Please use DD.MM.YYYY HH:MM or YYYY-MM-DD HH:MM.',
+							state.val,
+						),
 					);
 					await this.setState('Control.planTargetTimeInput', { val: '', ack: true });
 					return;
 				}
 				await this.setState('Control.planTargetTimeInput', { val: String(state.val).trim(), ack: true });
-				this.log.debug(`Converted date "${state.val}" to epoch timestamp ${unixSec}.`);
+				this.log.debug(I18n.t('Converted date "%s" to epoch timestamp %s.', state.val, unixSec));
 
 				await this.setValueOneCharger('Parameter.Chrg.Plan.StopTm', 'Control.planStopTime', unixSec);
 				return;
@@ -861,7 +886,7 @@ class SmaEcharger extends utils.Adapter {
 				const consumption = Number(this.config.carConsumption) || 0;
 
 				if (isNaN(targetKm) || targetKm < 0 || consumption <= 0) {
-					this.log.warn(`Ignored invalid target range "${state.val}" km.`);
+					this.log.warn(I18n.t('Ignored invalid target range "%s" km.', state.val));
 					const currentEn = Number(this.wallboxValues['Parameter.Chrg.Plan.En']) || 0;
 					const fallbackKm = consumption > 0 ? Number(((currentEn * 100) / consumption).toFixed(1)) : 0;
 					await this.setState('Control.planTargetRange', { val: fallbackKm, ack: true });
@@ -869,7 +894,7 @@ class SmaEcharger extends utils.Adapter {
 				}
 
 				const targetKwh = Number(((targetKm * consumption) / 100).toFixed(2));
-				this.log.info(`Converted target range ${targetKm} km to ${targetKwh} kWh.`);
+				this.log.info(I18n.t('Converted target range %s km to %s kWh.', targetKm, targetKwh));
 
 				await this.setValueOneCharger('Parameter.Chrg.Plan.En', 'Control.planTargetEnergy', targetKwh);
 
@@ -904,12 +929,11 @@ class SmaEcharger extends utils.Adapter {
 
 				if (controlState && controlState.ack === true && controlState.val !== targetControlVal) {
 					await this.setState(syncItem.id, { val: targetControlVal, ack: true });
-					this.log.debug(`SMA Sync: Updated ${syncItem.id} to ${targetControlVal}.`);
+					this.log.debug(I18n.t('SMA Sync: Updated %s to %s.', syncItem.id, targetControlVal));
 				}
 			}
 		}
 	}
-
 	toControlValue(channelId, rawVal) {
 		if (channelId === 'Parameter.Chrg.ChrgApv') {
 			return Number(rawVal) === 5172;
@@ -949,7 +973,7 @@ class SmaEcharger extends utils.Adapter {
 
 		// 1. Type check: allow valid numbers only
 		if (isNaN(numVal)) {
-			this.log.warn(`Ignored invalid value "${value}" for ${param}.`);
+			this.log.warn(I18n.t('Ignored invalid value "%s" for %s.', value, param));
 			await this.resetControlToWallboxValue(param, dp);
 			return;
 		}
@@ -958,12 +982,12 @@ class SmaEcharger extends utils.Adapter {
 		const controlConfig = this.controlStates.find(item => item.channelId === param);
 		if (controlConfig && controlConfig.common) {
 			if (controlConfig.common.min !== undefined && numVal < controlConfig.common.min) {
-				this.log.warn(`Value ${numVal} for ${param} is below minimum (${controlConfig.common.min}).`);
+				this.log.warn(I18n.t('Value %s for %s is below minimum (%s).', numVal, param, controlConfig.common.min));
 				await this.resetControlToWallboxValue(param, dp);
 				return;
 			}
 			if (controlConfig.common.max !== undefined && numVal > controlConfig.common.max) {
-				this.log.warn(`Value ${numVal} for ${param} exceeds maximum (${controlConfig.common.max}).`);
+				this.log.warn(I18n.t('Value %s for %s exceeds maximum (%s).', numVal, param, controlConfig.common.max));
 				await this.resetControlToWallboxValue(param, dp);
 				return;
 			}
@@ -976,7 +1000,11 @@ class SmaEcharger extends utils.Adapter {
 				const sessionKwh = Number((sessionState.val / 1000).toFixed(3));
 				if (numVal < sessionKwh) {
 					this.log.warn(
-						`Charging plan energy (${numVal} kWh) must not be less than already charged session energy (${sessionKwh} kWh).`,
+						I18n.t(
+							'Charging plan energy (%s kWh) must not be less than already charged session energy (%s kWh).',
+							numVal,
+							sessionKwh,
+						),
 					);
 					await this.resetControlToWallboxValue(param, dp);
 					return;
@@ -987,7 +1015,7 @@ class SmaEcharger extends utils.Adapter {
 		// 3. Duplicate filter: do not send if parameter already has this value
 		const currentWallboxVal = this.wallboxValues[cleanParam] ?? this.wallboxValues[param];
 		if (currentWallboxVal !== undefined && Number(currentWallboxVal) === numVal) {
-			this.log.debug(`SMA eCharger ${param} is already set to ${numVal} – no write command needed.`);
+			this.log.debug(I18n.t('SMA eCharger %s is already set to %s – no write command needed.', param, numVal));
 			const ackVal = dp.startsWith('Control.') ? this.toControlValue(param, numVal) : numVal;
 			await this.setState(dp, { val: ackVal, ack: true });
 			return;
@@ -999,7 +1027,7 @@ class SmaEcharger extends utils.Adapter {
 
 		if (now - lastWrite < COOLDOWN_MS) {
 			const waitSec = ((COOLDOWN_MS - (now - lastWrite)) / 1000).toFixed(1);
-			this.log.warn(`Rate limit: Write command for ${param} blocked (please wait ${waitSec}s).`);
+			this.log.warn(I18n.t('Rate limit: Write command for %s blocked (please wait %ss).', param, waitSec));
 			await this.resetControlToWallboxValue(param, dp);
 			return;
 		}
@@ -1017,7 +1045,9 @@ class SmaEcharger extends utils.Adapter {
 				],
 			});
 			if (putResponse) {
-				this.log.info(`SMA eCharger ${param} successfully set to ${numVal} (HTTP ${putResponse.status})`);
+				this.log.info(
+					I18n.t('SMA eCharger %s successfully set to %s (HTTP %s)', param, numVal, putResponse.status),
+				);
 				this.wallboxValues[cleanParam] = numVal;
 
 				// Acknowledge target state (Control.* gets converted boolean/number, Parameter.* gets raw number)
@@ -1032,7 +1062,7 @@ class SmaEcharger extends utils.Adapter {
 		} catch (error) {
 			delete this.lastWriteTimes[param];
 			const details = error.response ? JSON.stringify(error.response.data) : error.message;
-			this.log.error(`SMA eCharger error setting ${param}: ${details}`);
+			this.log.error(I18n.t('SMA eCharger error setting %s: %s', param, details));
 			await this.resetControlToWallboxValue(param, dp);
 		}
 	}
