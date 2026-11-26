@@ -33,7 +33,7 @@ This adapter connects your [**SMA eCharger**](https://www.sma.de/produkte/ladelo
     3. Set `Control.chargingMode` (`Parameter.Chrg.ActChaMod`) to `4720` (*Target charging*) to start.
   * Built-in 5-second cooldown per parameter, duplicate filtering, and automatic value reset on blocked commands to protect the wallbox hardware.
 
-### Configuration
+## Configuration
 
 1. Open the adapter instance settings in ioBroker.
 2. Enter the local **IP address** of your SMA eCharger.
@@ -54,12 +54,12 @@ This adapter connects your [**SMA eCharger**](https://www.sma.de/produkte/ladelo
 	### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
-* (SpongeTroN) Added admin button to manually clean up orphaned `Parameter.*` and `Control.*` states while protecting states with active `common.custom` settings (e.g., History, InfluxDB, SQL)
-* (SpongeTroN) Revoked write permissions (`write: false`) for unauthorized or inactive states on startup instead of automatically deleting them
-* (SpongeTroN) Filtered out sensitive `Parameter.Acs.*` credentials completely from state creation and `Debug.All_Parameters`
-* (SpongeTroN) Sanitized dynamic `Parameter.*` object IDs against `FORBIDDEN_CHARS` and enabled direct writes via `native.channelId`
-* (SpongeTroN) Assigned specific ioBroker state roles (`value.power`, `value.energy`, `value.current`, `value.voltage`, `value.distance`) to `Live.*` states
-* (SpongeTroN) Standardized all log messages, state names, and `jsonConfig` base keys to English
+* (SpongeTroN86) Added admin button to manually clean up orphaned `Parameter.*` and `Control.*` states while protecting states with active `common.custom` settings (e.g., History, InfluxDB, SQL)
+* (SpongeTroN86) Revoked write permissions (`write: false`) for unauthorized or inactive states on startup instead of automatically deleting them
+* (SpongeTroN86) Filtered out sensitive `Parameter.Acs.*` credentials completely from state creation and `Debug.All_Parameters`
+* (SpongeTroN86) Sanitized dynamic `Parameter.*` object IDs against `FORBIDDEN_CHARS` and enabled direct writes via `native.channelId`
+* (SpongeTroN86) Assigned specific ioBroker state roles (`value.power`, `value.energy`, `value.current`, `value.voltage`, `value.distance`) to `Live.*` states
+* (SpongeTroN86) Standardized all log messages, state names, and `jsonConfig` base keys to English
 
 ### 0.4.0 (2026-11-22)
 * (SpongeTroN86) Added live session range calculation (`Live.sessionRange`) and target range input (`Control.planTargetRange`) based on vehicle energy consumption
@@ -85,6 +85,7 @@ This adapter connects your [**SMA eCharger**](https://www.sma.de/produkte/ladelo
 
 * (SpongeTroN86) fix: remove specific schedule time from dependabot configuration
   feat: add placeholder for future changes in CHANGELOG_OLD.md
+
 
 ## License
 
