@@ -611,10 +611,7 @@ class SmaEcharger extends utils.Adapter {
 			}
 
 			this.log.info(
-				I18n.t(
-					'Success! Found %s parameters and saved to Debug.All_Parameters.',
-					filteredValues.length,
-				),
+				I18n.t('Success! Found %s parameters and saved to Debug.All_Parameters.', filteredValues.length),
 			);
 		} catch (error) {
 			const details = error.response
@@ -800,10 +797,7 @@ class SmaEcharger extends utils.Adapter {
 			if (obj.common?.custom && Object.keys(obj.common.custom).length > 0) {
 				skippedCustomCount++;
 				this.log.warn(
-					I18n.t(
-						'Skipped deletion of %s: active custom settings (e.g. History/InfluxDB) found.',
-						shortObjId,
-					),
+					I18n.t('Skipped deletion of %s: active custom settings (e.g. History/InfluxDB) found.', shortObjId),
 				);
 				continue;
 			}
@@ -866,10 +860,7 @@ class SmaEcharger extends utils.Adapter {
 				const unixSec = this.parseDateToUnixSeconds(String(state.val));
 				if (unixSec === null) {
 					this.log.warn(
-						I18n.t(
-							'Invalid date format "%s". Please use DD.MM.YYYY HH:MM or YYYY-MM-DD HH:MM.',
-							state.val,
-						),
+						I18n.t('Invalid date format "%s". Please use DD.MM.YYYY HH:MM or YYYY-MM-DD HH:MM.', state.val),
 					);
 					await this.setState('Control.planTargetTimeInput', { val: '', ack: true });
 					return;
@@ -982,7 +973,9 @@ class SmaEcharger extends utils.Adapter {
 		const controlConfig = this.controlStates.find(item => item.channelId === param);
 		if (controlConfig && controlConfig.common) {
 			if (controlConfig.common.min !== undefined && numVal < controlConfig.common.min) {
-				this.log.warn(I18n.t('Value %s for %s is below minimum (%s).', numVal, param, controlConfig.common.min));
+				this.log.warn(
+					I18n.t('Value %s for %s is below minimum (%s).', numVal, param, controlConfig.common.min),
+				);
 				await this.resetControlToWallboxValue(param, dp);
 				return;
 			}
