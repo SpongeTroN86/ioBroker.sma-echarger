@@ -61,7 +61,7 @@ This adapter connects your [**SMA eCharger**](https://www.sma.de/produkte/ladelo
 * (SpongeTroN86) Assigned specific ioBroker state roles (`value.power`, `value.energy`, `value.current`, `value.voltage`, `value.distance`) to `Live.*` states
 * (SpongeTroN86) Standardized all log messages, state names, and `jsonConfig` base keys to English
 
-### 0.4.0 (2026-11-22)
+### 0.4.0 (2026-11-22)       
 * (SpongeTroN86) Added live session range calculation (`Live.sessionRange`) and target range input (`Control.planTargetRange`) based on vehicle energy consumption
 * (SpongeTroN86) Changed `Control.chargingRelease` and `Control.chargingLock` to native `boolean` switches (`role: "switch"`) for better compatibility with visualization adapters like `vis-2`
 * (SpongeTroN86) Automatically reset `Control.planTargetRange` to `0` when the charging cable is disconnected (`vehicleStatus === 200111`)
